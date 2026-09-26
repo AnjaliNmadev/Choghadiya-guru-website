@@ -134,11 +134,21 @@ ${TOP_CITIES.slice(0, 12).map(c => { const [name] = c.split("|"); return `<li><a
 </ul></div>`;
 
 /* ---------------- Home / Choghadiya (flagship) ---------------- */
+const rulingPlanetByWeekday = [
+  ["Sunday", "Sun"], ["Monday", "Moon"], ["Tuesday", "Mars"], ["Wednesday", "Mercury"],
+  ["Thursday", "Jupiter"], ["Friday", "Venus"], ["Saturday", "Saturn"]
+];
+const homeFaqs = [
+  ["What does choghadiya mean?", "Choghadiya combines chau (four) and ghadi (a 24-minute unit), so one slot is about four ghadis, or roughly 96 minutes. Sunrise to sunset gives 8 day slots and sunset to next sunrise gives 8 night slots."],
+  ["What are the different types of choghadiya?", "There are seven: Amrit, Shubh and Labh are the most favourable and are best for important work. Char is a good, secondary slot. Udveg, Kaal and Rog are inauspicious and are usually avoided for new beginnings."],
+  ["What are Vaar Vela, Kaal Vela and Kaal Ratri?", "These are additional periods, alongside Rahu Kaal, that tradition marks as unsuitable for starting anything auspicious. Vaar Vela and Kaal Vela fall during the day, while Kaal Ratri falls at night."],
+  ["What if a good choghadiya overlaps Rahu Kaal or a similar inauspicious period?", "Classical guidance says to skip it even if the slot is otherwise Amrit or Shubh, and pick the next clean, favourable window instead."],
+  ["How is a choghadiya judged auspicious or inauspicious?", "It depends on the planet ruling that slot: benefic planets (Moon, Jupiter, Mercury, Venus) make a favourable slot, while malefic planets (Sun, Saturn, Mars) make it unfavourable. The very first slot of the day also follows the ruling planet of that weekday, after which the rest follow in a fixed order."],
+  ["Why do the same seven choghadiyas repeat through the day?", "Since there are 8 day slots and 8 night slots but only 7 choghadiya types, one type has to repeat once during the day and once during the night to fill all 16 slots."]
+];
 function choghadiyaBody() {
   return `<p class="sub" id="sub"></p>
 ${cityTools}
-<h2>Today Choghadiya | Shubh Choghadiya</h2>
-<p id="intro"></p>
 <div class="btns"><label class="cal">Calendar ▾ <input type="date" id="dt" aria-label="Pick a date"></label><button data-day="0">TODAY</button><button data-day="1">TOMORROW</button></div>
 ${legend}
 <div id="now" role="status"></div>
@@ -148,6 +158,22 @@ ${legend}
 <div class="col nightc"><h3>Night Choghadiya</h3><div class="hdr"><span>Muhurat Time</span><span>Recommended Activity</span></div><div id="night"></div></div>
 </div>
 <div class="sum" id="sum"></div>
+<h2>Today Choghadiya | Shubh Choghadiya</h2>
+<p id="intro"></p>
+<h2>Today's important shubh muhurat</h2>
+<p>Planning a wedding, naming ceremony, new vehicle, new property, a new business or a mundan? Pick an occasion below to see the cleanest slots for that purpose, drawn from today's choghadiya and with Rahu Kaal already excluded.</p>
+<div class="tiles">
+<a class="tile" href="/shubh-muhurat/"><span>💍</span>Shubh Muhurat For Marriage</a>
+<a class="tile" href="/shubh-muhurat/"><span>👶</span>Shubh Muhurat For Name Giving</a>
+<a class="tile" href="/shubh-muhurat/"><span>🚗</span>Shubh Muhurat For New Vehicle</a>
+<a class="tile" href="/shubh-muhurat/"><span>🏠</span>Shubh Muhurat For New Property</a>
+<a class="tile" href="/shubh-muhurat/"><span>💼</span>Shubh Muhurat For New Business</a>
+<a class="tile" href="/shubh-muhurat/"><span>✂️</span>Shubh Muhurat For Mundan</a>
+</div>
+<h2>Auspicious time today</h2>
+<p>Shubh, Labh, Char and Amrit are the choghadiyas people check first. Amrit is treated as the most auspicious period for any kind of work, Labh suits anyone starting a new business or a course, Shubh is the classic pick for weddings, puja and religious activities, and Char favours travel, dance and cultural work.</p>
+<div class="notice">Auspicious work is best avoided during Rahu Kaal. See today's <a href="/rahu-kaal/">Rahu Kaal</a> — the exact start and end time for your city, and how to plan around it.</div>
+${citiesBlock}
 <h2>What today's choghadiya tells you</h2>
 <p>Choghadiya splits the daylight and the night into eight slots each, about 90 minutes apiece. Every slot carries the mood of one planet, so you can quickly see which stretch suits a fresh start, a journey or a celebration, and which is better left alone.</p>
 <h2>The seven choghadiyas</h2>
@@ -160,18 +186,38 @@ ${legend}
 <div class="bad"><b>Kaal</b> Saturn. Heavy; mostly avoided, except for work tied to building wealth.</div>
 <div class="bad"><b>Rog</b> Mars. Conflict-prone; avoid new work and medical starts.</div>
 </div>
-${citiesBlock}
+<h2>Choghadiya meanings, explained</h2>
+<p><b>Amrit</b> is ruled by the Moon, considered a benefic planet, which makes this the single most favourable slot of the day — any kind of work started in it tends to go well.</p>
+<p><b>Shubh</b> is ruled by Jupiter, another benefic. It is the classic pick for weddings, worship, yagya and other religious ceremonies.</p>
+<p><b>Labh</b> is ruled by Mercury. Since Mercury favours intellect and trade, this slot is especially good for starting a business, a course, or learning a new skill.</p>
+<p><b>Char</b> is ruled by Venus. Venus governs movement, so this slot is the traditional choice for travel, and also suits art, dance and cultural activity.</p>
+<p><b>Udveg</b> is ruled by the Sun, a malefic planet here, which is why fresh starts are avoided during it — though government-related work is considered to do well in this slot.</p>
+<p><b>Kaal</b> is ruled by Saturn. It is generally avoided for auspicious work, with one exception: activity aimed purely at accumulating wealth is thought to fare well here.</p>
+<p><b>Rog</b> is ruled by Mars, associated with conflict. Auspicious work and medical consultations are avoided in this slot, though it has traditionally been noted for anything involving competition or confronting a rival.</p>
+<h2>Choghadiya vs shubh muhurat — what's the difference?</h2>
+<p>A shubh muhurat is calculated from planetary positions for one specific event, and a favourable one may be rare — a month can have several, or sometimes none on a given day. Choghadiya, on the other hand, is available every single day: it simply divides that day into 8 auspicious-or-not day slots and 8 night slots. For a big life event, use choghadiya as a first filter, then confirm the exact muhurat with a pandit.</p>
+<h2>How is today's choghadiya calculated?</h2>
+<p>The daylight period (sunrise to sunset) and the night period (sunset to next sunrise) are each split into eight equal parts. Since there are only seven choghadiya types, one type repeats once in the day and once at night. The very first slot of the day is always ruled by that weekday's own ruling planet, and the remaining slots follow a fixed planetary sequence after that — which is why the order is identical every Monday, every Tuesday, and so on, but different from one weekday to the next.</p>
+<h3>Ruling planet by weekday</h3>
+<div class="tbl"><table><thead><tr><th>Weekday</th><th>Ruling planet</th></tr></thead><tbody>
+${rulingPlanetByWeekday.map(([d, p]) => `<tr><td>${d}</td><td>${p}</td></tr>`).join("")}
+</tbody></table></div>
+<h2>More panchang tools</h2>
+<p>Along with choghadiya, check <a href="/hora/">Shubh Hora</a>, <a href="/gowri-panchangam/">Gowri Panchangam</a>, <a href="/rahu-kaal/">Rahu Kaal</a> and <a href="/abhijit-muhurat/">Abhijit Muhurat</a> for your city — all calculated live for the date and location you pick.</p>
 <h2 id="tables">Weekly choghadiya tables</h2>
 <p class="small">*Assuming sunrise at 6:00 AM. Today's weekday is highlighted.</p>
 <div class="tbl day"><table id="dgrid"></table></div>
 <h3>Night table</h3><p class="small">*Assuming sunset at 6:00 PM.</p>
-<div class="tbl night"><table id="ngrid"></table></div>`;
+<div class="tbl night"><table id="ngrid"></table></div>
+<h2 id="faq">Choghadiya FAQs</h2>
+${homeFaqs.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join("\n")}`;
 }
 
 write("/", layout({
   urlPath: "/", title: `Aaj Ka Choghadiya – Today's Shubh Muhurat, Hora & Rahu Kaal | ${BRAND}`,
   description: "Free daily Choghadiya, Shubh Hora, Gowri Panchangam, Rahu Kaal and Abhijit Muhurat for 150+ Indian cities. Calculated live for your exact location.",
   h1: "Aaj Ka Choghadiya", crumbLabel: "Home", bodyHtml: choghadiyaBody(),
+  extraJsonLd: [faqSchema(homeFaqs)],
   related: [["/hora/", "Shubh Hora"], ["/gowri-panchangam/", "Gowri Panchangam"], ["/rahu-kaal/", "Rahu Kaal"], ["/abhijit-muhurat/", "Abhijit Muhurat"]]
 }));
 
@@ -179,6 +225,7 @@ write("/choghadiya/", layout({
   urlPath: "/choghadiya/", title: `Choghadiya Today – Day & Night Muhurat Timings | ${BRAND}`,
   description: "Check today's Day and Night Choghadiya for your city: Amrit, Shubh, Labh, Char, Udveg, Kaal and Rog timings with Rahu Kaal.",
   h1: "Choghadiya Today", crumbLabel: "Choghadiya", bodyHtml: choghadiyaBody(),
+  extraJsonLd: [faqSchema(homeFaqs)],
   related: [["/hora/", "Shubh Hora"], ["/gowri-panchangam/", "Gowri Panchangam"], ["/rahu-kaal/", "Rahu Kaal"]]
 }));
 
