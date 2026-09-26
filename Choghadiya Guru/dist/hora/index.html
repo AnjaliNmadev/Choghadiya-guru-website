@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>try{if(localStorage.getItem("chg_lang")==="hi"){document.documentElement.className="lang-hi";document.documentElement.lang="hi";}}catch(e){}</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Shubh Hora Today – Planetary Hours (Hora Muhurat) | Choghadiya Guru</title>
@@ -17,79 +18,85 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shubh Hora Today – Planetary Hours (Hora Muhurat) | Choghadiya Guru">
 <meta name="twitter:description" content="Today's Day and Night Hora: 12+12 planetary hours ruled by Sun, Venus, Mercury, Moon, Saturn, Jupiter and Mars, with the best time for each task.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/style.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://choghadiyaguru.example/"},{"@type":"ListItem","position":2,"name":"Shubh Hora","item":"https://choghadiyaguru.example/hora/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Which hora is the best?","acceptedAnswer":{"@type":"Answer","text":"Jupiter (Guru) is usually treated as the best, followed by Venus and Mercury. The Moon hora is good for gentle work. Mars and Saturn horas are best avoided for new beginnings."}},{"@type":"Question","name":"Is hora the same as choghadiya?","acceptedAnswer":{"@type":"Answer","text":"No. Hora has 24 slots per day, each ruled by one planet. Choghadiya has 16 slots with its own names (Amrit, Shubh, Labh and so on)."}},{"@type":"Question","name":"How do I find the hora ruling right now without an app?","acceptedAnswer":{"@type":"Answer","text":"Note today's weekday ruler, then count forward through the Sun-Venus-Mercury-Moon-Saturn-Jupiter-Mars cycle in equal steps from sunrise until you reach the current time."}}]}</script>
 </head>
 <body>
 <nav class="navbar"><div class="wrap navwrap">
-<a class="brand" href="/">🪔 Choghadiya Guru</a>
+<a class="brand" href="/">🪔 <span>Choghadiya Guru</span></a>
+<div class="navright">
+<button class="langbtn" id="langBtn" aria-label="Switch language / भाषा बदलें" aria-pressed="false">EN <span class="lsep">/</span> हिं</button>
 <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">☰</button>
-<ul class="navlinks" id="navlinks"><li><a href="/">Home</a></li><li class="has-drop act">
-<a href="/choghadiya/" aria-haspopup="true" aria-expanded="false">Choghadiya <i class="caret">▾</i></a>
-<ul class="dropmenu"><li><a href="/choghadiya/">Aaj ka Choghadiya</a></li><li><a class="act" href="/hora/">Shubh Hora</a></li><li><a href="/abhijit-muhurat/">Abhijit Muhurat</a></li><li><a href="/rahu-kaal/">Rahu Kalam</a></li><li><a href="/gowri-panchangam/">Gowri Panchangam</a></li></ul>
-</li><li><a href="/shubh-muhurat/">Shubh Muhurat</a></li></ul>
+</div>
+<ul class="navlinks" id="navlinks"><li><a href="/"><span class="t-en">Home</span><span class="t-hi">होम</span></a></li><li class="has-drop act">
+<a href="/choghadiya/" aria-haspopup="true" aria-expanded="false"><span class="t-en">Choghadiya</span><span class="t-hi">चौघड़िया</span> <i class="caret">▾</i></a>
+<ul class="dropmenu"><li><a href="/choghadiya/"><span class="t-en">Aaj ka Choghadiya</span><span class="t-hi">आज का चौघड़िया</span></a></li><li><a class="act" href="/hora/"><span class="t-en">Shubh Hora</span><span class="t-hi">शुभ होरा</span></a></li><li><a href="/abhijit-muhurat/"><span class="t-en">Abhijit Muhurat</span><span class="t-hi">अभिजीत मुहूर्त</span></a></li><li><a href="/rahu-kaal/"><span class="t-en">Rahu Kalam</span><span class="t-hi">राहु काल</span></a></li><li><a href="/gowri-panchangam/"><span class="t-en">Gowri Panchangam</span><span class="t-hi">गौरी पंचांगम</span></a></li></ul>
+</li><li><a href="/shubh-muhurat/"><span class="t-en">Shubh Muhurat</span><span class="t-hi">शुभ मुहूर्त</span></a></li><li><a href="/what-is-choghadiya/"><span class="t-en">Guide</span><span class="t-hi">गाइड</span></a></li></ul>
 </div></nav>
 <main class="wrap" id="top">
-<p class="crumb"><a href="/">Home</a> &nbsp;/&nbsp; Shubh Hora</p>
+<p class="crumb"><a href="/"><span class="t-en">Home</span><span class="t-hi">होम</span></a> &nbsp;/&nbsp; Shubh Hora</p>
 <section class="panel">
 <div class="body">
-<h1 style="font-size:22px;margin:6px 0 4px;color:#1f1746">Shubh Hora Today</h1>
+<h1 style="margin:6px 0 4px"><span class="t-en">Shubh Hora Today</span><span class="t-hi">आज का शुभ होरा</span></h1>
 <p class="sub" id="sub"></p>
 <div class="tools">
-<div class="share"><button data-share="wa">WhatsApp</button><button data-share="fb">Facebook</button><button data-share="x">X</button><button data-share="copy">Copy link</button></div>
-<label class="fld">📍 Location<input id="city" list="cl" autocomplete="off" placeholder="Enter city name"><datalist id="cl"></datalist></label>
+<div class="share"><button data-share="wa">WhatsApp</button><button data-share="fb">Facebook</button><button data-share="x">X</button><button data-share="copy"><span class="t-en">Copy link</span><span class="t-hi">लिंक कॉपी करें</span></button></div>
+<label class="fld">📍 <span class="t-en">Location</span><span class="t-hi">स्थान</span><input id="city" list="cl" autocomplete="off" placeholder="Enter city name / शहर का नाम डालें"><datalist id="cl"></datalist></label>
 </div>
-<p>Hora splits the day into 12 planetary hours from sunrise to sunset and 12 more from sunset to the next sunrise. Each hora belongs to one planet, and the first hora of the day belongs to the ruler of the weekday. Green slots are shubh hora, the best windows to begin something new.</p>
-<div class="btns"><label class="cal">Calendar ▾ <input type="date" id="dt" aria-label="Pick a date"></label><button data-day="0">TODAY</button><button data-day="1">TOMORROW</button></div>
-<div class="cols2"><div class="col dayc"><h3>Day Hora</h3><div class="hdr"><span>Hora &amp; time</span><span>Best used for</span></div><div id="hday"></div></div>
-<div class="col nightc"><h3>Night Hora</h3><div class="hdr"><span>Hora &amp; time</span><span>Best used for</span></div><div id="hnight"></div></div></div>
-<h2>What each hora means</h2>
+<p><span class="t-en">Hora splits the day into 12 planetary hours from sunrise to sunset and 12 more from sunset to the next sunrise. Each hora belongs to one planet, and the first hora of the day belongs to the ruler of the weekday. Green slots are shubh hora, the best windows to begin something new.</span><span class="t-hi">होरा दिन को सूर्योदय से सूर्यास्त तक 12 और सूर्यास्त से अगले सूर्योदय तक 12 — यानी कुल 24 ग्रह-होरा में बांटता है। हर होरा एक ग्रह की होती है, और दिन की पहली होरा उस वार के स्वामी ग्रह की होती है। हरे स्लॉट शुभ होरा हैं — कुछ नया शुरू करने के लिए सबसे अच्छे समय।</span></p>
+<div class="btns"><label class="cal"><span class="t-en">Calendar</span><span class="t-hi">कैलेंडर</span> ▾ <input type="date" id="dt" aria-label="Pick a date"></label><button data-day="0"><span class="t-en">TODAY</span><span class="t-hi">आज</span></button><button data-day="1"><span class="t-en">TOMORROW</span><span class="t-hi">कल</span></button></div>
+<div class="cols2"><div class="col dayc"><h3><span class="t-en">Day Hora</span><span class="t-hi">दिन की होरा</span></h3><div class="hdr"><span><span class="t-en">Hora & time</span><span class="t-hi">होरा व समय</span></span><span><span class="t-en">Best used for</span><span class="t-hi">सबसे अच्छा उपयोग</span></span></div><div id="hday"></div></div>
+<div class="col nightc"><h3><span class="t-en">Night Hora</span><span class="t-hi">रात की होरा</span></h3><div class="hdr"><span><span class="t-en">Hora & time</span><span class="t-hi">होरा व समय</span></span><span><span class="t-en">Best used for</span><span class="t-hi">सबसे अच्छा उपयोग</span></span></div><div id="hnight"></div></div></div>
+<h2><span class="t-en">What each hora means</span><span class="t-hi">हर होरा का अर्थ</span></h2>
 <div class="meaning">
-<div class="good"><b>Guru</b> Jupiter. The most benevolent hora: puja, teaching, weddings, financial advice, starting learning.</div>
-<div class="good"><b>Shukra</b> Venus. Comfort and beauty: marriage talks, romance, jewellery, vehicles, art and entertainment.</div>
-<div class="good"><b>Budh</b> Mercury. Intelligence and trade: business deals, exams, contracts, writing, accounts.</div>
-<div class="ok"><b>Chandra</b> Moon. Gentle and fluid: travel, dairy, water-related work, family and emotional matters.</div>
-<div class="ok"><b>Surya</b> Sun. Authority and vitality: government work, meeting seniors, health routines. Fine for official tasks, not for soft ones.</div>
-<div class="bad"><b>Mangal</b> Mars. Energetic and forceful: property, sports, surgery, repairs. Avoid disputes and auspicious rites.</div>
-<div class="bad"><b>Shani</b> Saturn. Slow and heavy: iron, oil, labour, legal delays. Avoid fresh starts and celebrations.</div>
+<div class="good"><b><span class="t-en">Guru</span><span class="t-hi">गुरु</span></b> <span class="t-en">Jupiter. The most benevolent hora: puja, teaching, weddings, financial advice, starting learning.</span><span class="t-hi">बृहस्पति। सबसे शुभ होरा: पूजा, शिक्षा, विवाह, वित्तीय सलाह, पढ़ाई शुरू करना।</span></div>
+<div class="good"><b><span class="t-en">Shukra</span><span class="t-hi">शुक्र</span></b> <span class="t-en">Venus. Comfort and beauty: marriage talks, romance, jewellery, vehicles, art and entertainment.</span><span class="t-hi">शुक्र। आराम और सुंदरता: विवाह की बात, प्रेम, गहने, वाहन, कला और मनोरंजन।</span></div>
+<div class="good"><b><span class="t-en">Budh</span><span class="t-hi">बुध</span></b> <span class="t-en">Mercury. Intelligence and trade: business deals, exams, contracts, writing, accounts.</span><span class="t-hi">बुध। बुद्धि और व्यापार: व्यापारिक सौदे, परीक्षा, अनुबंध, लेखन, हिसाब-किताब।</span></div>
+<div class="ok"><b><span class="t-en">Chandra</span><span class="t-hi">चंद्र</span></b> <span class="t-en">Moon. Gentle and fluid: travel, dairy, water-related work, family and emotional matters.</span><span class="t-hi">चंद्रमा। कोमल और तरल: यात्रा, डेयरी, जल से जुड़े काम, पारिवारिक व भावनात्मक मामले।</span></div>
+<div class="ok"><b><span class="t-en">Surya</span><span class="t-hi">सूर्य</span></b> <span class="t-en">Sun. Authority and vitality: government work, meeting seniors, health routines. Fine for official tasks, not for soft ones.</span><span class="t-hi">सूर्य। अधिकार और ऊर्जा: सरकारी कार्य, वरिष्ठों से मिलना, स्वास्थ्य दिनचर्या। सरकारी कामों के लिए ठीक, कोमल कामों के लिए नहीं।</span></div>
+<div class="bad"><b><span class="t-en">Mangal</span><span class="t-hi">मंगल</span></b> <span class="t-en">Mars. Energetic and forceful: property, sports, surgery, repairs. Avoid disputes and auspicious rites.</span><span class="t-hi">मंगल। ऊर्जावान और तीव्र: संपत्ति, खेल, शल्य चिकित्सा, मरम्मत। विवाद और शुभ कार्यों से बचें।</span></div>
+<div class="bad"><b><span class="t-en">Shani</span><span class="t-hi">शनि</span></b> <span class="t-en">Saturn. Slow and heavy: iron, oil, labour, legal delays. Avoid fresh starts and celebrations.</span><span class="t-hi">शनि। धीमा और भारी: लोहा, तेल, मज़दूरी, कानूनी देरी। नई शुरुआत और उत्सवों से बचें।</span></div>
 </div>
-<h2>How to use hora</h2>
-<p>Pick the task, find its friendly planet, then choose a slot ruled by that planet on the day you need. Shubh hora works best when it does not overlap Rahu Kaal. For a wedding or housewarming, hora is only a helper: the main muhurat comes from tithi and nakshatra.</p>
-<p>The planetary order never changes: Sun, Venus, Mercury, Moon, Saturn, Jupiter, Mars, then it repeats. Because sunrise and sunset move through the year, a hora is rarely exactly 60 minutes long. It is one twelfth of the day (or night) in your city, so it stretches in summer days and shrinks in winter days.</p>
-<h2>Which planet opens each weekday's hora</h2>
-<p>Every day's very first hora — right at sunrise — is ruled by that weekday's own planet, and the same Sun–Venus–Mercury–Moon–Saturn–Jupiter–Mars order then repeats right through to the next sunrise. So once you know the day's ruler, you can count forward to find any later hora without a calculator:</p>
+<h2><span class="t-en">How to use hora</span><span class="t-hi">होरा का उपयोग कैसे करें</span></h2>
+<p><span class="t-en">Pick the task, find its friendly planet, then choose a slot ruled by that planet on the day you need. Shubh hora works best when it does not overlap Rahu Kaal. For a wedding or housewarming, hora is only a helper: the main muhurat comes from tithi and nakshatra.</span><span class="t-hi">अपना काम चुनें, उसका अनुकूल ग्रह पहचानें, फिर उसी ग्रह की होरा जिस दिन चाहिए वो चुनें। शुभ होरा तब सबसे अच्छी काम करती है जब वह राहु काल से न टकराए। शादी या गृह प्रवेश के लिए होरा सिर्फ़ एक सहायक है: असली मुहूर्त तिथि और नक्षत्र से निकलता है।</span></p>
+<p><span class="t-en">The planetary order never changes: Sun, Venus, Mercury, Moon, Saturn, Jupiter, Mars, then it repeats. Because sunrise and sunset move through the year, a hora is rarely exactly 60 minutes long. It is one twelfth of the day (or night) in your city, so it stretches in summer days and shrinks in winter days.</span><span class="t-hi">ग्रहों का क्रम कभी नहीं बदलता: सूर्य, शुक्र, बुध, चंद्र, शनि, गुरु, मंगल — फिर यह दोहराता है। चूंकि सूर्योदय-सूर्यास्त साल भर बदलते हैं, इसलिए होरा शायद ही ठीक 60 मिनट की हो। यह आपके शहर के दिन (या रात) का बारहवां हिस्सा है, इसलिए गर्मियों में लंबी और सर्दियों में छोटी होती है।</span></p>
+<h2><span class="t-en">Which planet opens each weekday's hora</span><span class="t-hi">हर वार की पहली होरा किस ग्रह की होती है</span></h2>
+<p><span class="t-en">Every day's very first hora — right at sunrise — is ruled by that weekday's own planet, and the same Sun–Venus–Mercury–Moon–Saturn–Jupiter–Mars order then repeats right through to the next sunrise. So once you know the day's ruler, you can count forward to find any later hora without a calculator:</span><span class="t-hi">हर दिन की पहली होरा — सूर्योदय के समय — उस वार के अपने ग्रह की होती है, फिर वही सूर्य–शुक्र–बुध–चंद्र–शनि–गुरु–मंगल क्रम अगले सूर्योदय तक दोहराता रहता है। एक बार दिन का स्वामी ग्रह पता चल जाए तो बिना कैलकुलेटर के आगे गिनकर कोई भी होरा निकाली जा सकती है:</span></p>
 <div class="tbl"><table>
-<tr><th>Weekday</th><th>First hora (from sunrise)</th></tr>
-<tr><td>Sunday</td><td>Surya (Sun)</td></tr>
-<tr><td>Monday</td><td>Chandra (Moon)</td></tr>
-<tr><td>Tuesday</td><td>Mangal (Mars)</td></tr>
-<tr><td>Wednesday</td><td>Budh (Mercury)</td></tr>
-<tr><td>Thursday</td><td>Guru (Jupiter)</td></tr>
-<tr><td>Friday</td><td>Shukra (Venus)</td></tr>
-<tr><td>Saturday</td><td>Shani (Saturn)</td></tr>
+<tr><th><span class="t-en">Weekday</span><span class="t-hi">वार</span></th><th><span class="t-en">First hora (from sunrise)</span><span class="t-hi">पहली होरा (सूर्योदय से)</span></th></tr>
+<tr><td><span class="t-en">Sunday</span><span class="t-hi">रविवार</span></td><td><span class="t-en">Surya (Sun)</span><span class="t-hi">सूर्य</span></td></tr>
+<tr><td><span class="t-en">Monday</span><span class="t-hi">सोमवार</span></td><td><span class="t-en">Chandra (Moon)</span><span class="t-hi">चंद्र</span></td></tr>
+<tr><td><span class="t-en">Tuesday</span><span class="t-hi">मंगलवार</span></td><td><span class="t-en">Mangal (Mars)</span><span class="t-hi">मंगल</span></td></tr>
+<tr><td><span class="t-en">Wednesday</span><span class="t-hi">बुधवार</span></td><td><span class="t-en">Budh (Mercury)</span><span class="t-hi">बुध</span></td></tr>
+<tr><td><span class="t-en">Thursday</span><span class="t-hi">गुरुवार</span></td><td><span class="t-en">Guru (Jupiter)</span><span class="t-hi">गुरु</span></td></tr>
+<tr><td><span class="t-en">Friday</span><span class="t-hi">शुक्रवार</span></td><td><span class="t-en">Shukra (Venus)</span><span class="t-hi">शुक्र</span></td></tr>
+<tr><td><span class="t-en">Saturday</span><span class="t-hi">शनिवार</span></td><td><span class="t-en">Shani (Saturn)</span><span class="t-hi">शनि</span></td></tr>
 </table></div>
-<h2>Matching a hora to a task</h2>
-<p>A quick way to use hora: Guru or Shukra hora for anything you want to start on a good note (agreements, courtship, big purchases), Budh hora for anything needing a sharp mind (interviews, exams, negotiations), Chandra hora for travel or family matters, and Surya hora when you specifically need to deal with authority or officialdom. Mangal and Shani horas are usually kept for routine or physically demanding work rather than fresh, auspicious beginnings.</p>
-<h2 id="faq">Shubh Hora FAQs</h2>
-<details><summary>Which hora is the best?</summary><p>Jupiter (Guru) is usually treated as the best, followed by Venus and Mercury. The Moon hora is good for gentle work. Mars and Saturn horas are best avoided for new beginnings.</p></details>
-<details><summary>Is hora the same as choghadiya?</summary><p>No. Hora has 24 slots per day, each ruled by one planet. Choghadiya has 16 slots with its own names (Amrit, Shubh, Labh and so on). Many people check both and pick a time that looks good in each.</p></details>
-<details><summary>How do I find the hora ruling right now without an app?</summary><p>Note today's weekday ruler from the table above, then count forward through the Sun–Venus–Mercury–Moon–Saturn–Jupiter–Mars cycle in roughly equal steps from sunrise to sunset (and again from sunset to next sunrise) until you reach the current time.</p></details>
-<div class="cities"><h3>Frequently searched cities</h3><ul>
-<li><a href="/choghadiya/new-delhi/">Choghadiya for New Delhi</a></li><li><a href="/choghadiya/mumbai/">Choghadiya for Mumbai</a></li><li><a href="/choghadiya/bengaluru/">Choghadiya for Bengaluru</a></li><li><a href="/choghadiya/hyderabad/">Choghadiya for Hyderabad</a></li><li><a href="/choghadiya/ahmedabad/">Choghadiya for Ahmedabad</a></li><li><a href="/choghadiya/chennai/">Choghadiya for Chennai</a></li><li><a href="/choghadiya/kolkata/">Choghadiya for Kolkata</a></li><li><a href="/choghadiya/pune/">Choghadiya for Pune</a></li><li><a href="/choghadiya/jaipur/">Choghadiya for Jaipur</a></li><li><a href="/choghadiya/surat/">Choghadiya for Surat</a></li><li><a href="/choghadiya/lucknow/">Choghadiya for Lucknow</a></li><li><a href="/choghadiya/kanpur/">Choghadiya for Kanpur</a></li>
+<h2><span class="t-en">Matching a hora to a task</span><span class="t-hi">काम के अनुसार होरा चुनना</span></h2>
+<p><span class="t-en">A quick way to use hora: Guru or Shukra hora for anything you want to start on a good note (agreements, courtship, big purchases), Budh hora for anything needing a sharp mind (interviews, exams, negotiations), Chandra hora for travel or family matters, and Surya hora when you specifically need to deal with authority or officialdom. Mangal and Shani horas are usually kept for routine or physically demanding work rather than fresh, auspicious beginnings.</span><span class="t-hi">एक आसान तरीका: अच्छी शुरुआत (अनुबंध, प्रेम-प्रस्ताव, बड़ी खरीद) के लिए गुरु या शुक्र होरा, तेज़ दिमाग़ वाले काम (इंटरव्यू, परीक्षा, बातचीत) के लिए बुध होरा, यात्रा या पारिवारिक मामलों के लिए चंद्र होरा, और अधिकारियों से जुड़े काम के लिए सूर्य होरा। मंगल और शनि होरा आमतौर पर नियमित या मेहनत वाले काम के लिए रखी जाती हैं, नई शुभ शुरुआत के लिए नहीं।</span></p>
+<h2 id="faq"><span class="t-en">Shubh Hora FAQs</span><span class="t-hi">शुभ होरा से जुड़े सवाल</span></h2>
+<details><summary><span class="t-en">Which hora is the best?</span><span class="t-hi">सबसे अच्छी होरा कौन-सी है?</span></summary><p><span class="t-en">Jupiter (Guru) is usually treated as the best, followed by Venus and Mercury. The Moon hora is good for gentle work. Mars and Saturn horas are best avoided for new beginnings.</span><span class="t-hi">गुरु (बृहस्पति) को आमतौर पर सबसे अच्छा माना जाता है, उसके बाद शुक्र और बुध। चंद्र होरा कोमल कामों के लिए अच्छी है। मंगल और शनि होरा नई शुरुआत के लिए टालना बेहतर है।</span></p></details>
+<details><summary><span class="t-en">Is hora the same as choghadiya?</span><span class="t-hi">क्या होरा और चौघड़िया एक ही हैं?</span></summary><p><span class="t-en">No. Hora has 24 slots per day, each ruled by one planet. Choghadiya has 16 slots with its own names (Amrit, Shubh, Labh and so on). Many people check both and pick a time that looks good in each.</span><span class="t-hi">नहीं। होरा में एक दिन में 24 स्लॉट होते हैं, हर एक किसी ग्रह का। चौघड़िया में 16 स्लॉट होते हैं जिनके अपने नाम हैं (अमृत, शुभ, लाभ आदि)। कई लोग दोनों देखकर वह समय चुनते हैं जो दोनों में अच्छा दिखे।</span></p></details>
+<details><summary><span class="t-en">How do I find the hora ruling right now without an app?</span><span class="t-hi">बिना ऐप के अभी की होरा कैसे पता करें?</span></summary><p><span class="t-en">Note today's weekday ruler from the table above, then count forward through the Sun–Venus–Mercury–Moon–Saturn–Jupiter–Mars cycle in roughly equal steps from sunrise to sunset (and again from sunset to next sunrise) until you reach the current time.</span><span class="t-hi">ऊपर तालिका से आज के वार का स्वामी ग्रह नोट करें, फिर सूर्योदय से सूर्यास्त तक (और फिर सूर्यास्त से अगले सूर्योदय तक) सूर्य–शुक्र–बुध–चंद्र–शनि–गुरु–मंगल क्रम में लगभग बराबर हिस्सों में गिनते हुए वर्तमान समय तक पहुंचें।</span></p></details>
+<div class="cities"><h3><span class="t-en">Frequently searched cities</span><span class="t-hi">अक्सर खोजे जाने वाले शहर</span></h3><ul>
+<li><a href="/choghadiya/new-delhi/"><span class="t-en">Choghadiya for New Delhi</span><span class="t-hi">New Delhi का चौघड़िया</span></a></li><li><a href="/choghadiya/mumbai/"><span class="t-en">Choghadiya for Mumbai</span><span class="t-hi">Mumbai का चौघड़िया</span></a></li><li><a href="/choghadiya/bengaluru/"><span class="t-en">Choghadiya for Bengaluru</span><span class="t-hi">Bengaluru का चौघड़िया</span></a></li><li><a href="/choghadiya/hyderabad/"><span class="t-en">Choghadiya for Hyderabad</span><span class="t-hi">Hyderabad का चौघड़िया</span></a></li><li><a href="/choghadiya/ahmedabad/"><span class="t-en">Choghadiya for Ahmedabad</span><span class="t-hi">Ahmedabad का चौघड़िया</span></a></li><li><a href="/choghadiya/chennai/"><span class="t-en">Choghadiya for Chennai</span><span class="t-hi">Chennai का चौघड़िया</span></a></li><li><a href="/choghadiya/kolkata/"><span class="t-en">Choghadiya for Kolkata</span><span class="t-hi">Kolkata का चौघड़िया</span></a></li><li><a href="/choghadiya/pune/"><span class="t-en">Choghadiya for Pune</span><span class="t-hi">Pune का चौघड़िया</span></a></li><li><a href="/choghadiya/jaipur/"><span class="t-en">Choghadiya for Jaipur</span><span class="t-hi">Jaipur का चौघड़िया</span></a></li><li><a href="/choghadiya/surat/"><span class="t-en">Choghadiya for Surat</span><span class="t-hi">Surat का चौघड़िया</span></a></li><li><a href="/choghadiya/lucknow/"><span class="t-en">Choghadiya for Lucknow</span><span class="t-hi">Lucknow का चौघड़िया</span></a></li><li><a href="/choghadiya/kanpur/"><span class="t-en">Choghadiya for Kanpur</span><span class="t-hi">Kanpur का चौघड़िया</span></a></li>
 </ul></div>
-<div class="related"><h3>Related pages</h3><a href="/choghadiya/">Choghadiya Today</a><a href="/rahu-kaal/">Rahu Kaal</a><a href="/abhijit-muhurat/">Abhijit Muhurat</a></div>
+<div class="related"><h3><span class="t-en">Related pages</span><span class="t-hi">संबंधित पृष्ठ</span></h3><a href="/choghadiya/">Choghadiya Today</a><a href="/rahu-kaal/">Rahu Kaal</a><a href="/abhijit-muhurat/">Abhijit Muhurat</a></div>
 </div>
 </section>
 </main>
 <footer class="foot"><div class="wrap">
 <div class="cols4">
-<div><h4>Panchang Tools</h4><a href="/choghadiya/">Today's Choghadiya</a><a href="/hora/">Shubh Hora</a><a href="/gowri-panchangam/">Gowri Panchangam</a><a href="/rahu-kaal/">Rahu Kaal</a><a href="/abhijit-muhurat/">Abhijit Muhurat</a></div>
-<div><h4>Shubh Muhurat</h4><a href="/shubh-muhurat/">Marriage</a><a href="/shubh-muhurat/">New Vehicle</a><a href="/shubh-muhurat/">New Property</a><a href="/shubh-muhurat/">Business</a><a href="/shubh-muhurat/">Mundan</a></div>
-<div><h4>Learn</h4><a href="/what-is-choghadiya/">What is Choghadiya</a><a href="/what-is-choghadiya/#faq">FAQs</a></div>
-<div><h4>About Choghadiya Guru</h4><p>Simple, free choghadiya, hora, Gowri Panchangam, Rahu Kaal and Abhijit muhurat timings for Indian cities, calculated in your browser.</p></div>
+<div><h4><span class="t-en">Panchang Tools</span><span class="t-hi">पंचांग टूल्स</span></h4><a href="/choghadiya/"><span class="t-en">Today's Choghadiya</span><span class="t-hi">आज का चौघड़िया</span></a><a href="/hora/"><span class="t-en">Shubh Hora</span><span class="t-hi">शुभ होरा</span></a><a href="/gowri-panchangam/"><span class="t-en">Gowri Panchangam</span><span class="t-hi">गौरी पंचांगम</span></a><a href="/rahu-kaal/"><span class="t-en">Rahu Kaal</span><span class="t-hi">राहु काल</span></a><a href="/abhijit-muhurat/"><span class="t-en">Abhijit Muhurat</span><span class="t-hi">अभिजीत मुहूर्त</span></a></div>
+<div><h4><span class="t-en">Shubh Muhurat</span><span class="t-hi">शुभ मुहूर्त</span></h4><a href="/shubh-muhurat/"><span class="t-en">Marriage</span><span class="t-hi">विवाह</span></a><a href="/shubh-muhurat/"><span class="t-en">New Vehicle</span><span class="t-hi">नया वाहन</span></a><a href="/shubh-muhurat/"><span class="t-en">New Property</span><span class="t-hi">नई संपत्ति</span></a><a href="/shubh-muhurat/"><span class="t-en">Business</span><span class="t-hi">व्यापार</span></a><a href="/shubh-muhurat/"><span class="t-en">Mundan</span><span class="t-hi">मुंडन</span></a></div>
+<div><h4><span class="t-en">Learn</span><span class="t-hi">जानें</span></h4><a href="/what-is-choghadiya/"><span class="t-en">What is Choghadiya</span><span class="t-hi">चौघड़िया क्या है</span></a><a href="/what-is-choghadiya/#faq"><span class="t-en">FAQs</span><span class="t-hi">सामान्य प्रश्न</span></a></div>
+<div><h4><span class="t-en">About Choghadiya Guru</span><span class="t-hi">Choghadiya Guru के बारे में</span></h4><p><span class="t-en">Simple, free choghadiya, hora, Gowri Panchangam, Rahu Kaal and Abhijit muhurat timings for Indian cities, calculated in your browser.</span><span class="t-hi">भारतीय शहरों के लिए सरल, मुफ़्त चौघड़िया, होरा, गौरी पंचांगम, राहु काल और अभिजीत मुहूर्त — आपके ब्राउज़र में ही गणना।</span></p></div>
 </div>
-<p class="disc">Times are computed with an astronomical formula (IST) and can differ by 1–3 minutes from other panchangs. Confirm important events with a pandit.<br>© 2026 Choghadiya Guru</p>
+<p class="disc"><span class="t-en">Times are computed with an astronomical formula (IST) and can differ by 1–3 minutes from other panchangs. Confirm important events with a pandit.</span><span class="t-hi">समय की गणना खगोलीय सूत्र (IST) से की जाती है और अन्य पंचांगों से 1–3 मिनट का अंतर हो सकता है। ज़रूरी कार्यों से पहले अपने पंडितजी से पुष्टि करें।</span><br>© 2026 Choghadiya Guru</p>
 </div></footer>
 
 <script src="/assets/app.js"></script>

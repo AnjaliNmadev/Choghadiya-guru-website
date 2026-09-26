@@ -57,6 +57,32 @@ var GD = ["UARLDSOV", "AVRLDSOU", "RLDSOUAV", "LDSOVUAR", "DSOUAVRL", "SOVUARLD"
 var TILES = { marriage: ["Marriage", ["Shubh", "Amrit", "Labh"]], naming: ["Name Giving", ["Amrit", "Shubh"]], vehicle: ["New Vehicle", ["Amrit", "Shubh", "Labh", "Char"]],
   property: ["New Property", ["Labh", "Amrit", "Shubh"]], business: ["Business", ["Labh", "Amrit", "Shubh"]], mundan: ["Mundan", ["Shubh", "Amrit"]] };
 
+/* ---------------- Hindi (client-side dynamic content) ---------------- */
+function isHi() { return document.documentElement.classList.contains("lang-hi"); }
+var WD_HI = ["रविवार", "सोमवार", "मंगलवार", "बुधवार", "गुरुवार", "शुक्रवार", "शनिवार"];
+var MN_HI = ["जनवरी", "फ़रवरी", "मार्च", "अप्रैल", "मई", "जून", "जुलाई", "अगस्त", "सितंबर", "अक्टूबर", "नवंबर", "दिसंबर"];
+var CHOG_NAME_HI = { Amrit: "अमृत", Shubh: "शुभ", Labh: "लाभ", Char: "चर", Udveg: "उद्वेग", Kaal: "काल", Rog: "रोग" };
+var HORA_NAME_HI = { Surya: "सूर्य", Shukra: "शुक्र", Budh: "बुध", Chandra: "चंद्र", Shani: "शनि", Guru: "गुरु", Mangal: "मंगल" };
+var GOOD_HI = {
+  Amrit: ["good", "हर तरह का कार्य, विशेषकर डेयरी व्यापार"], Shubh: ["good", "विवाह, पूजा, पढ़ाई"],
+  Labh: ["good", "नया व्यापार, नई सीख"], Char: ["ok", "यात्रा, कला, नृत्य, सांस्कृतिक कार्यक्रम"],
+  Udveg: ["bad", "सरकारी कार्य"], Kaal: ["bad", "मशीनरी, निर्माण, खेती का काम"], Rog: ["bad", "बहस, प्रतियोगिता, विवाद निपटाना"]
+};
+var HI_HI = { Surya: ["ok", "सरकारी कार्य, अधिकार, स्वास्थ्य"], Shukra: ["good", "विवाह, प्रेम, कला, वाहन"], Budh: ["good", "व्यापार, परीक्षा, अनुबंध"],
+  Chandra: ["ok", "यात्रा, जल, पारिवारिक मामले"], Shani: ["bad", "लोहा, तेल, मज़दूरी; नई शुरुआत से बचें"], Guru: ["good", "पूजा, शिक्षा, विवाह, वित्त"], Mangal: ["bad", "संपत्ति, खेल, मरम्मत; विवाद से बचें"] };
+var GK_HI = { U: "उठी", A: "अमृत", V: "विषम", R: "रोगम", L: "लाभम", D: "धनम", S: "सुगम", O: "सोरम" };
+var GI_HI = { U: ["ok", "सरकारी / व्यावसायिक कार्य"], A: ["good", "हर नई शुरुआत के लिए सर्वोत्तम"], L: ["ok", "लाभ, व्यापार, सौदे"], D: ["ok", "धन, हिसाब, खरीदारी"],
+  S: ["ok", "आराम, यात्रा, घर से जुड़े काम"], V: ["bad", "बचें: बाधाएं आ सकती हैं"], R: ["bad", "बचें: स्वास्थ्य, देरी"], O: ["bad", "बचें: नुकसान, झगड़ा"] };
+var TILES_HI = { marriage: "विवाह", naming: "नामकरण", vehicle: "नया वाहन", property: "नई संपत्ति", business: "व्यापार", mundan: "मुंडन" };
+var UI = {
+  now: "अभी", nextDay: "(अगला दिन)", rahuTag: "☊ राहु काल",
+  time: "समय", from: "से", date: "तारीख़", sunrise: "सूर्योदय", sunset: "सूर्यास्त",
+  rahuKaal: "राहु काल", yamaganda: "यमगण्ड", gulikaKaal: "गुलिक काल", abhijitMuhurat: "अभिजीत मुहूर्त",
+  notObservedWed: "बुधवार को नहीं देखा जाता", notObserved: "नहीं देखा जाता",
+  prevDay: "« पिछला दिन", nextDayBtn: "अगला दिन »", copied: "कॉपी हो गया",
+  enterCity: "शहर का नाम डालें"
+};
+
 var IST = 330, ZEN = 90.0, RAD = Math.PI / 180, DEG = 180 / Math.PI;
 var $ = function (id) { return document.getElementById(id); };
 function set(id, html) { var e = $(id); if (e) e.innerHTML = html; }
@@ -92,66 +118,99 @@ function range(a, b) { return fmt(a) + " – " + fmt(b); }
 
 var state = { city: (typeof DEFAULT_CITY !== "undefined" ? DEFAULT_CITY : "New Delhi, Delhi"), date: new Date() }, SLOTS = [], tile = "";
 
-function slotHtml(cls, n, s, e, txt, on, tag) {
-  return '<div class="slot ' + cls + (on ? " cur" : "") + '"><div class="sh"><b>' + n + '</b>' + (tag ? "<em>" + tag + "</em>" : "") + (on ? '<em class="now">Now</em>' : "") +
-    '</div><time>' + range(s, e) + (s >= 1440 ? " (next day)" : "") + '</time><p>' + txt + '</p></div>';
+function slotHtml(cls, n, s, e, txt, on, tag, hi) {
+  return '<div class="slot ' + cls + (on ? " cur" : "") + '"><div class="sh"><b>' + n + '</b>' + (tag ? "<em>" + tag + "</em>" : "") + (on ? '<em class="now">' + (hi ? UI.now : "Now") + '</em>' : "") +
+    '</div><time>' + range(s, e) + (s >= 1440 ? " " + (hi ? UI.nextDay : "(next day)") : "") + '</time><p>' + txt + '</p></div>';
 }
 
 function build() {
+  var hi = isHi();
   var d = state.date, c = CITIES[state.city]; if (!c) { state.city = "New Delhi, Delhi"; c = CITIES[state.city]; }
   var y = d.getFullYear(), m = d.getMonth() + 1, dd = d.getDate(), w = d.getDay(), nx = new Date(y, m - 1, dd + 1);
   var a = sun(y, m, dd, c.lat, c.lon), b = sun(nx.getFullYear(), nx.getMonth() + 1, nx.getDate(), c.lat, c.lon), dl = (a.s - a.r) / 8, nl = (b.r + 1440 - a.s) / 8;
   var now = new Date(), t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate()), off = Math.round((t0 - new Date(y, m - 1, dd)) / 864e5), nm = now.getHours() * 60 + now.getMinutes() + off * 1440, live = off === 0 || off === 1;
   var h1 = "", h2 = "", cur = null; SLOTS = [];
-  DAYSEQ[w].split(" ").forEach(function (n, i) { var s = a.r + i * dl, e = s + dl, rk = i + 1 === RAHU[w], on = live && nm >= s && nm < e; h1 += slotHtml(GOOD[n][0], n, s, e, GOOD[n][1], on, rk ? "☊ Rahu Kaal" : ""); SLOTS.push({ n: n, s: s, e: e, rk: rk }); if (on) cur = { n: n, e: e, rk: rk }; });
-  NIGHTSEQ[w].split(" ").forEach(function (n, i) { var s = a.s + i * nl, e = s + nl, on = live && nm >= s && nm < e; h2 += slotHtml(GOOD[n][0], n, s, e, GOOD[n][1], on, ""); if (on) cur = { n: n, e: e, rk: false }; });
+  var GD_ = hi ? GOOD_HI : GOOD, WD_ = hi ? WD_HI : WD, MN_ = hi ? MN_HI : MN, NM_ = hi ? CHOG_NAME_HI : null;
+  DAYSEQ[w].split(" ").forEach(function (n, i) { var s = a.r + i * dl, e = s + dl, rk = i + 1 === RAHU[w], on = live && nm >= s && nm < e; h1 += slotHtml(GD_[n][0], hi ? NM_[n] : n, s, e, GD_[n][1], on, rk ? (hi ? UI.rahuTag : "☊ Rahu Kaal") : "", hi); SLOTS.push({ n: n, s: s, e: e, rk: rk }); if (on) cur = { n: n, e: e, rk: rk }; });
+  NIGHTSEQ[w].split(" ").forEach(function (n, i) { var s = a.s + i * nl, e = s + nl, on = live && nm >= s && nm < e; h2 += slotHtml(GD_[n][0], hi ? NM_[n] : n, s, e, GD_[n][1], on, "", hi); if (on) cur = { n: n, e: e, rk: false }; });
   set("day", h1); set("night", h2);
   var seg = function (mp) { var s = a.r + (mp[w] - 1) * dl; return range(s, s + dl); }, ab = (a.s - a.r) / 15, abS = a.r + 7 * ab, place = state.city.toUpperCase() + ", INDIA", cn = state.city.split(",")[0];
-  set("hd", "<mark>CHOGHADIYA</mark> FOR " + place);
-  setText("sub", WD[w] + ", " + MN[m - 1] + " " + dd + ", " + y);
-  setText("intro", "Choghadiya timings for " + state.city + " on " + WD[w] + ", " + MN[m - 1] + " " + dd + ", " + y + ". Green marks the most auspicious slots, blue is good, red is best avoided.");
-  set("dcard", '<div class="dn">' + dd + '</div><div class="dm">' + MN[m - 1].slice(0, 3) + " " + y + '</div><div class="dw">' + WD[w] + '</div><div class="ck" id="ck"></div><button data-s="-1">« Prev Day</button><button data-s="1">Next Day »</button>');
+  set("hd", hi ? ("<mark>चौघड़िया</mark> " + place) : ("<mark>CHOGHADIYA</mark> FOR " + place));
+  setText("sub", WD_[w] + ", " + MN_[m - 1] + " " + dd + ", " + y);
+  setText("intro", hi
+    ? (state.city + " के लिए " + WD_[w] + ", " + dd + " " + MN_[m - 1] + " " + y + " का चौघड़िया समय। हरा सबसे शुभ स्लॉट दिखाता है, नीला अच्छा है, और लाल से बचना बेहतर है।")
+    : ("Choghadiya timings for " + state.city + " on " + WD[w] + ", " + MN[m - 1] + " " + dd + ", " + y + ". Green marks the most auspicious slots, blue is good, red is best avoided."));
+  set("dcard", '<div class="dn">' + dd + '</div><div class="dm">' + (hi ? MN_[m - 1] : MN[m - 1].slice(0, 3)) + " " + y + '</div><div class="dw">' + WD_[w] + '</div><div class="ck" id="ck"></div><button data-s="-1">' + (hi ? UI.prevDay : "« Prev Day") + '</button><button data-s="1">' + (hi ? UI.nextDayBtn : "Next Day »") + '</button>');
   tick();
-  set("sum", [["Sunrise", fmt(a.r)], ["Sunset", fmt(a.s)], ["Rahu Kaal", seg(RAHU)], ["Yamaganda", seg(YAMA)], ["Gulika Kaal", seg(GULI)], ["Abhijit Muhurat", w === 3 ? "Not observed on Wednesday" : range(abS, abS + ab)]].map(function (x) { return "<div><b>" + x[0] + "</b><span>" + x[1] + "</span></div>"; }).join(""));
-  setText("rkline", "Today's Rahu Kaal in " + cn + ": " + seg(RAHU));
-  var el = $("now"); if (el) { if (cur) { el.style.display = "block"; el.innerHTML = "<b>Right now: " + cur.n + " choghadiya</b> until " + fmt(cur.e) + "." + (cur.rk ? " Rahu Kaal is also running." : ""); } else el.style.display = "none"; }
+  set("sum", (hi
+    ? [[UI.sunrise, fmt(a.r)], [UI.sunset, fmt(a.s)], [UI.rahuKaal, seg(RAHU)], [UI.yamaganda, seg(YAMA)], [UI.gulikaKaal, seg(GULI)], [UI.abhijitMuhurat, w === 3 ? UI.notObservedWed : range(abS, abS + ab)]]
+    : [["Sunrise", fmt(a.r)], ["Sunset", fmt(a.s)], ["Rahu Kaal", seg(RAHU)], ["Yamaganda", seg(YAMA)], ["Gulika Kaal", seg(GULI)], ["Abhijit Muhurat", w === 3 ? "Not observed on Wednesday" : range(abS, abS + ab)]]
+  ).map(function (x) { return "<div><b>" + x[0] + "</b><span>" + x[1] + "</span></div>"; }).join(""));
+  setText("rkline", hi ? (cn + " में आज राहु काल: " + seg(RAHU)) : ("Today's Rahu Kaal in " + cn + ": " + seg(RAHU)));
+  var el = $("now"); if (el) {
+    if (cur) {
+      el.style.display = "block";
+      var curName = hi ? CHOG_NAME_HI[cur.n] : cur.n;
+      el.innerHTML = hi
+        ? ("<b>अभी चल रहा है: " + curName + " चौघड़िया</b> " + fmt(cur.e) + " तक।" + (cur.rk ? " राहु काल भी चल रहा है।" : ""))
+        : ("<b>Right now: " + cur.n + " choghadiya</b> until " + fmt(cur.e) + "." + (cur.rk ? " Rahu Kaal is also running." : ""));
+    } else el.style.display = "none";
+  }
   document.querySelectorAll(".cn").forEach(function (elm) { elm.textContent = cn; });
   showTile(); grids(w); extra(a, b, w, dl, nl, nm, live, c);
 }
 function tick() { var n = new Date(), e = $("ck"); if (e) e.textContent = "(" + fmt(n.getHours() * 60 + n.getMinutes()) + ")"; }
-function showTile() { var o = $("tileOut"); if (!o) return; if (!tile) { o.style.display = "none"; return; } var t = TILES[tile], r = SLOTS.filter(function (x) { return t[1].indexOf(x.n) > -1 && !x.rk; });
-  o.style.display = "block"; o.innerHTML = "<b>" + t[0] + " – best daytime slots (Rahu Kaal excluded):</b><br>" + (r.length ? r.map(function (x) { return x.n + " " + range(x.s, x.e); }).join(" &nbsp;|&nbsp; ") : "No clean slot today, try another date.") + "<br><small>For weddings and other major rites, also check tithi and nakshatra with a pandit.</small>"; }
-function grids(w) { if (!$("dgrid")) return; [["dgrid", DAYSEQ, "AM"], ["ngrid", NIGHTSEQ, "PM"]].forEach(function (g) { var h = "<thead><tr><th>Time</th>" + WD.map(function (x, i) { return "<th" + (i === w ? ' class="tw"' : "") + ">" + x.replace("vaar", "") + "</th>"; }).join("") + "</tr></thead><tbody>";
-  for (var i = 0; i < 8; i++) { var mins = 360 + i * 90, hh = Math.floor(mins / 60) % 12 || 12, mm = ("0" + mins % 60).slice(-2), ap = mins >= 720 ? (g[2] === "AM" ? "PM" : "AM") : g[2];
-    h += "<tr><td>From " + hh + ":" + mm + " " + ap + "</td>" + [0, 1, 2, 3, 4, 5, 6].map(function (k) { var n = g[1][k].split(" ")[i]; return '<td class="' + GOOD[n][0] + (k === w ? " tw" : "") + '">' + n + "</td>"; }).join("") + "</tr>"; }
-  set(g[0], h + "</tbody>"); }); }
+function showTile() {
+  var o = $("tileOut"); if (!o) return; if (!tile) { o.style.display = "none"; return; }
+  var hi = isHi(), t = TILES[tile], label = hi ? TILES_HI[tile] : t[0];
+  var r = SLOTS.filter(function (x) { return t[1].indexOf(x.n) > -1 && !x.rk; });
+  o.style.display = "block";
+  o.innerHTML = hi
+    ? ("<b>" + label + " – आज के सबसे अच्छे दिन के स्लॉट (राहु काल हटाकर):</b><br>" + (r.length ? r.map(function (x) { return CHOG_NAME_HI[x.n] + " " + range(x.s, x.e); }).join(" &nbsp;|&nbsp; ") : "आज कोई साफ़ स्लॉट नहीं है, कोई और तारीख़ आज़माएं।") + "<br><small>शादी और अन्य बड़े संस्कारों के लिए, पंडितजी से तिथि और नक्षत्र भी ज़रूर देखें।</small>")
+    : ("<b>" + label + " – best daytime slots (Rahu Kaal excluded):</b><br>" + (r.length ? r.map(function (x) { return x.n + " " + range(x.s, x.e); }).join(" &nbsp;|&nbsp; ") : "No clean slot today, try another date.") + "<br><small>For weddings and other major rites, also check tithi and nakshatra with a pandit.</small>");
+}
+function grids(w) {
+  if (!$("dgrid")) return;
+  var hi = isHi(), WD_ = hi ? WD_HI : WD, GD_ = hi ? GOOD_HI : GOOD, NM_ = hi ? CHOG_NAME_HI : null;
+  [["dgrid", DAYSEQ, "AM"], ["ngrid", NIGHTSEQ, "PM"]].forEach(function (g) {
+    var h = "<thead><tr><th>" + (hi ? UI.time : "Time") + "</th>" + WD_.map(function (x, i) { return "<th" + (i === w ? ' class="tw"' : "") + ">" + x.replace(hi ? "वार" : "vaar", "") + "</th>"; }).join("") + "</tr></thead><tbody>";
+    for (var i = 0; i < 8; i++) {
+      var mins = 360 + i * 90, hh = Math.floor(mins / 60) % 12 || 12, mm = ("0" + mins % 60).slice(-2), ap = mins >= 720 ? (g[2] === "AM" ? "PM" : "AM") : g[2];
+      h += "<tr><td>" + (hi ? (hh + ":" + mm + " " + ap + " " + UI.from) : ("From " + hh + ":" + mm + " " + ap)) + "</td>" + [0, 1, 2, 3, 4, 5, 6].map(function (k) { var n = g[1][k].split(" ")[i]; return '<td class="' + GOOD[n][0] + (k === w ? " tw" : "") + '">' + (hi ? NM_[n] : n) + "</td>"; }).join("") + "</tr>";
+    }
+    set(g[0], h + "</tbody>");
+  });
+}
 function extra(a, b, w, dl, nl, nm, live, c) {
+  var hi = isHi();
   var hd = (a.s - a.r) / 12, hn = (b.r + 1440 - a.s) / 12, h1 = "", h2 = "", g1 = "", g2 = "", i, n, s, e;
+  var HI_ = hi ? HI_HI : HI, HN_ = hi ? HORA_NAME_HI : null;
   if ($("hday") || $("hnight")) {
     for (i = 0; i < 24; i++) { n = HN[(HL[w] + i) % 7]; s = i < 12 ? a.r + i * hd : a.s + (i - 12) * hn; e = s + (i < 12 ? hd : hn);
-      var x = slotHtml(HI[n][0], n, s, e, HI[n][1], live && nm >= s && nm < e, HI[n][0] === "good" ? "Shubh" : ""); if (i < 12) h1 += x; else h2 += x; }
+      var x = slotHtml(HI_[n][0], hi ? HN_[n] : n, s, e, HI_[n][1], live && nm >= s && nm < e, HI_[n][0] === "good" ? (hi ? CHOG_NAME_HI.Shubh : "Shubh") : "", hi); if (i < 12) h1 += x; else h2 += x; }
     set("hday", h1); set("hnight", h2);
   }
+  var GI_ = hi ? GI_HI : GI, GK_ = hi ? GK_HI : GK;
   if ($("gday") || $("gnight")) {
     var gd = GD[w], gn = w ? GD[(w + 4) % 7] : "DSOVUARL";
-    for (i = 0; i < 8; i++) { n = gd[i]; s = a.r + i * dl; e = s + dl; g1 += slotHtml(GI[n][0], GK[n], s, e, GI[n][1], live && nm >= s && nm < e, i + 1 === RAHU[w] ? "☊ Rahu Kaal" : "");
-      n = gn[i]; s = a.s + i * nl; e = s + nl; g2 += slotHtml(GI[n][0], GK[n], s, e, GI[n][1], live && nm >= s && nm < e, ""); }
+    for (i = 0; i < 8; i++) { n = gd[i]; s = a.r + i * dl; e = s + dl; g1 += slotHtml(GI_[n][0], GK_[n], s, e, GI_[n][1], live && nm >= s && nm < e, i + 1 === RAHU[w] ? (hi ? UI.rahuTag : "☊ Rahu Kaal") : "", hi);
+      n = gn[i]; s = a.s + i * nl; e = s + nl; g2 += slotHtml(GI_[n][0], GK_[n], s, e, GI_[n][1], live && nm >= s && nm < e, "", hi); }
     set("gday", g1); set("gnight", g2);
   }
   if ($("rkTbl") || $("abTbl") || $("rkSum") || $("abSum")) {
-    var rk = "", ab = "";
+    var rk = "", ab = "", WDS_ = hi ? WD_HI.map(function (x) { return x.replace("वार", ""); }) : WDS, MN_ = hi ? MN_HI : MN;
     for (i = 0; i < 7; i++) {
       var d = new Date(state.date.getFullYear(), state.date.getMonth(), state.date.getDate() + i), q = d.getDay(), t = sun(d.getFullYear(), d.getMonth() + 1, d.getDate(), c.lat, c.lon), l = (t.s - t.r) / 8, p = (t.s - t.r) / 15,
-        f = function (mp) { var z = t.r + (mp[q] - 1) * l; return range(z, z + l); }, lb = d.getDate() + " " + MN[d.getMonth()].slice(0, 3) + ", " + WDS[q], cl = i ? "" : ' class="tw"';
+        f = function (mp) { var z = t.r + (mp[q] - 1) * l; return range(z, z + l); }, lb = d.getDate() + " " + (hi ? MN_[d.getMonth()] : MN[d.getMonth()].slice(0, 3)) + ", " + WDS_[q], cl = i ? "" : ' class="tw"';
       if (i === 0) {
-        set("rkSum", [["Rahu Kaal", f(RAHU)], ["Yamaganda", f(YAMA)], ["Gulika Kaal", f(GULI)]].map(function (y) { return "<div><b>" + y[0] + "</b><span>" + y[1] + "</span></div>"; }).join(""));
-        set("abSum", [["Sunrise", fmt(t.r)], ["Sunset", fmt(t.s)], ["Abhijit Muhurat", q === 3 ? "Not observed on Wednesday" : range(t.r + 7 * p, t.r + 8 * p)]].map(function (y) { return "<div><b>" + y[0] + "</b><span>" + y[1] + "</span></div>"; }).join(""));
+        set("rkSum", (hi ? [[UI.rahuKaal, f(RAHU)], [UI.yamaganda, f(YAMA)], [UI.gulikaKaal, f(GULI)]] : [["Rahu Kaal", f(RAHU)], ["Yamaganda", f(YAMA)], ["Gulika Kaal", f(GULI)]]).map(function (y) { return "<div><b>" + y[0] + "</b><span>" + y[1] + "</span></div>"; }).join(""));
+        set("abSum", (hi ? [[UI.sunrise, fmt(t.r)], [UI.sunset, fmt(t.s)], [UI.abhijitMuhurat, q === 3 ? UI.notObservedWed : range(t.r + 7 * p, t.r + 8 * p)]] : [["Sunrise", fmt(t.r)], ["Sunset", fmt(t.s)], ["Abhijit Muhurat", q === 3 ? "Not observed on Wednesday" : range(t.r + 7 * p, t.r + 8 * p)]]).map(function (y) { return "<div><b>" + y[0] + "</b><span>" + y[1] + "</span></div>"; }).join(""));
       }
       rk += "<tr" + cl + "><td>" + lb + "</td><td>" + fmt(t.r) + "</td><td>" + f(RAHU) + "</td><td>" + f(YAMA) + "</td><td>" + f(GULI) + "</td></tr>";
-      ab += "<tr" + cl + "><td>" + lb + "</td><td>" + fmt(t.r) + "</td><td>" + fmt(t.s) + "</td><td>" + (q === 3 ? "Not observed" : range(t.r + 7 * p, t.r + 8 * p)) + "</td></tr>";
+      ab += "<tr" + cl + "><td>" + lb + "</td><td>" + fmt(t.r) + "</td><td>" + fmt(t.s) + "</td><td>" + (q === 3 ? (hi ? UI.notObserved : "Not observed") : range(t.r + 7 * p, t.r + 8 * p)) + "</td></tr>";
     }
-    set("rkTbl", "<thead><tr><th>Date</th><th>Sunrise</th><th>Rahu Kaal</th><th>Yamaganda</th><th>Gulika</th></tr></thead><tbody>" + rk + "</tbody>");
-    set("abTbl", "<thead><tr><th>Date</th><th>Sunrise</th><th>Sunset</th><th>Abhijit Muhurat</th></tr></thead><tbody>" + ab + "</tbody>");
+    set("rkTbl", (hi ? ("<thead><tr><th>" + UI.date + "</th><th>" + UI.sunrise + "</th><th>" + UI.rahuKaal + "</th><th>" + UI.yamaganda + "</th><th>गुलिक</th></tr></thead><tbody>") : "<thead><tr><th>Date</th><th>Sunrise</th><th>Rahu Kaal</th><th>Yamaganda</th><th>Gulika</th></tr></thead><tbody>") + rk + "</tbody>");
+    set("abTbl", (hi ? ("<thead><tr><th>" + UI.date + "</th><th>" + UI.sunrise + "</th><th>" + UI.sunset + "</th><th>" + UI.abhijitMuhurat + "</th></tr></thead><tbody>") : "<thead><tr><th>Date</th><th>Sunrise</th><th>Sunset</th><th>Abhijit Muhurat</th></tr></thead><tbody>") + ab + "</tbody>");
   }
 }
 function iso(d) { return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); }
@@ -166,7 +225,7 @@ document.addEventListener("click", function (e) {
   if (b.dataset.s) go(+b.dataset.s); else if (b.dataset.day) today(+b.dataset.day);
   else if (b.dataset.city) { setCity(b.dataset.city); window.scrollTo({ top: 0, behavior: "smooth" }); }
   else if (b.dataset.tile) { tile = b.dataset.tile; showTile(); document.querySelectorAll(".tile").forEach(function (t) { t.setAttribute("aria-pressed", t === b); }); }
-  else { var u = encodeURIComponent(location.href), s = b.dataset.share; if (s === "copy") { try { navigator.clipboard.writeText(location.href); b.textContent = "Copied"; } catch (x) { } } else window.open({ wa: "https://wa.me/?text=", fb: "https://www.facebook.com/sharer/sharer.php?u=", x: "https://twitter.com/intent/tweet?url=" }[s] + u, "_blank", "noopener"); }
+  else { var u = encodeURIComponent(location.href), s = b.dataset.share; if (s === "copy") { try { navigator.clipboard.writeText(location.href); b.textContent = isHi() ? UI.copied : "Copied"; } catch (x) { } } else window.open({ wa: "https://wa.me/?text=", fb: "https://www.facebook.com/sharer/sharer.php?u=", x: "https://twitter.com/intent/tweet?url=" }[s] + u, "_blank", "noopener"); }
 });
 if ($("dt")) $("dt").onchange = function () { if (!this.value) return; var p = this.value.split("-"); state.date = new Date(+p[0], +p[1] - 1, +p[2]); build(); };
 if ($("cl")) { var cl = $("cl"); Object.keys(CITIES).forEach(function (k) { var o = document.createElement("option"); o.value = k; cl.appendChild(o); }); }
@@ -176,6 +235,22 @@ if ($("city")) $("city").value = state.city;
 if ($("dt")) $("dt").value = iso(state.date);
 build();
 setInterval(function () { if (!document.hidden) build(); }, 60000);
+function applyLangToInputs() {
+  var hi = isHi(), city = $("city");
+  if (city) city.placeholder = hi ? UI.enterCity : "Enter city name";
+}
+applyLangToInputs();
+var langBtn = $("langBtn");
+if (langBtn) {
+  langBtn.onclick = function () {
+    var hi = document.documentElement.classList.toggle("lang-hi");
+    document.documentElement.lang = hi ? "hi" : "en";
+    try { localStorage.setItem("chg_lang", hi ? "hi" : "en"); } catch (e) { }
+    langBtn.setAttribute("aria-pressed", hi ? "true" : "false");
+    applyLangToInputs();
+    build();
+  };
+}
 var hb = $("hamburger"), navl = $("navlinks");
 if (hb && navl) {
   hb.onclick = function () { var o = navl.classList.toggle("open"); hb.setAttribute("aria-expanded", o); };

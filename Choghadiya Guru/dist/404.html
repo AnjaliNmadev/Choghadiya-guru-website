@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>try{if(localStorage.getItem("chg_lang")==="hi"){document.documentElement.className="lang-hi";document.documentElement.lang="hi";}}catch(e){}</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Page Not Found | Choghadiya Guru</title>
@@ -17,38 +18,44 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Page Not Found | Choghadiya Guru">
 <meta name="twitter:description" content="This page could not be found.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/style.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://choghadiyaguru.example/"},{"@type":"ListItem","position":2,"name":"404","item":"https://choghadiyaguru.example/404/"}]}</script>
 </head>
 <body>
 <nav class="navbar"><div class="wrap navwrap">
-<a class="brand" href="/">🪔 Choghadiya Guru</a>
+<a class="brand" href="/">🪔 <span>Choghadiya Guru</span></a>
+<div class="navright">
+<button class="langbtn" id="langBtn" aria-label="Switch language / भाषा बदलें" aria-pressed="false">EN <span class="lsep">/</span> हिं</button>
 <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">☰</button>
-<ul class="navlinks" id="navlinks"><li><a href="/">Home</a></li><li class="has-drop">
-<a href="/choghadiya/" aria-haspopup="true" aria-expanded="false">Choghadiya <i class="caret">▾</i></a>
-<ul class="dropmenu"><li><a href="/choghadiya/">Aaj ka Choghadiya</a></li><li><a href="/hora/">Shubh Hora</a></li><li><a href="/abhijit-muhurat/">Abhijit Muhurat</a></li><li><a href="/rahu-kaal/">Rahu Kalam</a></li><li><a href="/gowri-panchangam/">Gowri Panchangam</a></li></ul>
-</li><li><a href="/shubh-muhurat/">Shubh Muhurat</a></li></ul>
+</div>
+<ul class="navlinks" id="navlinks"><li><a href="/"><span class="t-en">Home</span><span class="t-hi">होम</span></a></li><li class="has-drop">
+<a href="/choghadiya/" aria-haspopup="true" aria-expanded="false"><span class="t-en">Choghadiya</span><span class="t-hi">चौघड़िया</span> <i class="caret">▾</i></a>
+<ul class="dropmenu"><li><a href="/choghadiya/"><span class="t-en">Aaj ka Choghadiya</span><span class="t-hi">आज का चौघड़िया</span></a></li><li><a href="/hora/"><span class="t-en">Shubh Hora</span><span class="t-hi">शुभ होरा</span></a></li><li><a href="/abhijit-muhurat/"><span class="t-en">Abhijit Muhurat</span><span class="t-hi">अभिजीत मुहूर्त</span></a></li><li><a href="/rahu-kaal/"><span class="t-en">Rahu Kalam</span><span class="t-hi">राहु काल</span></a></li><li><a href="/gowri-panchangam/"><span class="t-en">Gowri Panchangam</span><span class="t-hi">गौरी पंचांगम</span></a></li></ul>
+</li><li><a href="/shubh-muhurat/"><span class="t-en">Shubh Muhurat</span><span class="t-hi">शुभ मुहूर्त</span></a></li><li><a href="/what-is-choghadiya/"><span class="t-en">Guide</span><span class="t-hi">गाइड</span></a></li></ul>
 </div></nav>
 <main class="wrap" id="top">
-<p class="crumb"><a href="/">Home</a> &nbsp;/&nbsp; 404</p>
+<p class="crumb"><a href="/"><span class="t-en">Home</span><span class="t-hi">होम</span></a> &nbsp;/&nbsp; 404</p>
 <section class="panel">
 <div class="body">
-<h1 style="font-size:22px;margin:6px 0 4px;color:#1f1746">Page not found</h1>
-<p>The page you're looking for doesn't exist. Try one of these instead:</p><div class="cities"><h3>Frequently searched cities</h3><ul>
-<li><a href="/choghadiya/new-delhi/">Choghadiya for New Delhi</a></li><li><a href="/choghadiya/mumbai/">Choghadiya for Mumbai</a></li><li><a href="/choghadiya/bengaluru/">Choghadiya for Bengaluru</a></li><li><a href="/choghadiya/hyderabad/">Choghadiya for Hyderabad</a></li><li><a href="/choghadiya/ahmedabad/">Choghadiya for Ahmedabad</a></li><li><a href="/choghadiya/chennai/">Choghadiya for Chennai</a></li><li><a href="/choghadiya/kolkata/">Choghadiya for Kolkata</a></li><li><a href="/choghadiya/pune/">Choghadiya for Pune</a></li><li><a href="/choghadiya/jaipur/">Choghadiya for Jaipur</a></li><li><a href="/choghadiya/surat/">Choghadiya for Surat</a></li><li><a href="/choghadiya/lucknow/">Choghadiya for Lucknow</a></li><li><a href="/choghadiya/kanpur/">Choghadiya for Kanpur</a></li>
+<h1 style="margin:6px 0 4px"><span class="t-en">Page not found</span><span class="t-hi">पृष्ठ नहीं मिला</span></h1>
+<p><span class="t-en">The page you're looking for doesn't exist. Try one of these instead:</span><span class="t-hi">जिस पृष्ठ को आप ढूंढ रहे हैं वह मौजूद नहीं है। इनमें से कोई एक आज़माएं:</span></p><div class="cities"><h3><span class="t-en">Frequently searched cities</span><span class="t-hi">अक्सर खोजे जाने वाले शहर</span></h3><ul>
+<li><a href="/choghadiya/new-delhi/"><span class="t-en">Choghadiya for New Delhi</span><span class="t-hi">New Delhi का चौघड़िया</span></a></li><li><a href="/choghadiya/mumbai/"><span class="t-en">Choghadiya for Mumbai</span><span class="t-hi">Mumbai का चौघड़िया</span></a></li><li><a href="/choghadiya/bengaluru/"><span class="t-en">Choghadiya for Bengaluru</span><span class="t-hi">Bengaluru का चौघड़िया</span></a></li><li><a href="/choghadiya/hyderabad/"><span class="t-en">Choghadiya for Hyderabad</span><span class="t-hi">Hyderabad का चौघड़िया</span></a></li><li><a href="/choghadiya/ahmedabad/"><span class="t-en">Choghadiya for Ahmedabad</span><span class="t-hi">Ahmedabad का चौघड़िया</span></a></li><li><a href="/choghadiya/chennai/"><span class="t-en">Choghadiya for Chennai</span><span class="t-hi">Chennai का चौघड़िया</span></a></li><li><a href="/choghadiya/kolkata/"><span class="t-en">Choghadiya for Kolkata</span><span class="t-hi">Kolkata का चौघड़िया</span></a></li><li><a href="/choghadiya/pune/"><span class="t-en">Choghadiya for Pune</span><span class="t-hi">Pune का चौघड़िया</span></a></li><li><a href="/choghadiya/jaipur/"><span class="t-en">Choghadiya for Jaipur</span><span class="t-hi">Jaipur का चौघड़िया</span></a></li><li><a href="/choghadiya/surat/"><span class="t-en">Choghadiya for Surat</span><span class="t-hi">Surat का चौघड़िया</span></a></li><li><a href="/choghadiya/lucknow/"><span class="t-en">Choghadiya for Lucknow</span><span class="t-hi">Lucknow का चौघड़िया</span></a></li><li><a href="/choghadiya/kanpur/"><span class="t-en">Choghadiya for Kanpur</span><span class="t-hi">Kanpur का चौघड़िया</span></a></li>
 </ul></div>
-<div class="related"><h3>Related pages</h3><a href="/">Home</a><a href="/choghadiya/">Choghadiya Today</a></div>
+<div class="related"><h3><span class="t-en">Related pages</span><span class="t-hi">संबंधित पृष्ठ</span></h3><a href="/">Home</a><a href="/choghadiya/">Choghadiya Today</a></div>
 </div>
 </section>
 </main>
 <footer class="foot"><div class="wrap">
 <div class="cols4">
-<div><h4>Panchang Tools</h4><a href="/choghadiya/">Today's Choghadiya</a><a href="/hora/">Shubh Hora</a><a href="/gowri-panchangam/">Gowri Panchangam</a><a href="/rahu-kaal/">Rahu Kaal</a><a href="/abhijit-muhurat/">Abhijit Muhurat</a></div>
-<div><h4>Shubh Muhurat</h4><a href="/shubh-muhurat/">Marriage</a><a href="/shubh-muhurat/">New Vehicle</a><a href="/shubh-muhurat/">New Property</a><a href="/shubh-muhurat/">Business</a><a href="/shubh-muhurat/">Mundan</a></div>
-<div><h4>Learn</h4><a href="/what-is-choghadiya/">What is Choghadiya</a><a href="/what-is-choghadiya/#faq">FAQs</a></div>
-<div><h4>About Choghadiya Guru</h4><p>Simple, free choghadiya, hora, Gowri Panchangam, Rahu Kaal and Abhijit muhurat timings for Indian cities, calculated in your browser.</p></div>
+<div><h4><span class="t-en">Panchang Tools</span><span class="t-hi">पंचांग टूल्स</span></h4><a href="/choghadiya/"><span class="t-en">Today's Choghadiya</span><span class="t-hi">आज का चौघड़िया</span></a><a href="/hora/"><span class="t-en">Shubh Hora</span><span class="t-hi">शुभ होरा</span></a><a href="/gowri-panchangam/"><span class="t-en">Gowri Panchangam</span><span class="t-hi">गौरी पंचांगम</span></a><a href="/rahu-kaal/"><span class="t-en">Rahu Kaal</span><span class="t-hi">राहु काल</span></a><a href="/abhijit-muhurat/"><span class="t-en">Abhijit Muhurat</span><span class="t-hi">अभिजीत मुहूर्त</span></a></div>
+<div><h4><span class="t-en">Shubh Muhurat</span><span class="t-hi">शुभ मुहूर्त</span></h4><a href="/shubh-muhurat/"><span class="t-en">Marriage</span><span class="t-hi">विवाह</span></a><a href="/shubh-muhurat/"><span class="t-en">New Vehicle</span><span class="t-hi">नया वाहन</span></a><a href="/shubh-muhurat/"><span class="t-en">New Property</span><span class="t-hi">नई संपत्ति</span></a><a href="/shubh-muhurat/"><span class="t-en">Business</span><span class="t-hi">व्यापार</span></a><a href="/shubh-muhurat/"><span class="t-en">Mundan</span><span class="t-hi">मुंडन</span></a></div>
+<div><h4><span class="t-en">Learn</span><span class="t-hi">जानें</span></h4><a href="/what-is-choghadiya/"><span class="t-en">What is Choghadiya</span><span class="t-hi">चौघड़िया क्या है</span></a><a href="/what-is-choghadiya/#faq"><span class="t-en">FAQs</span><span class="t-hi">सामान्य प्रश्न</span></a></div>
+<div><h4><span class="t-en">About Choghadiya Guru</span><span class="t-hi">Choghadiya Guru के बारे में</span></h4><p><span class="t-en">Simple, free choghadiya, hora, Gowri Panchangam, Rahu Kaal and Abhijit muhurat timings for Indian cities, calculated in your browser.</span><span class="t-hi">भारतीय शहरों के लिए सरल, मुफ़्त चौघड़िया, होरा, गौरी पंचांगम, राहु काल और अभिजीत मुहूर्त — आपके ब्राउज़र में ही गणना।</span></p></div>
 </div>
-<p class="disc">Times are computed with an astronomical formula (IST) and can differ by 1–3 minutes from other panchangs. Confirm important events with a pandit.<br>© 2026 Choghadiya Guru</p>
+<p class="disc"><span class="t-en">Times are computed with an astronomical formula (IST) and can differ by 1–3 minutes from other panchangs. Confirm important events with a pandit.</span><span class="t-hi">समय की गणना खगोलीय सूत्र (IST) से की जाती है और अन्य पंचांगों से 1–3 मिनट का अंतर हो सकता है। ज़रूरी कार्यों से पहले अपने पंडितजी से पुष्टि करें।</span><br>© 2026 Choghadiya Guru</p>
 </div></footer>
 
 <script src="/assets/app.js"></script>

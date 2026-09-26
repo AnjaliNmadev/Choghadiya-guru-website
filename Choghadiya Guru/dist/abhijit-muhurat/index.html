@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>try{if(localStorage.getItem("chg_lang")==="hi"){document.documentElement.className="lang-hi";document.documentElement.lang="hi";}}catch(e){}</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Abhijit Muhurat Today – Timing for Your City | Choghadiya Guru</title>
@@ -17,60 +18,66 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Abhijit Muhurat Today – Timing for Your City | Choghadiya Guru">
 <meta name="twitter:description" content="Today's Abhijit Muhurat timing (the 8th of 15 daily muhurats, around local noon) for your city, plus a 7-day table. Not observed on Wednesday.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/style.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://choghadiyaguru.example/"},{"@type":"ListItem","position":2,"name":"Abhijit Muhurat","item":"https://choghadiyaguru.example/abhijit-muhurat/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does Abhijit Muhurat cancel Rahu Kaal?","acceptedAnswer":{"@type":"Answer","text":"Not by tradition. If the two overlap, most guidance says to wait or use the next favourable slot. The two overlap on Wednesday, which is why Abhijit is not counted that day."}},{"@type":"Question","name":"Why is Abhijit Muhurat not used on Wednesday?","acceptedAnswer":{"@type":"Answer","text":"Several traditions say it is weakened on Wednesday. If you follow a different school, ask your family pandit."}},{"@type":"Question","name":"How long does Abhijit Muhurat usually last?","acceptedAnswer":{"@type":"Answer","text":"Roughly 48 minutes on an average day, since it is one of 15 equal divisions of daylight centred on local midday."}}]}</script>
 </head>
 <body>
 <nav class="navbar"><div class="wrap navwrap">
-<a class="brand" href="/">🪔 Choghadiya Guru</a>
+<a class="brand" href="/">🪔 <span>Choghadiya Guru</span></a>
+<div class="navright">
+<button class="langbtn" id="langBtn" aria-label="Switch language / भाषा बदलें" aria-pressed="false">EN <span class="lsep">/</span> हिं</button>
 <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">☰</button>
-<ul class="navlinks" id="navlinks"><li><a href="/">Home</a></li><li class="has-drop act">
-<a href="/choghadiya/" aria-haspopup="true" aria-expanded="false">Choghadiya <i class="caret">▾</i></a>
-<ul class="dropmenu"><li><a href="/choghadiya/">Aaj ka Choghadiya</a></li><li><a href="/hora/">Shubh Hora</a></li><li><a class="act" href="/abhijit-muhurat/">Abhijit Muhurat</a></li><li><a href="/rahu-kaal/">Rahu Kalam</a></li><li><a href="/gowri-panchangam/">Gowri Panchangam</a></li></ul>
-</li><li><a href="/shubh-muhurat/">Shubh Muhurat</a></li></ul>
+</div>
+<ul class="navlinks" id="navlinks"><li><a href="/"><span class="t-en">Home</span><span class="t-hi">होम</span></a></li><li class="has-drop act">
+<a href="/choghadiya/" aria-haspopup="true" aria-expanded="false"><span class="t-en">Choghadiya</span><span class="t-hi">चौघड़िया</span> <i class="caret">▾</i></a>
+<ul class="dropmenu"><li><a href="/choghadiya/"><span class="t-en">Aaj ka Choghadiya</span><span class="t-hi">आज का चौघड़िया</span></a></li><li><a href="/hora/"><span class="t-en">Shubh Hora</span><span class="t-hi">शुभ होरा</span></a></li><li><a class="act" href="/abhijit-muhurat/"><span class="t-en">Abhijit Muhurat</span><span class="t-hi">अभिजीत मुहूर्त</span></a></li><li><a href="/rahu-kaal/"><span class="t-en">Rahu Kalam</span><span class="t-hi">राहु काल</span></a></li><li><a href="/gowri-panchangam/"><span class="t-en">Gowri Panchangam</span><span class="t-hi">गौरी पंचांगम</span></a></li></ul>
+</li><li><a href="/shubh-muhurat/"><span class="t-en">Shubh Muhurat</span><span class="t-hi">शुभ मुहूर्त</span></a></li><li><a href="/what-is-choghadiya/"><span class="t-en">Guide</span><span class="t-hi">गाइड</span></a></li></ul>
 </div></nav>
 <main class="wrap" id="top">
-<p class="crumb"><a href="/">Home</a> &nbsp;/&nbsp; Abhijit Muhurat</p>
+<p class="crumb"><a href="/"><span class="t-en">Home</span><span class="t-hi">होम</span></a> &nbsp;/&nbsp; Abhijit Muhurat</p>
 <section class="panel">
 <div class="body">
-<h1 style="font-size:22px;margin:6px 0 4px;color:#1f1746">Abhijit Muhurat Today</h1>
+<h1 style="margin:6px 0 4px"><span class="t-en">Abhijit Muhurat Today</span><span class="t-hi">आज का अभिजीत मुहूर्त</span></h1>
 <p class="sub" id="sub"></p>
 <div class="tools">
-<div class="share"><button data-share="wa">WhatsApp</button><button data-share="fb">Facebook</button><button data-share="x">X</button><button data-share="copy">Copy link</button></div>
-<label class="fld">📍 Location<input id="city" list="cl" autocomplete="off" placeholder="Enter city name"><datalist id="cl"></datalist></label>
+<div class="share"><button data-share="wa">WhatsApp</button><button data-share="fb">Facebook</button><button data-share="x">X</button><button data-share="copy"><span class="t-en">Copy link</span><span class="t-hi">लिंक कॉपी करें</span></button></div>
+<label class="fld">📍 <span class="t-en">Location</span><span class="t-hi">स्थान</span><input id="city" list="cl" autocomplete="off" placeholder="Enter city name / शहर का नाम डालें"><datalist id="cl"></datalist></label>
 </div>
-<p>Abhijit means "victorious". This muhurat sits at the middle of the day, around local noon, and lasts about 48 minutes. It is considered strong enough to reduce the effect of many minor doshas.</p>
-<div class="btns"><label class="cal">Calendar ▾ <input type="date" id="dt" aria-label="Pick a date"></label><button data-day="0">TODAY</button><button data-day="1">TOMORROW</button></div>
+<p><span class="t-en">Abhijit means "victorious". This muhurat sits at the middle of the day, around local noon, and lasts about 48 minutes. It is considered strong enough to reduce the effect of many minor doshas.</span><span class="t-hi">अभिजीत का अर्थ है "विजयी"। यह मुहूर्त दिन के बीच, स्थानीय दोपहर के आसपास आता है, और लगभग 48 मिनट का होता है। इसे इतना शक्तिशाली माना जाता है कि यह कई छोटे दोषों का प्रभाव कम कर देता है।</span></p>
+<div class="btns"><label class="cal"><span class="t-en">Calendar</span><span class="t-hi">कैलेंडर</span> ▾ <input type="date" id="dt" aria-label="Pick a date"></label><button data-day="0"><span class="t-en">TODAY</span><span class="t-hi">आज</span></button><button data-day="1"><span class="t-en">TOMORROW</span><span class="t-hi">कल</span></button></div>
 <div class="sum" id="abSum"></div>
-<h2>Abhijit Muhurat for the next 7 days</h2>
+<h2><span class="t-en">Abhijit Muhurat for the next 7 days</span><span class="t-hi">अगले 7 दिनों का अभिजीत मुहूर्त</span></h2>
 <div class="tbl"><table id="abTbl"></table></div>
-<h2>How Abhijit Muhurat is found</h2>
-<p>The daylight period is divided into 15 muhurats, and the eighth one is Abhijit. It therefore centres on the midpoint between sunrise and sunset, and it moves with your city and the season. In many traditions it is skipped on Wednesday, and this page follows that rule.</p>
-<p>People choose it for short, important starts: signing papers, buying a vehicle, entering a new home, opening an account, beginning a journey or a new job. For a marriage, a full muhurat based on tithi and nakshatra still comes first.</p>
-<h2>Good uses for Abhijit Muhurat</h2>
-<p>Because it is short, strong and repeats every single day (barring Wednesday), Abhijit works best for things that need a quick, favourable window rather than an elaborate ceremony: a first bite of medicine, launching a small task, a job interview, starting a course, or making an important phone call. It is not usually treated as a substitute for a full wedding or griha pravesh muhurat, which factor in far more variables.</p>
-<h2>Abhijit Muhurat and other doshas</h2>
-<p>One reason this window is popular is that classical texts describe it as strong enough to override many minor doshas that would otherwise make a moment unfavourable — though it does not override Rahu Kaal itself when the two genuinely overlap. If your day's Abhijit window and Rahu Kaal coincide, it is safer to pick the next available Abhijit period the following day or another well-rated choghadiya slot instead.</p>
-<h2 id="faq">Abhijit Muhurat FAQs</h2>
-<details><summary>Does Abhijit Muhurat cancel Rahu Kaal?</summary><p>Not by tradition. If the two overlap, most guidance says to wait or use the next favourable slot. The two overlap on Wednesday, which is why Abhijit is not counted that day.</p></details>
-<details><summary>Why is Abhijit Muhurat not used on Wednesday?</summary><p>Several traditions say it is weakened on Wednesday. If you follow a different school, ask your family pandit.</p></details>
-<details><summary>How long does Abhijit Muhurat usually last?</summary><p>Roughly 48 minutes on an average day, since it is one of 15 equal divisions of daylight centred on local midday. It runs a little longer on long summer days and a little shorter in winter.</p></details>
-<div class="cities"><h3>Frequently searched cities</h3><ul>
-<li><a href="/choghadiya/new-delhi/">Choghadiya for New Delhi</a></li><li><a href="/choghadiya/mumbai/">Choghadiya for Mumbai</a></li><li><a href="/choghadiya/bengaluru/">Choghadiya for Bengaluru</a></li><li><a href="/choghadiya/hyderabad/">Choghadiya for Hyderabad</a></li><li><a href="/choghadiya/ahmedabad/">Choghadiya for Ahmedabad</a></li><li><a href="/choghadiya/chennai/">Choghadiya for Chennai</a></li><li><a href="/choghadiya/kolkata/">Choghadiya for Kolkata</a></li><li><a href="/choghadiya/pune/">Choghadiya for Pune</a></li><li><a href="/choghadiya/jaipur/">Choghadiya for Jaipur</a></li><li><a href="/choghadiya/surat/">Choghadiya for Surat</a></li><li><a href="/choghadiya/lucknow/">Choghadiya for Lucknow</a></li><li><a href="/choghadiya/kanpur/">Choghadiya for Kanpur</a></li>
+<h2><span class="t-en">How Abhijit Muhurat is found</span><span class="t-hi">अभिजीत मुहूर्त कैसे निकाला जाता है</span></h2>
+<p><span class="t-en">The daylight period is divided into 15 muhurats, and the eighth one is Abhijit. It therefore centres on the midpoint between sunrise and sunset, and it moves with your city and the season. In many traditions it is skipped on Wednesday, and this page follows that rule.</span><span class="t-hi">दिन के उजाले को 15 मुहूर्तों में बांटा जाता है, और आठवां मुहूर्त अभिजीत है। इसलिए यह सूर्योदय-सूर्यास्त के बीचोंबीच केंद्रित होता है, और आपके शहर व मौसम के साथ बदलता है। कई परंपराओं में बुधवार को इसे छोड़ दिया जाता है, और यह पृष्ठ भी वही नियम मानता है।</span></p>
+<p><span class="t-en">People choose it for short, important starts: signing papers, buying a vehicle, entering a new home, opening an account, beginning a journey or a new job. For a marriage, a full muhurat based on tithi and nakshatra still comes first.</span><span class="t-hi">लोग इसे छोटी पर ज़रूरी शुरुआत के लिए चुनते हैं: कागज़ात पर हस्ताक्षर, वाहन ख़रीदना, नए घर में प्रवेश, खाता खोलना, यात्रा या नई नौकरी शुरू करना। विवाह के लिए तिथि-नक्षत्र पर आधारित पूरा मुहूर्त अब भी पहले आता है।</span></p>
+<h2><span class="t-en">Good uses for Abhijit Muhurat</span><span class="t-hi">अभिजीत मुहूर्त के अच्छे उपयोग</span></h2>
+<p><span class="t-en">Because it is short, strong and repeats every single day (barring Wednesday), Abhijit works best for things that need a quick, favourable window rather than an elaborate ceremony: a first bite of medicine, launching a small task, a job interview, starting a course, or making an important phone call. It is not usually treated as a substitute for a full wedding or griha pravesh muhurat, which factor in far more variables.</span><span class="t-hi">चूंकि यह छोटा, शक्तिशाली है और (बुधवार को छोड़कर) हर दिन दोहराता है, अभिजीत उन कामों के लिए सबसे अच्छा है जिन्हें बड़े समारोह की नहीं बल्कि तुरंत एक शुभ पल की ज़रूरत है: दवा की पहली खुराक, छोटा काम शुरू करना, नौकरी का इंटरव्यू, कोर्स शुरू करना, या ज़रूरी फ़ोन कॉल। इसे पूरे विवाह या गृह प्रवेश मुहूर्त का विकल्प नहीं माना जाता, जिनमें कहीं ज़्यादा बातें देखी जाती हैं।</span></p>
+<h2><span class="t-en">Abhijit Muhurat and other doshas</span><span class="t-hi">अभिजीत मुहूर्त और अन्य दोष</span></h2>
+<p><span class="t-en">One reason this window is popular is that classical texts describe it as strong enough to override many minor doshas that would otherwise make a moment unfavourable — though it does not override Rahu Kaal itself when the two genuinely overlap. If your day's Abhijit window and Rahu Kaal coincide, it is safer to pick the next available Abhijit period the following day or another well-rated choghadiya slot instead.</span><span class="t-hi">यह समय इसलिए लोकप्रिय है क्योंकि शास्त्रों में इसे इतना शक्तिशाली बताया गया है कि यह कई छोटे दोषों को दूर कर देता है — पर जब यह वाक़ई राहु काल से टकराए तो उसे नहीं हटाता। अगर आपके दिन का अभिजीत और राहु काल एक साथ पड़ें, तो अगले दिन का अभिजीत या कोई और अच्छा चौघड़िया स्लॉट चुनना ज़्यादा सुरक्षित है।</span></p>
+<h2 id="faq"><span class="t-en">Abhijit Muhurat FAQs</span><span class="t-hi">अभिजीत मुहूर्त से जुड़े सवाल</span></h2>
+<details><summary><span class="t-en">Does Abhijit Muhurat cancel Rahu Kaal?</span><span class="t-hi">क्या अभिजीत मुहूर्त राहु काल को रद्द कर देता है?</span></summary><p><span class="t-en">Not by tradition. If the two overlap, most guidance says to wait or use the next favourable slot. The two overlap on Wednesday, which is why Abhijit is not counted that day.</span><span class="t-hi">परंपरा के अनुसार नहीं। अगर दोनों टकराएं, तो ज़्यादातर सलाह इंतज़ार करने या अगला शुभ स्लॉट लेने की है। बुधवार को दोनों टकराते हैं, इसीलिए उस दिन अभिजीत नहीं गिना जाता।</span></p></details>
+<details><summary><span class="t-en">Why is Abhijit Muhurat not used on Wednesday?</span><span class="t-hi">बुधवार को अभिजीत मुहूर्त क्यों नहीं माना जाता?</span></summary><p><span class="t-en">Several traditions say it is weakened on Wednesday. If you follow a different school, ask your family pandit.</span><span class="t-hi">कई परंपराओं में इसे बुधवार को कमज़ोर माना गया है। अगर आप किसी अलग परंपरा को मानते हैं, तो अपने पारिवारिक पंडितजी से पूछें।</span></p></details>
+<details><summary><span class="t-en">How long does Abhijit Muhurat usually last?</span><span class="t-hi">अभिजीत मुहूर्त आमतौर पर कितनी देर रहता है?</span></summary><p><span class="t-en">Roughly 48 minutes on an average day, since it is one of 15 equal divisions of daylight centred on local midday. It runs a little longer on long summer days and a little shorter in winter.</span><span class="t-hi">औसत दिन में लगभग 48 मिनट, क्योंकि यह स्थानीय दोपहर के आसपास दिन के उजाले के 15 बराबर हिस्सों में से एक है। लंबे गर्मी के दिनों में थोड़ा ज़्यादा और सर्दियों में थोड़ा कम रहता है।</span></p></details>
+<div class="cities"><h3><span class="t-en">Frequently searched cities</span><span class="t-hi">अक्सर खोजे जाने वाले शहर</span></h3><ul>
+<li><a href="/choghadiya/new-delhi/"><span class="t-en">Choghadiya for New Delhi</span><span class="t-hi">New Delhi का चौघड़िया</span></a></li><li><a href="/choghadiya/mumbai/"><span class="t-en">Choghadiya for Mumbai</span><span class="t-hi">Mumbai का चौघड़िया</span></a></li><li><a href="/choghadiya/bengaluru/"><span class="t-en">Choghadiya for Bengaluru</span><span class="t-hi">Bengaluru का चौघड़िया</span></a></li><li><a href="/choghadiya/hyderabad/"><span class="t-en">Choghadiya for Hyderabad</span><span class="t-hi">Hyderabad का चौघड़िया</span></a></li><li><a href="/choghadiya/ahmedabad/"><span class="t-en">Choghadiya for Ahmedabad</span><span class="t-hi">Ahmedabad का चौघड़िया</span></a></li><li><a href="/choghadiya/chennai/"><span class="t-en">Choghadiya for Chennai</span><span class="t-hi">Chennai का चौघड़िया</span></a></li><li><a href="/choghadiya/kolkata/"><span class="t-en">Choghadiya for Kolkata</span><span class="t-hi">Kolkata का चौघड़िया</span></a></li><li><a href="/choghadiya/pune/"><span class="t-en">Choghadiya for Pune</span><span class="t-hi">Pune का चौघड़िया</span></a></li><li><a href="/choghadiya/jaipur/"><span class="t-en">Choghadiya for Jaipur</span><span class="t-hi">Jaipur का चौघड़िया</span></a></li><li><a href="/choghadiya/surat/"><span class="t-en">Choghadiya for Surat</span><span class="t-hi">Surat का चौघड़िया</span></a></li><li><a href="/choghadiya/lucknow/"><span class="t-en">Choghadiya for Lucknow</span><span class="t-hi">Lucknow का चौघड़िया</span></a></li><li><a href="/choghadiya/kanpur/"><span class="t-en">Choghadiya for Kanpur</span><span class="t-hi">Kanpur का चौघड़िया</span></a></li>
 </ul></div>
-<div class="related"><h3>Related pages</h3><a href="/choghadiya/">Choghadiya Today</a><a href="/rahu-kaal/">Rahu Kaal</a><a href="/gowri-panchangam/">Gowri Panchangam</a></div>
+<div class="related"><h3><span class="t-en">Related pages</span><span class="t-hi">संबंधित पृष्ठ</span></h3><a href="/choghadiya/">Choghadiya Today</a><a href="/rahu-kaal/">Rahu Kaal</a><a href="/gowri-panchangam/">Gowri Panchangam</a></div>
 </div>
 </section>
 </main>
 <footer class="foot"><div class="wrap">
 <div class="cols4">
-<div><h4>Panchang Tools</h4><a href="/choghadiya/">Today's Choghadiya</a><a href="/hora/">Shubh Hora</a><a href="/gowri-panchangam/">Gowri Panchangam</a><a href="/rahu-kaal/">Rahu Kaal</a><a href="/abhijit-muhurat/">Abhijit Muhurat</a></div>
-<div><h4>Shubh Muhurat</h4><a href="/shubh-muhurat/">Marriage</a><a href="/shubh-muhurat/">New Vehicle</a><a href="/shubh-muhurat/">New Property</a><a href="/shubh-muhurat/">Business</a><a href="/shubh-muhurat/">Mundan</a></div>
-<div><h4>Learn</h4><a href="/what-is-choghadiya/">What is Choghadiya</a><a href="/what-is-choghadiya/#faq">FAQs</a></div>
-<div><h4>About Choghadiya Guru</h4><p>Simple, free choghadiya, hora, Gowri Panchangam, Rahu Kaal and Abhijit muhurat timings for Indian cities, calculated in your browser.</p></div>
+<div><h4><span class="t-en">Panchang Tools</span><span class="t-hi">पंचांग टूल्स</span></h4><a href="/choghadiya/"><span class="t-en">Today's Choghadiya</span><span class="t-hi">आज का चौघड़िया</span></a><a href="/hora/"><span class="t-en">Shubh Hora</span><span class="t-hi">शुभ होरा</span></a><a href="/gowri-panchangam/"><span class="t-en">Gowri Panchangam</span><span class="t-hi">गौरी पंचांगम</span></a><a href="/rahu-kaal/"><span class="t-en">Rahu Kaal</span><span class="t-hi">राहु काल</span></a><a href="/abhijit-muhurat/"><span class="t-en">Abhijit Muhurat</span><span class="t-hi">अभिजीत मुहूर्त</span></a></div>
+<div><h4><span class="t-en">Shubh Muhurat</span><span class="t-hi">शुभ मुहूर्त</span></h4><a href="/shubh-muhurat/"><span class="t-en">Marriage</span><span class="t-hi">विवाह</span></a><a href="/shubh-muhurat/"><span class="t-en">New Vehicle</span><span class="t-hi">नया वाहन</span></a><a href="/shubh-muhurat/"><span class="t-en">New Property</span><span class="t-hi">नई संपत्ति</span></a><a href="/shubh-muhurat/"><span class="t-en">Business</span><span class="t-hi">व्यापार</span></a><a href="/shubh-muhurat/"><span class="t-en">Mundan</span><span class="t-hi">मुंडन</span></a></div>
+<div><h4><span class="t-en">Learn</span><span class="t-hi">जानें</span></h4><a href="/what-is-choghadiya/"><span class="t-en">What is Choghadiya</span><span class="t-hi">चौघड़िया क्या है</span></a><a href="/what-is-choghadiya/#faq"><span class="t-en">FAQs</span><span class="t-hi">सामान्य प्रश्न</span></a></div>
+<div><h4><span class="t-en">About Choghadiya Guru</span><span class="t-hi">Choghadiya Guru के बारे में</span></h4><p><span class="t-en">Simple, free choghadiya, hora, Gowri Panchangam, Rahu Kaal and Abhijit muhurat timings for Indian cities, calculated in your browser.</span><span class="t-hi">भारतीय शहरों के लिए सरल, मुफ़्त चौघड़िया, होरा, गौरी पंचांगम, राहु काल और अभिजीत मुहूर्त — आपके ब्राउज़र में ही गणना।</span></p></div>
 </div>
-<p class="disc">Times are computed with an astronomical formula (IST) and can differ by 1–3 minutes from other panchangs. Confirm important events with a pandit.<br>© 2026 Choghadiya Guru</p>
+<p class="disc"><span class="t-en">Times are computed with an astronomical formula (IST) and can differ by 1–3 minutes from other panchangs. Confirm important events with a pandit.</span><span class="t-hi">समय की गणना खगोलीय सूत्र (IST) से की जाती है और अन्य पंचांगों से 1–3 मिनट का अंतर हो सकता है। ज़रूरी कार्यों से पहले अपने पंडितजी से पुष्टि करें।</span><br>© 2026 Choghadiya Guru</p>
 </div></footer>
 
 <script src="/assets/app.js"></script>
