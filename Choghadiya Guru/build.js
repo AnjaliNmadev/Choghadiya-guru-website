@@ -7,16 +7,15 @@ const TODAY = new Date().toISOString().slice(0, 10);
 // Each item: [href, label] for a plain link, or [href, label, children] for a dropdown.
 // children: array of [href, label] — clicking any of these opens ONLY that tool's own page.
 const NAV = [
-  ["/", "Home", null, "होम"],
+  ["/", "Home"],
   ["/choghadiya/", "Choghadiya", [
-    ["/choghadiya/", "Aaj ka Choghadiya", "आज का चौघड़िया"],
-    ["/hora/", "Shubh Hora", "शुभ होरा"],
-    ["/abhijit-muhurat/", "Abhijit Muhurat", "अभिजीत मुहूर्त"],
-    ["/rahu-kaal/", "Rahu Kalam", "राहु काल"],
-    ["/gowri-panchangam/", "Gowri Panchangam", "गौरी पंचांगम"]
-  ], "चौघड़िया"],
-  ["/shubh-muhurat/", "Shubh Muhurat", null, "शुभ मुहूर्त"],
-  ["/what-is-choghadiya/", "Guide", null, "गाइड"]
+    ["/choghadiya/", "Aaj ka Choghadiya"],
+    ["/hora/", "Shubh Hora"],
+    ["/abhijit-muhurat/", "Abhijit Muhurat"],
+    ["/rahu-kaal/", "Rahu Kalam"],
+    ["/gowri-panchangam/", "Gowri Panchangam"]
+  ]],
+  ["/shubh-muhurat/", "Shubh Muhurat"]
 ];
 
 // Top cities that get their own dedicated /choghadiya/<slug>/ landing page.
@@ -28,9 +27,6 @@ const TOP_CITIES = [
   "Rajkot|Gujarat", "Varanasi|Uttar Pradesh", "Chandigarh|Chandigarh", "Jodhpur|Rajasthan", "Udaipur|Rajasthan"
 ];
 const slugify = s => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-
-// t(english, hindi) -> renders both; CSS shows only the active language (client-side toggle, no reload).
-function t(en, hi) { return `<span class="t-en">${en}</span><span class="t-hi">${hi}</span>`; }
 
 function faqSchema(pairs) {
   return JSON.stringify({
@@ -46,25 +42,24 @@ function breadcrumbSchema(urlPath, label) {
 
 function layout({ urlPath, title, description, h1, crumbLabel, bodyHtml, extraJsonLd = [], defaultCity = null, lockCity = false, related = [] }) {
   const canonical = SITE + urlPath;
-  const navHtml = NAV.map(([href, label, children, hiLabel]) => {
+  const navHtml = NAV.map(([href, label, children]) => {
     if (children) {
       const childIsActive = children.some(c => c[0] === urlPath);
-      const subHtml = children.map(([chref, chlabel, chhi]) =>
-        `<li><a${urlPath === chref ? ' class="act"' : ""} href="${chref}">${t(chlabel, chhi)}</a></li>`).join("");
+      const subHtml = children.map(([chref, chlabel]) =>
+        `<li><a${urlPath === chref ? ' class="act"' : ""} href="${chref}">${chlabel}</a></li>`).join("");
       return `<li class="has-drop${childIsActive ? " act" : ""}">
-<a${urlPath === href ? ' class="act"' : ""} href="${href}" aria-haspopup="true" aria-expanded="false">${t(label, hiLabel)} <i class="caret">▾</i></a>
+<a${urlPath === href ? ' class="act"' : ""} href="${href}" aria-haspopup="true" aria-expanded="false">${label} <i class="caret">▾</i></a>
 <ul class="dropmenu">${subHtml}</ul>
 </li>`;
     }
-    return `<li><a${urlPath === href ? ' class="act"' : ""} href="${href}">${t(label, hiLabel)}</a></li>`;
+    return `<li><a${urlPath === href ? ' class="act"' : ""} href="${href}">${label}</a></li>`;
   }).join("");
   const jsonLd = [breadcrumbSchema(urlPath, crumbLabel)].concat(extraJsonLd)
     .map(j => `<script type="application/ld+json">${j}</script>`).join("\n");
-  const relatedHtml = related.length ? `<div class="related"><h3>${t("Related pages", "संबंधित पृष्ठ")}</h3>${related.map(r => `<a href="${r[0]}">${r[1]}</a>`).join("")}</div>` : "";
+  const relatedHtml = related.length ? `<div class="related"><h3>Related pages</h3>${related.map(r => `<a href="${r[0]}">${r[1]}</a>`).join("")}</div>` : "";
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
-<script>try{if(localStorage.getItem("chg_lang")==="hi"){document.documentElement.className="lang-hi";document.documentElement.lang="hi";}}catch(e){}</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${title}</title>
@@ -81,26 +76,20 @@ function layout({ urlPath, title, description, h1, crumbLabel, bodyHtml, extraJs
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="${title}">
 <meta name="twitter:description" content="${description}">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/style.css">
 ${jsonLd}
 </head>
 <body>
 <nav class="navbar"><div class="wrap navwrap">
-<a class="brand" href="/">🪔 <span>${BRAND}</span></a>
-<div class="navright">
-<button class="langbtn" id="langBtn" aria-label="Switch language / भाषा बदलें" aria-pressed="false">EN <span class="lsep">/</span> हिं</button>
+<a class="brand" href="/">🪔 ${BRAND}</a>
 <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">☰</button>
-</div>
 <ul class="navlinks" id="navlinks">${navHtml}</ul>
 </div></nav>
 <main class="wrap" id="top">
-<p class="crumb"><a href="/">${t("Home", "होम")}</a>${urlPath !== "/" ? ` &nbsp;/&nbsp; ${crumbLabel}` : ""}</p>
+<p class="crumb"><a href="/">Home</a>${urlPath !== "/" ? ` &nbsp;/&nbsp; ${crumbLabel}` : ""}</p>
 <section class="panel">
 <div class="body">
-<h1 style="margin:6px 0 4px">${h1}</h1>
+<h1 style="font-size:22px;margin:6px 0 4px;color:#1f1746">${h1}</h1>
 ${bodyHtml}
 ${relatedHtml}
 </div>
@@ -108,12 +97,12 @@ ${relatedHtml}
 </main>
 <footer class="foot"><div class="wrap">
 <div class="cols4">
-<div><h4>${t("Panchang Tools", "पंचांग टूल्स")}</h4><a href="/choghadiya/">${t("Today's Choghadiya", "आज का चौघड़िया")}</a><a href="/hora/">${t("Shubh Hora", "शुभ होरा")}</a><a href="/gowri-panchangam/">${t("Gowri Panchangam", "गौरी पंचांगम")}</a><a href="/rahu-kaal/">${t("Rahu Kaal", "राहु काल")}</a><a href="/abhijit-muhurat/">${t("Abhijit Muhurat", "अभिजीत मुहूर्त")}</a></div>
-<div><h4>${t("Shubh Muhurat", "शुभ मुहूर्त")}</h4><a href="/shubh-muhurat/">${t("Marriage", "विवाह")}</a><a href="/shubh-muhurat/">${t("New Vehicle", "नया वाहन")}</a><a href="/shubh-muhurat/">${t("New Property", "नई संपत्ति")}</a><a href="/shubh-muhurat/">${t("Business", "व्यापार")}</a><a href="/shubh-muhurat/">${t("Mundan", "मुंडन")}</a></div>
-<div><h4>${t("Learn", "जानें")}</h4><a href="/what-is-choghadiya/">${t("What is Choghadiya", "चौघड़िया क्या है")}</a><a href="/what-is-choghadiya/#faq">${t("FAQs", "सामान्य प्रश्न")}</a></div>
-<div><h4>${t("About " + BRAND, BRAND + " के बारे में")}</h4><p>${t("Simple, free choghadiya, hora, Gowri Panchangam, Rahu Kaal and Abhijit muhurat timings for Indian cities, calculated in your browser.", "भारतीय शहरों के लिए सरल, मुफ़्त चौघड़िया, होरा, गौरी पंचांगम, राहु काल और अभिजीत मुहूर्त — आपके ब्राउज़र में ही गणना।")}</p></div>
+<div><h4>Panchang Tools</h4><a href="/choghadiya/">Today's Choghadiya</a><a href="/hora/">Shubh Hora</a><a href="/gowri-panchangam/">Gowri Panchangam</a><a href="/rahu-kaal/">Rahu Kaal</a><a href="/abhijit-muhurat/">Abhijit Muhurat</a></div>
+<div><h4>Shubh Muhurat</h4><a href="/shubh-muhurat/">Marriage</a><a href="/shubh-muhurat/">New Vehicle</a><a href="/shubh-muhurat/">New Property</a><a href="/shubh-muhurat/">Business</a><a href="/shubh-muhurat/">Mundan</a></div>
+<div><h4>Learn</h4><a href="/what-is-choghadiya/">What is Choghadiya</a><a href="/what-is-choghadiya/#faq">FAQs</a></div>
+<div><h4>About ${BRAND}</h4><p>Simple, free choghadiya, hora, Gowri Panchangam, Rahu Kaal and Abhijit muhurat timings for Indian cities, calculated in your browser.</p></div>
 </div>
-<p class="disc">${t("Times are computed with an astronomical formula (IST) and can differ by 1–3 minutes from other panchangs. Confirm important events with a pandit.", "समय की गणना खगोलीय सूत्र (IST) से की जाती है और अन्य पंचांगों से 1–3 मिनट का अंतर हो सकता है। ज़रूरी कार्यों से पहले अपने पंडितजी से पुष्टि करें।")}<br>© ${new Date().getFullYear()} ${BRAND}</p>
+<p class="disc">Times are computed with an astronomical formula (IST) and can differ by 1–3 minutes from other panchangs. Confirm important events with a pandit.<br>© ${new Date().getFullYear()} ${BRAND}</p>
 </div></footer>
 ${defaultCity ? `<script>var DEFAULT_CITY=${JSON.stringify(defaultCity)};var LOCK_CITY=${lockCity ? "true" : "false"};</script>` : ""}
 <script src="/assets/app.js"></script>
@@ -133,128 +122,109 @@ const URLS = [];
 /* ---------------- Shared blocks ---------------- */
 const cityTools = `
 <div class="tools">
-<div class="share"><button data-share="wa">WhatsApp</button><button data-share="fb">Facebook</button><button data-share="x">X</button><button data-share="copy">${t("Copy link", "लिंक कॉपी करें")}</button></div>
-<label class="fld">📍 <span class="t-en">Location</span><span class="t-hi">स्थान</span><input id="city" list="cl" autocomplete="off" placeholder="Enter city name / शहर का नाम डालें"><datalist id="cl"></datalist></label>
+<div class="share"><button data-share="wa">WhatsApp</button><button data-share="fb">Facebook</button><button data-share="x">X</button><button data-share="copy">Copy link</button></div>
+<label class="fld">📍 Location<input id="city" list="cl" autocomplete="off" placeholder="Enter city name"><datalist id="cl"></datalist></label>
 </div>`;
 
-const btnsBlock = `<div class="btns"><label class="cal">${t("Calendar", "कैलेंडर")} ▾ <input type="date" id="dt" aria-label="Pick a date"></label><button data-day="0">${t("TODAY", "आज")}</button><button data-day="1">${t("TOMORROW", "कल")}</button></div>`;
+const legend = `<div class="legend"><span><i class="rk">☊</i>Rahu Kaal</span><span><i class="g"></i>Most Auspicious</span><span><i class="b"></i>Good</span><span><i class="r"></i>Inauspicious Time</span></div>`;
 
-const legend = `<div class="legend"><span><i class="rk">☊</i>${t("Rahu Kaal", "राहु काल")}</span><span><i class="g"></i>${t("Most Auspicious", "सबसे शुभ")}</span><span><i class="b"></i>${t("Good", "अच्छा")}</span><span><i class="r"></i>${t("Inauspicious Time", "अशुभ समय")}</span></div>`;
-
-const citiesBlock = `<div class="cities"><h3>${t("Frequently searched cities", "अक्सर खोजे जाने वाले शहर")}</h3><ul>
-${TOP_CITIES.slice(0, 12).map(c => { const [name] = c.split("|"); return `<li><a href="/choghadiya/${slugify(name)}/">${t("Choghadiya for " + name, name + " का चौघड़िया")}</a></li>`; }).join("")}
+const citiesBlock = `<div class="cities"><h3>Frequently searched cities</h3><ul>
+${TOP_CITIES.slice(0, 12).map(c => { const [name] = c.split("|"); return `<li><a href="/choghadiya/${slugify(name)}/">Choghadiya for ${name}</a></li>`; }).join("")}
 </ul></div>`;
 
 /* ---------------- Home / Choghadiya (flagship) ---------------- */
 const rulingPlanetByWeekday = [
-  ["Sunday", "Sun", "रविवार", "सूर्य"], ["Monday", "Moon", "सोमवार", "चंद्रमा"], ["Tuesday", "Mars", "मंगलवार", "मंगल"], ["Wednesday", "Mercury", "बुधवार", "बुध"],
-  ["Thursday", "Jupiter", "गुरुवार", "बृहस्पति"], ["Friday", "Venus", "शुक्रवार", "शुक्र"], ["Saturday", "Saturn", "शनिवार", "शनि"]
+  ["Sunday", "Sun"], ["Monday", "Moon"], ["Tuesday", "Mars"], ["Wednesday", "Mercury"],
+  ["Thursday", "Jupiter"], ["Friday", "Venus"], ["Saturday", "Saturn"]
 ];
 const homeFaqs = [
-  ["What does choghadiya mean?", "Choghadiya combines chau (four) and ghadi (a 24-minute unit), so one slot is about four ghadis, or roughly 96 minutes. Sunrise to sunset gives 8 day slots and sunset to next sunrise gives 8 night slots.",
-    "चौघड़िया का मतलब क्या है?", "चौघड़िया दो शब्दों से बना है — चौ (चार) और घड़ी (24 मिनट की इकाई)। यानी एक चौघड़िया लगभग चार घड़ी, यानी करीब 96 मिनट की होती है। सूर्योदय से सूर्यास्त तक 8 दिन के स्लॉट और सूर्यास्त से अगले सूर्योदय तक 8 रात के स्लॉट बनते हैं।"],
-  ["What are the different types of choghadiya?", "There are seven: Amrit, Shubh and Labh are the most favourable and are best for important work. Char is a good, secondary slot. Udveg, Kaal and Rog are inauspicious and are usually avoided for new beginnings.",
-    "चौघड़िया के कितने प्रकार होते हैं?", "कुल सात प्रकार होते हैं: अमृत, शुभ और लाभ सबसे शुभ माने जाते हैं और ज़रूरी काम के लिए सबसे अच्छे हैं। चर एक ठीक-ठाक विकल्प है। उद्वेग, काल और रोग अशुभ माने जाते हैं और नई शुरुआत के लिए आमतौर पर टाले जाते हैं।"],
-  ["What are Vaar Vela, Kaal Vela and Kaal Ratri?", "These are additional periods, alongside Rahu Kaal, that tradition marks as unsuitable for starting anything auspicious. Vaar Vela and Kaal Vela fall during the day, while Kaal Ratri falls at night.",
-    "वार वेला, काल वेला और काल रात्रि क्या हैं?", "ये राहु काल के अलावा वे अतिरिक्त समय हैं जिन्हें परंपरा शुभ कार्य शुरू करने के लिए उपयुक्त नहीं मानती। वार वेला और काल वेला दिन में आते हैं, जबकि काल रात्रि रात में आती है।"],
-  ["What if a good choghadiya overlaps Rahu Kaal or a similar inauspicious period?", "Classical guidance says to skip it even if the slot is otherwise Amrit or Shubh, and pick the next clean, favourable window instead.",
-    "अगर शुभ चौघड़िया राहु काल जैसे अशुभ समय से टकरा जाए तो?", "पारंपरिक मान्यता कहती है कि उस स्लॉट को छोड़ दें, भले ही वह अमृत या शुभ ही क्यों न हो, और अगले साफ़-सुथरे शुभ समय को चुनें।"],
-  ["How is a choghadiya judged auspicious or inauspicious?", "It depends on the planet ruling that slot: benefic planets (Moon, Jupiter, Mercury, Venus) make a favourable slot, while malefic planets (Sun, Saturn, Mars) make it unfavourable. The very first slot of the day also follows the ruling planet of that weekday, after which the rest follow in a fixed order.",
-    "चौघड़िया को शुभ या अशुभ कैसे तय किया जाता है?", "यह उस स्लॉट के स्वामी ग्रह पर निर्भर करता है: शुभ ग्रह (चंद्रमा, बृहस्पति, बुध, शुक्र) शुभ स्लॉट बनाते हैं, जबकि अशुभ ग्रह (सूर्य, शनि, मंगल) उसे अशुभ बनाते हैं। दिन का पहला स्लॉट उस वार के स्वामी ग्रह से शुरू होता है, बाकी एक तय क्रम में चलते हैं।"],
-  ["Why do the same seven choghadiyas repeat through the day?", "Since there are 8 day slots and 8 night slots but only 7 choghadiya types, one type has to repeat once during the day and once during the night to fill all 16 slots.",
-    "एक ही सातों चौघड़िया दिन में दोबारा क्यों आती हैं?", "क्योंकि दिन में 8 और रात में 8 स्लॉट होते हैं, पर चौघड़िया के प्रकार सिर्फ़ 7 हैं, इसलिए एक प्रकार दिन में एक बार और रात में एक बार दोहराया जाता है ताकि सभी 16 स्लॉट भर सकें।"]
-];
-const guideFaqsHomeExtra = [
-  ["Why can my local pandit's timing differ?", "Sunrise definitions and location details vary slightly. Expect a difference of a few minutes and confirm important events with your pandit.",
-    "मेरे पंडितजी का समय अलग क्यों हो सकता है?", "सूर्योदय की परिभाषा और स्थान की गणना में मामूली अंतर होता है। कुछ मिनट का फ़र्क़ सामान्य है, ज़रूरी कार्यों के लिए अपने पंडितजी से पुष्टि ज़रूर करें।"]
+  ["What does choghadiya mean?", "Choghadiya combines chau (four) and ghadi (a 24-minute unit), so one slot is about four ghadis, or roughly 96 minutes. Sunrise to sunset gives 8 day slots and sunset to next sunrise gives 8 night slots."],
+  ["What are the different types of choghadiya?", "There are seven: Amrit, Shubh and Labh are the most favourable and are best for important work. Char is a good, secondary slot. Udveg, Kaal and Rog are inauspicious and are usually avoided for new beginnings."],
+  ["What are Vaar Vela, Kaal Vela and Kaal Ratri?", "These are additional periods, alongside Rahu Kaal, that tradition marks as unsuitable for starting anything auspicious. Vaar Vela and Kaal Vela fall during the day, while Kaal Ratri falls at night."],
+  ["What if a good choghadiya overlaps Rahu Kaal or a similar inauspicious period?", "Classical guidance says to skip it even if the slot is otherwise Amrit or Shubh, and pick the next clean, favourable window instead."],
+  ["How is a choghadiya judged auspicious or inauspicious?", "It depends on the planet ruling that slot: benefic planets (Moon, Jupiter, Mercury, Venus) make a favourable slot, while malefic planets (Sun, Saturn, Mars) make it unfavourable. The very first slot of the day also follows the ruling planet of that weekday, after which the rest follow in a fixed order."],
+  ["Why do the same seven choghadiyas repeat through the day?", "Since there are 8 day slots and 8 night slots but only 7 choghadiya types, one type has to repeat once during the day and once during the night to fill all 16 slots."]
 ];
 function choghadiyaBody() {
   return `<p class="sub" id="sub"></p>
 ${cityTools}
-${btnsBlock}
+<div class="btns"><label class="cal">Calendar ▾ <input type="date" id="dt" aria-label="Pick a date"></label><button data-day="0">TODAY</button><button data-day="1">TOMORROW</button></div>
 ${legend}
 <div id="now" role="status"></div>
 <div class="cols">
 <div class="dcard" id="dcard"></div>
-<div class="col dayc"><h3>${t("Day Choghadiya", "दिन का चौघड़िया")}</h3><div class="hdr"><span>${t("Muhurat Time", "मुहूर्त समय")}</span><span>${t("Recommended Activity", "अनुशंसित कार्य")}</span></div><div id="day"></div></div>
-<div class="col nightc"><h3>${t("Night Choghadiya", "रात का चौघड़िया")}</h3><div class="hdr"><span>${t("Muhurat Time", "मुहूर्त समय")}</span><span>${t("Recommended Activity", "अनुशंसित कार्य")}</span></div><div id="night"></div></div>
+<div class="col dayc"><h3>Day Choghadiya</h3><div class="hdr"><span>Muhurat Time</span><span>Recommended Activity</span></div><div id="day"></div></div>
+<div class="col nightc"><h3>Night Choghadiya</h3><div class="hdr"><span>Muhurat Time</span><span>Recommended Activity</span></div><div id="night"></div></div>
 </div>
 <div class="sum" id="sum"></div>
-<h2>${t("Today Choghadiya | Shubh Choghadiya", "आज का चौघड़िया | शुभ चौघड़िया")}</h2>
+<h2>Today Choghadiya | Shubh Choghadiya</h2>
 <p id="intro"></p>
-<h2>${t("Today's important shubh muhurat", "आज के ज़रूरी शुभ मुहूर्त")}</h2>
-<p>${t("Planning a wedding, naming ceremony, new vehicle, new property, a new business or a mundan? Pick an occasion below to see the cleanest slots for that purpose, drawn from today's choghadiya and with Rahu Kaal already excluded.", "शादी, नामकरण, नया वाहन, नई संपत्ति, नया व्यापार या मुंडन की योजना बना रहे हैं? नीचे अपना अवसर चुनें और आज के चौघड़िया से चुने गए सबसे बेहतर समय देखें — राहु काल पहले ही हटाया जा चुका है।")}</p>
+<h2>Today's important shubh muhurat</h2>
+<p>Planning a wedding, naming ceremony, new vehicle, new property, a new business or a mundan? Pick an occasion below to see the cleanest slots for that purpose, drawn from today's choghadiya and with Rahu Kaal already excluded.</p>
 <div class="tiles">
-<a class="tile" href="/shubh-muhurat/"><span>💍</span>${t("Shubh Muhurat For Marriage", "विवाह के लिए शुभ मुहूर्त")}</a>
-<a class="tile" href="/shubh-muhurat/"><span>👶</span>${t("Shubh Muhurat For Name Giving", "नामकरण के लिए शुभ मुहूर्त")}</a>
-<a class="tile" href="/shubh-muhurat/"><span>🚗</span>${t("Shubh Muhurat For New Vehicle", "नए वाहन के लिए शुभ मुहूर्त")}</a>
-<a class="tile" href="/shubh-muhurat/"><span>🏠</span>${t("Shubh Muhurat For New Property", "नई संपत्ति के लिए शुभ मुहूर्त")}</a>
-<a class="tile" href="/shubh-muhurat/"><span>💼</span>${t("Shubh Muhurat For New Business", "नए व्यापार के लिए शुभ मुहूर्त")}</a>
-<a class="tile" href="/shubh-muhurat/"><span>✂️</span>${t("Shubh Muhurat For Mundan", "मुंडन के लिए शुभ मुहूर्त")}</a>
+<a class="tile" href="/shubh-muhurat/"><span>💍</span>Shubh Muhurat For Marriage</a>
+<a class="tile" href="/shubh-muhurat/"><span>👶</span>Shubh Muhurat For Name Giving</a>
+<a class="tile" href="/shubh-muhurat/"><span>🚗</span>Shubh Muhurat For New Vehicle</a>
+<a class="tile" href="/shubh-muhurat/"><span>🏠</span>Shubh Muhurat For New Property</a>
+<a class="tile" href="/shubh-muhurat/"><span>💼</span>Shubh Muhurat For New Business</a>
+<a class="tile" href="/shubh-muhurat/"><span>✂️</span>Shubh Muhurat For Mundan</a>
 </div>
-<h2>${t("Auspicious time today", "आज का शुभ समय")}</h2>
-<p>${t("Shubh, Labh, Char and Amrit are the choghadiyas people check first. Amrit is treated as the most auspicious period for any kind of work, Labh suits anyone starting a new business or a course, Shubh is the classic pick for weddings, puja and religious activities, and Char favours travel, dance and cultural work.", "शुभ, लाभ, चर और अमृत — ये चौघड़िया लोग सबसे पहले देखते हैं। अमृत को हर तरह के काम के लिए सबसे शुभ माना जाता है, लाभ नया व्यापार या कोर्स शुरू करने वालों के लिए अच्छा है, शुभ शादी-पूजा जैसे धार्मिक कार्यों के लिए पारंपरिक पसंद है, और चर यात्रा, नृत्य व सांस्कृतिक कार्यों के लिए अनुकूल है।")}</p>
-<div class="notice">${t('Auspicious work is best avoided during Rahu Kaal. See today\'s', "शुभ कार्य राहु काल में न करें। आज का")} <a href="/rahu-kaal/">${t("Rahu Kaal", "राहु काल")}</a> ${t("— the exact start and end time for your city, and how to plan around it.", "देखें — आपके शहर का सटीक शुरू व खत्म होने का समय, और उसके आसपास योजना कैसे बनाएं।")}</div>
+<h2>Auspicious time today</h2>
+<p>Shubh, Labh, Char and Amrit are the choghadiyas people check first. Amrit is treated as the most auspicious period for any kind of work, Labh suits anyone starting a new business or a course, Shubh is the classic pick for weddings, puja and religious activities, and Char favours travel, dance and cultural work.</p>
+<div class="notice">Auspicious work is best avoided during Rahu Kaal. See today's <a href="/rahu-kaal/">Rahu Kaal</a> — the exact start and end time for your city, and how to plan around it.</div>
 ${citiesBlock}
-<h2 id="guide">${t("What is Choghadiya? — Full Guide", "चौघड़िया क्या है? — पूरी गाइड")}</h2>
-<p>${t("Choghadiya is a Vedic time-keeping method that grades every part of the day as favourable or unfavourable. The stretch from sunrise to sunset makes the day choghadiya; sunset to the next sunrise makes the night choghadiya. Seven kinds of slot rotate through these sixteen divisions, so one kind repeats. The starting slot depends on the weekday, which is why the pattern is fixed for each weekday but shifts from one weekday to the next.", "चौघड़िया एक वैदिक समय-पद्धति है जो दिन के हर हिस्से को शुभ या अशुभ बताती है। सूर्योदय से सूर्यास्त तक का समय दिन का चौघड़िया कहलाता है, और सूर्यास्त से अगले सूर्योदय तक रात का चौघड़िया। सात तरह के स्लॉट इन सोलह भागों में घूमते हैं, इसलिए एक प्रकार दोहराया जाता है। शुरुआती स्लॉट उस वार पर निर्भर करता है, इसलिए हर वार के लिए यह क्रम तय है पर अगले वार में बदल जाता है।")}</p>
-<p>${t('The word joins <i>chau</i> (four) and <i>ghadi</i> (a unit of 24 minutes), so one slot is roughly four ghadis, or 96 minutes on a 12-hour day.', "यह शब्द <i>चौ</i> (चार) और <i>घड़ी</i> (24 मिनट की इकाई) से मिलकर बना है, यानी 12 घंटे के दिन में एक स्लॉट लगभग चार घड़ी, यानी 96 मिनट का होता है।")}</p>
-<h3 class="sec">${t("Good uses for each choghadiya", "हर चौघड़िया के लिए अच्छे कार्य")}</h3>
-<p>${t("Because each slot carries a fixed planetary mood every single day, choghadiya works best for everyday decisions — starting a journey, opening a shop for the day, a first phone call, or a small ceremony — rather than once-in-a-lifetime events, which classically call for a full muhurat calculated from tithi and nakshatra.", "क्योंकि हर स्लॉट का ग्रह-स्वभाव हर दिन तय रहता है, चौघड़िया रोज़मर्रा के फ़ैसलों — यात्रा शुरू करना, दुकान खोलना, पहला फ़ोन कॉल, या छोटा समारोह — के लिए सबसे उपयुक्त है, न कि जीवन के बड़े मौक़ों के लिए, जिनके लिए परंपरागत रूप से तिथि और नक्षत्र से पूरा मुहूर्त निकाला जाता है।")}</p>
-<h3 class="sec">${t("Why your local pandit's timing may differ", "आपके पंडितजी का समय अलग क्यों हो सकता है")}</h3>
-<p>${t("Sunrise definitions and exact location details vary slightly between sources, so a difference of a few minutes from other panchangs is normal — always confirm important events with your family pandit.", "सूर्योदय की परिभाषा और सटीक स्थान अलग-अलग स्रोतों में थोड़े भिन्न होते हैं, इसलिए दूसरे पंचांगों से कुछ मिनट का अंतर सामान्य है — ज़रूरी कार्यों के लिए हमेशा अपने पारिवारिक पंडितजी से पुष्टि करें।")}</p>
-<h2>${t("What today's choghadiya tells you", "आज का चौघड़िया आपको क्या बताता है")}</h2>
-<p>${t("Choghadiya splits the daylight and the night into eight slots each, about 90 minutes apiece. Every slot carries the mood of one planet, so you can quickly see which stretch suits a fresh start, a journey or a celebration, and which is better left alone.", "चौघड़िया दिन और रात को आठ-आठ स्लॉट में बांटता है, हर एक लगभग 90 मिनट का। हर स्लॉट किसी एक ग्रह का स्वभाव लिए होता है, जिससे आप तुरंत देख सकते हैं कि कौन-सा समय नई शुरुआत, यात्रा या उत्सव के लिए सही है और कौन-सा टालना बेहतर है।")}</p>
-<h2>${t("The seven choghadiyas", "सातों चौघड़िया")}</h2>
+<h2>What today's choghadiya tells you</h2>
+<p>Choghadiya splits the daylight and the night into eight slots each, about 90 minutes apiece. Every slot carries the mood of one planet, so you can quickly see which stretch suits a fresh start, a journey or a celebration, and which is better left alone.</p>
+<h2>The seven choghadiyas</h2>
 <div class="meaning">
-<div class="good"><b>${t("Amrit", "अमृत")}</b> ${t("Moon. The best slot of the day; good for almost anything.", "चंद्रमा। दिन का सबसे अच्छा स्लॉट; लगभग हर काम के लिए शुभ।")}</div>
-<div class="good"><b>${t("Shubh", "शुभ")}</b> ${t("Jupiter. Ideal for weddings, puja, yagya and religious work.", "बृहस्पति। शादी, पूजा, यज्ञ और धार्मिक कार्यों के लिए आदर्श।")}</div>
-<div class="good"><b>${t("Labh", "लाभ")}</b> ${t("Mercury. Profitable; ideal for opening a business or starting to learn something.", "बुध। लाभदायक; व्यापार शुरू करने या कुछ नया सीखने के लिए आदर्श।")}</div>
-<div class="ok"><b>${t("Char", "चर")}</b> ${t("Venus. Movement; favoured for travel, art and dance.", "शुक्र। गति; यात्रा, कला और नृत्य के लिए अनुकूल।")}</div>
-<div class="bad"><b>${t("Udveg", "उद्वेग")}</b> ${t("Sun. Restless; avoid fresh starts, though official work goes well.", "सूर्य। बेचैन; नई शुरुआत टालें, पर सरकारी काम अच्छा चलता है।")}</div>
-<div class="bad"><b>${t("Kaal", "काल")}</b> ${t("Saturn. Heavy; mostly avoided, except for work tied to building wealth.", "शनि। भारी; ज़्यादातर टाला जाता है, सिवाय धन-संचय से जुड़े काम के।")}</div>
-<div class="bad"><b>${t("Rog", "रोग")}</b> ${t("Mars. Conflict-prone; avoid new work and medical starts.", "मंगल। विवाद-प्रवण; नया काम और इलाज शुरू करने से बचें।")}</div>
+<div class="good"><b>Amrit</b> Moon. The best slot of the day; good for almost anything.</div>
+<div class="good"><b>Shubh</b> Jupiter. Ideal for weddings, puja, yagya and religious work.</div>
+<div class="good"><b>Labh</b> Mercury. Profitable; ideal for opening a business or starting to learn something.</div>
+<div class="ok"><b>Char</b> Venus. Movement; favoured for travel, art and dance.</div>
+<div class="bad"><b>Udveg</b> Sun. Restless; avoid fresh starts, though official work goes well.</div>
+<div class="bad"><b>Kaal</b> Saturn. Heavy; mostly avoided, except for work tied to building wealth.</div>
+<div class="bad"><b>Rog</b> Mars. Conflict-prone; avoid new work and medical starts.</div>
 </div>
-<h2>${t("Choghadiya meanings, explained", "चौघड़िया के अर्थ, विस्तार से")}</h2>
-<p><b>${t("Amrit", "अमृत")}</b> ${t("is ruled by the Moon, considered a benefic planet, which makes this the single most favourable slot of the day — any kind of work started in it tends to go well.", "चंद्रमा द्वारा शासित है, जो एक शुभ ग्रह माना जाता है — इसलिए यह दिन का सबसे शुभ स्लॉट है और इसमें शुरू किया गया कोई भी काम अच्छा चलता है।")}</p>
-<p><b>${t("Shubh", "शुभ")}</b> ${t("is ruled by Jupiter, another benefic. It is the classic pick for weddings, worship, yagya and other religious ceremonies.", "बृहस्पति द्वारा शासित है, जो एक और शुभ ग्रह है। यह शादी, पूजा, यज्ञ और अन्य धार्मिक कार्यों के लिए पारंपरिक पसंद है।")}</p>
-<p><b>${t("Labh", "लाभ")}</b> ${t("is ruled by Mercury. Since Mercury favours intellect and trade, this slot is especially good for starting a business, a course, or learning a new skill.", "बुध द्वारा शासित है। बुध बुद्धि और व्यापार का कारक है, इसलिए यह स्लॉट व्यापार शुरू करने, कोर्स करने या नया हुनर सीखने के लिए ख़ास तौर पर अच्छा है।")}</p>
-<p><b>${t("Char", "चर")}</b> ${t("is ruled by Venus. Venus governs movement, so this slot is the traditional choice for travel, and also suits art, dance and cultural activity.", "शुक्र द्वारा शासित है। शुक्र गति का कारक है, इसलिए यह स्लॉट यात्रा के लिए पारंपरिक पसंद है, और कला, नृत्य व सांस्कृतिक कार्यों के लिए भी उपयुक्त है।")}</p>
-<p><b>${t("Udveg", "उद्वेग")}</b> ${t("is ruled by the Sun, a malefic planet here, which is why fresh starts are avoided during it — though government-related work is considered to do well in this slot.", "सूर्य द्वारा शासित है, जो यहां अशुभ ग्रह माना जाता है — इसलिए इसमें नई शुरुआत टाली जाती है, हालांकि सरकारी काम इस स्लॉट में अच्छा माना जाता है।")}</p>
-<p><b>${t("Kaal", "काल")}</b> ${t("is ruled by Saturn. It is generally avoided for auspicious work, with one exception: activity aimed purely at accumulating wealth is thought to fare well here.", "शनि द्वारा शासित है। इसे आमतौर पर शुभ कार्यों के लिए टाला जाता है, सिवाय एक अपवाद के: शुद्ध रूप से धन-संचय से जुड़ा काम इसमें अच्छा माना जाता है।")}</p>
-<p><b>${t("Rog", "रोग")}</b> ${t("is ruled by Mars, associated with conflict. Auspicious work and medical consultations are avoided in this slot, though it has traditionally been noted for anything involving competition or confronting a rival.", "मंगल द्वारा शासित है, जो विवाद से जुड़ा है। इस स्लॉट में शुभ कार्य और इलाज टाला जाता है, हालांकि प्रतिस्पर्धा या प्रतिद्वंद्वी से जुड़े कामों के लिए इसे पारंपरिक रूप से नोट किया गया है।")}</p>
-<h2>${t("Choghadiya vs shubh muhurat — what's the difference?", "चौघड़िया बनाम शुभ मुहूर्त — क्या फ़र्क़ है?")}</h2>
-<p>${t("A shubh muhurat is calculated from planetary positions for one specific event, and a favourable one may be rare — a month can have several, or sometimes none on a given day. Choghadiya, on the other hand, is available every single day: it simply divides that day into 8 auspicious-or-not day slots and 8 night slots. For a big life event, use choghadiya as a first filter, then confirm the exact muhurat with a pandit.", "शुभ मुहूर्त किसी ख़ास घटना के लिए ग्रहों की स्थिति से निकाला जाता है, और यह दुर्लभ हो सकता है — एक महीने में कई हो सकते हैं, या किसी दिन एक भी नहीं। वहीं चौघड़िया हर दिन उपलब्ध है: यह बस दिन को 8 शुभ/अशुभ दिन के स्लॉट और 8 रात के स्लॉट में बांटता है। बड़े मौक़े के लिए, पहले चौघड़िया से छांटें, फिर पंडितजी से सटीक मुहूर्त की पुष्टि करें।")}</p>
-<h2>${t("How is today's choghadiya calculated?", "आज का चौघड़िया कैसे निकाला जाता है?")}</h2>
-<p>${t("The daylight period (sunrise to sunset) and the night period (sunset to next sunrise) are each split into eight equal parts. Since there are only seven choghadiya types, one type repeats once in the day and once at night. The very first slot of the day is always ruled by that weekday's own ruling planet, and the remaining slots follow a fixed planetary sequence after that — which is why the order is identical every Monday, every Tuesday, and so on, but different from one weekday to the next.", "दिन (सूर्योदय से सूर्यास्त) और रात (सूर्यास्त से अगले सूर्योदय) — दोनों को आठ बराबर हिस्सों में बांटा जाता है। चूंकि चौघड़िया के प्रकार सिर्फ़ सात हैं, इसलिए एक प्रकार दिन में एक बार और रात में एक बार दोहराया जाता है। दिन का पहला स्लॉट हमेशा उस वार के स्वामी ग्रह से शुरू होता है, बाकी स्लॉट एक तय ग्रह-क्रम में चलते हैं — इसलिए हर सोमवार, हर मंगलवार का क्रम एक जैसा रहता है, पर अगले वार में बदल जाता है।")}</p>
-<h3>${t("Ruling planet by weekday", "वार अनुसार स्वामी ग्रह")}</h3>
-<div class="tbl"><table><thead><tr><th>${t("Weekday", "वार")}</th><th>${t("Ruling planet", "स्वामी ग्रह")}</th></tr></thead><tbody>
-${rulingPlanetByWeekday.map(([d, p, dh, ph]) => `<tr><td>${t(d, dh)}</td><td>${t(p, ph)}</td></tr>`).join("")}
+<h2>Choghadiya meanings, explained</h2>
+<p><b>Amrit</b> is ruled by the Moon, considered a benefic planet, which makes this the single most favourable slot of the day — any kind of work started in it tends to go well.</p>
+<p><b>Shubh</b> is ruled by Jupiter, another benefic. It is the classic pick for weddings, worship, yagya and other religious ceremonies.</p>
+<p><b>Labh</b> is ruled by Mercury. Since Mercury favours intellect and trade, this slot is especially good for starting a business, a course, or learning a new skill.</p>
+<p><b>Char</b> is ruled by Venus. Venus governs movement, so this slot is the traditional choice for travel, and also suits art, dance and cultural activity.</p>
+<p><b>Udveg</b> is ruled by the Sun, a malefic planet here, which is why fresh starts are avoided during it — though government-related work is considered to do well in this slot.</p>
+<p><b>Kaal</b> is ruled by Saturn. It is generally avoided for auspicious work, with one exception: activity aimed purely at accumulating wealth is thought to fare well here.</p>
+<p><b>Rog</b> is ruled by Mars, associated with conflict. Auspicious work and medical consultations are avoided in this slot, though it has traditionally been noted for anything involving competition or confronting a rival.</p>
+<h2>Choghadiya vs shubh muhurat — what's the difference?</h2>
+<p>A shubh muhurat is calculated from planetary positions for one specific event, and a favourable one may be rare — a month can have several, or sometimes none on a given day. Choghadiya, on the other hand, is available every single day: it simply divides that day into 8 auspicious-or-not day slots and 8 night slots. For a big life event, use choghadiya as a first filter, then confirm the exact muhurat with a pandit.</p>
+<h2>How is today's choghadiya calculated?</h2>
+<p>The daylight period (sunrise to sunset) and the night period (sunset to next sunrise) are each split into eight equal parts. Since there are only seven choghadiya types, one type repeats once in the day and once at night. The very first slot of the day is always ruled by that weekday's own ruling planet, and the remaining slots follow a fixed planetary sequence after that — which is why the order is identical every Monday, every Tuesday, and so on, but different from one weekday to the next.</p>
+<h3>Ruling planet by weekday</h3>
+<div class="tbl"><table><thead><tr><th>Weekday</th><th>Ruling planet</th></tr></thead><tbody>
+${rulingPlanetByWeekday.map(([d, p]) => `<tr><td>${d}</td><td>${p}</td></tr>`).join("")}
 </tbody></table></div>
-<h2>${t("More panchang tools", "अन्य पंचांग टूल्स")}</h2>
-<p>${t('Along with choghadiya, check', "चौघड़िया के साथ-साथ")} <a href="/hora/">${t("Shubh Hora", "शुभ होरा")}</a>, <a href="/gowri-panchangam/">${t("Gowri Panchangam", "गौरी पंचांगम")}</a>, <a href="/rahu-kaal/">${t("Rahu Kaal", "राहु काल")}</a> ${t("and", "और")} <a href="/abhijit-muhurat/">${t("Abhijit Muhurat", "अभिजीत मुहूर्त")}</a> ${t("for your city — all calculated live for the date and location you pick.", "अपने शहर के लिए भी देखें — सभी की गणना आपकी चुनी हुई तारीख़ और जगह के लिए तुरंत होती है।")}</p>
-<h2 id="tables">${t("Weekly choghadiya tables", "साप्ताहिक चौघड़िया तालिका")}</h2>
-<p class="small">${t("*Assuming sunrise at 6:00 AM. Today's weekday is highlighted.", "*सूर्योदय सुबह 6:00 बजे मानते हुए। आज का वार हाइलाइट किया गया है।")}</p>
+<h2>More panchang tools</h2>
+<p>Along with choghadiya, check <a href="/hora/">Shubh Hora</a>, <a href="/gowri-panchangam/">Gowri Panchangam</a>, <a href="/rahu-kaal/">Rahu Kaal</a> and <a href="/abhijit-muhurat/">Abhijit Muhurat</a> for your city — all calculated live for the date and location you pick.</p>
+<h2 id="tables">Weekly choghadiya tables</h2>
+<p class="small">*Assuming sunrise at 6:00 AM. Today's weekday is highlighted.</p>
 <div class="tbl day"><table id="dgrid"></table></div>
-<h3>${t("Night table", "रात की तालिका")}</h3><p class="small">${t("*Assuming sunset at 6:00 PM.", "*सूर्यास्त शाम 6:00 बजे मानते हुए।")}</p>
+<h3>Night table</h3><p class="small">*Assuming sunset at 6:00 PM.</p>
 <div class="tbl night"><table id="ngrid"></table></div>
-<h2 id="faq">${t("Choghadiya FAQs", "चौघड़िया से जुड़े सवाल")}</h2>
-${homeFaqs.concat(guideFaqsHomeExtra).map(([q, a, qh, ah]) => `<details><summary>${t(q, qh)}</summary><p>${t(a, ah)}</p></details>`).join("\n")}`;
+<h2 id="faq">Choghadiya FAQs</h2>
+${homeFaqs.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join("\n")}`;
 }
 
 write("/", layout({
   urlPath: "/", title: `Aaj Ka Choghadiya – Today's Shubh Muhurat, Hora & Rahu Kaal | ${BRAND}`,
   description: "Free daily Choghadiya, Shubh Hora, Gowri Panchangam, Rahu Kaal and Abhijit Muhurat for 150+ Indian cities. Calculated live for your exact location.",
-  h1: t("Aaj Ka Choghadiya", "आज का चौघड़िया"), crumbLabel: "Home", bodyHtml: choghadiyaBody(),
-  extraJsonLd: [faqSchema(homeFaqs.concat(guideFaqsHomeExtra))],
+  h1: "Aaj Ka Choghadiya", crumbLabel: "Home", bodyHtml: choghadiyaBody(),
+  extraJsonLd: [faqSchema(homeFaqs)],
   related: [["/hora/", "Shubh Hora"], ["/gowri-panchangam/", "Gowri Panchangam"], ["/rahu-kaal/", "Rahu Kaal"], ["/abhijit-muhurat/", "Abhijit Muhurat"]]
 }));
 
 write("/choghadiya/", layout({
   urlPath: "/choghadiya/", title: `Choghadiya Today – Day & Night Muhurat Timings | ${BRAND}`,
   description: "Check today's Day and Night Choghadiya for your city: Amrit, Shubh, Labh, Char, Udveg, Kaal and Rog timings with Rahu Kaal.",
-  h1: t("Choghadiya Today", "आज का चौघड़िया"), crumbLabel: "Choghadiya", bodyHtml: choghadiyaBody(),
-  extraJsonLd: [faqSchema(homeFaqs.concat(guideFaqsHomeExtra))],
+  h1: "Choghadiya Today", crumbLabel: "Choghadiya", bodyHtml: choghadiyaBody(),
+  extraJsonLd: [faqSchema(homeFaqs)],
   related: [["/hora/", "Shubh Hora"], ["/gowri-panchangam/", "Gowri Panchangam"], ["/rahu-kaal/", "Rahu Kaal"]]
 }));
 
@@ -265,7 +235,7 @@ for (const c of TOP_CITIES) {
     urlPath: `/choghadiya/${slug}/`,
     title: `Choghadiya Today for ${name} – Shubh Muhurat & Rahu Kaal | ${BRAND}`,
     description: `Today's Day and Night Choghadiya for ${name}, ${state_}: Amrit, Shubh, Labh, Char, Udveg, Kaal, Rog timings with sunrise, sunset and Rahu Kaal.`,
-    h1: t(`Choghadiya Today for ${name}`, `${name} का आज का चौघड़िया`), crumbLabel: `Choghadiya for ${name}`, bodyHtml: choghadiyaBody(),
+    h1: `Choghadiya Today for ${name}`, crumbLabel: `Choghadiya for ${name}`, bodyHtml: choghadiyaBody(),
     defaultCity: cityFull, lockCity: true,
     related: [["/hora/", "Shubh Hora"], ["/gowri-panchangam/", "Gowri Panchangam"], ["/rahu-kaal/", "Rahu Kaal"], ["/choghadiya/", "All cities"]]
   }));
@@ -275,10 +245,10 @@ for (const c of TOP_CITIES) {
 write("/hora/", layout({
   urlPath: "/hora/", title: `Shubh Hora Today – Planetary Hours (Hora Muhurat) | ${BRAND}`,
   description: "Today's Day and Night Hora: 12+12 planetary hours ruled by Sun, Venus, Mercury, Moon, Saturn, Jupiter and Mars, with the best time for each task.",
-  h1: t("Shubh Hora Today", "आज का शुभ होरा"), crumbLabel: "Shubh Hora",
+  h1: "Shubh Hora Today", crumbLabel: "Shubh Hora",
   bodyHtml: `<p class="sub" id="sub"></p>${cityTools}
 <p>Hora splits the day into 12 planetary hours from sunrise to sunset and 12 more from sunset to the next sunrise. Each hora belongs to one planet, and the first hora of the day belongs to the ruler of the weekday. Green slots are shubh hora, the best windows to begin something new.</p>
-${btnsBlock}
+<div class="btns"><label class="cal">Calendar ▾ <input type="date" id="dt" aria-label="Pick a date"></label><button data-day="0">TODAY</button><button data-day="1">TOMORROW</button></div>
 <div class="cols2"><div class="col dayc"><h3>Day Hora</h3><div class="hdr"><span>Hora &amp; time</span><span>Best used for</span></div><div id="hday"></div></div>
 <div class="col nightc"><h3>Night Hora</h3><div class="hdr"><span>Hora &amp; time</span><span>Best used for</span></div><div id="hnight"></div></div></div>
 <h2>What each hora means</h2>
@@ -325,10 +295,10 @@ ${citiesBlock}`,
 write("/gowri-panchangam/", layout({
   urlPath: "/gowri-panchangam/", title: `Gowri Panchangam Today – Nalla Neram (Day & Night) | ${BRAND}`,
   description: "Today's Day and Night Gowri Panchangam / Nalla Neram: Amirdha, Uthi, Laabam, Dhanam, Sugam, Visham, Rogam and Soram timings for your city.",
-  h1: t("Gowri Panchangam Today (Nalla Neram)", "आज का गौरी पंचांगम (नल्ला नेरम)"), crumbLabel: "Gowri Panchangam",
+  h1: "Gowri Panchangam Today (Nalla Neram)", crumbLabel: "Gowri Panchangam",
   bodyHtml: `<p class="sub" id="sub"></p>${cityTools}
 <p>Gowri Panchangam is the South Indian way of finding a good time. Like choghadiya, it splits the day and the night into eight equal parts. Amirdha, Uthi, Laabam, Sugam and Dhanam are the five good slots (Nalla Neram). Visham, Rogam and Soram are the three to avoid.</p>
-${btnsBlock}
+<div class="btns"><label class="cal">Calendar ▾ <input type="date" id="dt" aria-label="Pick a date"></label><button data-day="0">TODAY</button><button data-day="1">TOMORROW</button></div>
 ${legend}
 <div class="cols2"><div class="col dayc"><h3>Day Gowri Panchangam</h3><div class="hdr"><span>Time</span><span>Result</span></div><div id="gday"></div></div>
 <div class="col nightc"><h3>Night Gowri Panchangam</h3><div class="hdr"><span>Time</span><span>Result</span></div><div id="gnight"></div></div></div>
@@ -377,10 +347,10 @@ ${citiesBlock}`,
 write("/rahu-kaal/", layout({
   urlPath: "/rahu-kaal/", title: `Rahu Kaal Today – Timing with Yamaganda & Gulika Kaal | ${BRAND}`,
   description: "Today's Rahu Kaal, Yamaganda and Gulika Kaal timings for your city, plus a 7-day table. Avoid starting new work during these periods.",
-  h1: t("Rahu Kaal Today", "आज का राहु काल"), crumbLabel: "Rahu Kaal",
+  h1: "Rahu Kaal Today", crumbLabel: "Rahu Kaal",
   bodyHtml: `<p class="sub" id="sub"></p>${cityTools}
 <p>Rahu Kaal is a stretch of about 90 minutes every day that tradition marks as unsuitable for starting anything auspicious. It is one of eight equal parts of the daylight period, and the part changes with the weekday. Yamaganda and Gulika Kaal work the same way and are watched alongside it.</p>
-${btnsBlock}
+<div class="btns"><label class="cal">Calendar ▾ <input type="date" id="dt" aria-label="Pick a date"></label><button data-day="0">TODAY</button><button data-day="1">TOMORROW</button></div>
 <div class="notice"><b>Avoid starting anything new during Rahu Kaal.</b> <span id="rkline"></span></div>
 <div class="sum" id="rkSum"></div>
 <h2>Rahu Kaal for the next 7 days</h2>
@@ -421,10 +391,10 @@ ${citiesBlock}`,
 write("/abhijit-muhurat/", layout({
   urlPath: "/abhijit-muhurat/", title: `Abhijit Muhurat Today – Timing for Your City | ${BRAND}`,
   description: "Today's Abhijit Muhurat timing (the 8th of 15 daily muhurats, around local noon) for your city, plus a 7-day table. Not observed on Wednesday.",
-  h1: t("Abhijit Muhurat Today", "आज का अभिजीत मुहूर्त"), crumbLabel: "Abhijit Muhurat",
+  h1: "Abhijit Muhurat Today", crumbLabel: "Abhijit Muhurat",
   bodyHtml: `<p class="sub" id="sub"></p>${cityTools}
 <p>Abhijit means "victorious". This muhurat sits at the middle of the day, around local noon, and lasts about 48 minutes. It is considered strong enough to reduce the effect of many minor doshas.</p>
-${btnsBlock}
+<div class="btns"><label class="cal">Calendar ▾ <input type="date" id="dt" aria-label="Pick a date"></label><button data-day="0">TODAY</button><button data-day="1">TOMORROW</button></div>
 <div class="sum" id="abSum"></div>
 <h2>Abhijit Muhurat for the next 7 days</h2>
 <div class="tbl"><table id="abTbl"></table></div>
@@ -452,10 +422,10 @@ ${citiesBlock}`,
 write("/shubh-muhurat/", layout({
   urlPath: "/shubh-muhurat/", title: `Shubh Muhurat Today – Marriage, Vehicle, Property, Business | ${BRAND}`,
   description: "Today's shubh muhurat for marriage, name giving, new vehicle, new property, business and mundan, picked from the day's choghadiya.",
-  h1: t("Shubh Muhurat Today", "आज का शुभ मुहूर्त"), crumbLabel: "Shubh Muhurat",
+  h1: "Shubh Muhurat Today", crumbLabel: "Shubh Muhurat",
   bodyHtml: `<p class="sub" id="sub"></p>${cityTools}
 <p>Tap an occasion to see the cleanest daytime slots for the selected date and city, based on today's choghadiya.</p>
-${btnsBlock}
+<div class="btns"><label class="cal">Calendar ▾ <input type="date" id="dt" aria-label="Pick a date"></label><button data-day="0">TODAY</button><button data-day="1">TOMORROW</button></div>
 <div class="tiles">
 <button class="tile" data-tile="marriage"><span>💍</span>Shubh Muhurat For Marriage</button>
 <button class="tile" data-tile="naming"><span>👶</span>Shubh Muhurat For Name Giving</button>
@@ -485,7 +455,7 @@ const guideFaqs = [
 write("/what-is-choghadiya/", layout({
   urlPath: "/what-is-choghadiya/", title: `What is Choghadiya? Complete Guide & FAQs | ${BRAND}`,
   description: "Learn what choghadiya is, how it's calculated, the seven types explained, choghadiya vs shubh muhurat, and answers to common questions.",
-  h1: t("What is Choghadiya?", "चौघड़िया क्या है?"), crumbLabel: "Guide",
+  h1: "What is Choghadiya?", crumbLabel: "Guide",
   bodyHtml: `<p>Choghadiya is a Vedic time-keeping method that grades every part of the day as favourable or unfavourable. The stretch from sunrise to sunset makes the day choghadiya; sunset to the next sunrise makes the night choghadiya. Seven kinds of slot rotate through these sixteen divisions, so one kind repeats. The starting slot depends on the weekday, which is why the pattern is fixed for each weekday but shifts from one weekday to the next.</p>
 <p>The word joins <i>chau</i> (four) and <i>ghadi</i> (a unit of 24 minutes), so one slot is roughly four ghadis, or 96 minutes on a 12-hour day.</p>
 <h2>Choghadiya vs shubh muhurat</h2>
@@ -502,7 +472,7 @@ ${citiesBlock}`,
 /* ---------------- 404 ---------------- */
 fs.writeFileSync(path.join(ROOT, "dist", "404.html"), layout({
   urlPath: "/404/", title: `Page Not Found | ${BRAND}`, description: "This page could not be found.",
-  h1: t("Page not found", "पृष्ठ नहीं मिला"), crumbLabel: "404",
+  h1: "Page not found", crumbLabel: "404",
   bodyHtml: `<p>The page you're looking for doesn't exist. Try one of these instead:</p>${citiesBlock}`,
   related: [["/", "Home"], ["/choghadiya/", "Choghadiya Today"]]
 }));

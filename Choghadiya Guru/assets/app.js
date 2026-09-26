@@ -176,14 +176,6 @@ if ($("city")) $("city").value = state.city;
 if ($("dt")) $("dt").value = iso(state.date);
 build();
 setInterval(function () { if (!document.hidden) build(); }, 60000);
-var langBtn = $("langBtn");
-if (langBtn) {
-  langBtn.onclick = function () {
-    var hi = document.documentElement.classList.toggle("lang-hi");
-    document.documentElement.lang = hi ? "hi" : "en";
-    try { localStorage.setItem("chg_lang", hi ? "hi" : "en"); } catch (e) { }
-  };
-}
 var hb = $("hamburger"), navl = $("navlinks");
 if (hb && navl) {
   hb.onclick = function () { var o = navl.classList.toggle("open"); hb.setAttribute("aria-expanded", o); };
