@@ -139,7 +139,7 @@ const cityTools = `
 
 const btnsBlock = `<div class="btns"><label class="cal">${t("Calendar", "कैलेंडर")} ▾ <input type="date" id="dt" aria-label="Pick a date"></label><button data-day="0">${t("TODAY", "आज")}</button><button data-day="1">${t("TOMORROW", "कल")}</button></div>`;
 
-const legend = `<div class="legend"><span><i class="rk">☊</i>${t("Rahu Kaal", "राहु काल")}</span><span><i class="g"></i>${t("Most Auspicious", "सबसे शुभ")}</span><span><i class="b"></i>${t("Good", "अच्छा")}</span><span><i class="r"></i>${t("Inauspicious Time", "अशुभ समय")}</span></div>`;
+const legend = `<div class="legend"><span class="chip"><i class="rk">☊</i>${t("Rahu Kaal", "राहु काल")}</span><span class="chip"><i class="g"></i>${t("Most Auspicious", "सबसे शुभ")}</span><span class="chip"><i class="b"></i>${t("Good", "अच्छा")}</span><span class="chip"><i class="r"></i>${t("Inauspicious Time", "अशुभ समय")}</span></div>`;
 
 const citiesBlock = `<div class="cities"><h3>${t("Frequently searched cities", "अक्सर खोजे जाने वाले शहर")}</h3><ul>
 ${TOP_CITIES.slice(0, 12).map(c => { const [name] = c.split("|"); return `<li><a href="/choghadiya/${slugify(name)}/">${t("Choghadiya for " + name, name + " का चौघड़िया")}</a></li>`; }).join("")}
@@ -185,12 +185,12 @@ ${legend}
 <h2>${t("Today's important shubh muhurat", "आज के ज़रूरी शुभ मुहूर्त")}</h2>
 <p>${t("Planning a wedding, naming ceremony, new vehicle, new property, a new business or a mundan? Pick an occasion below to see the cleanest slots for that purpose, drawn from today's choghadiya and with Rahu Kaal already excluded.", "शादी, नामकरण, नया वाहन, नई संपत्ति, नया व्यापार या मुंडन की योजना बना रहे हैं? नीचे अपना अवसर चुनें और आज के चौघड़िया से चुने गए सबसे बेहतर समय देखें — राहु काल पहले ही हटाया जा चुका है।")}</p>
 <div class="tiles">
-<a class="tile" href="/shubh-muhurat/"><span>💍</span>${t("Shubh Muhurat For Marriage", "विवाह के लिए शुभ मुहूर्त")}</a>
-<a class="tile" href="/shubh-muhurat/"><span>👶</span>${t("Shubh Muhurat For Name Giving", "नामकरण के लिए शुभ मुहूर्त")}</a>
-<a class="tile" href="/shubh-muhurat/"><span>🚗</span>${t("Shubh Muhurat For New Vehicle", "नए वाहन के लिए शुभ मुहूर्त")}</a>
-<a class="tile" href="/shubh-muhurat/"><span>🏠</span>${t("Shubh Muhurat For New Property", "नई संपत्ति के लिए शुभ मुहूर्त")}</a>
-<a class="tile" href="/shubh-muhurat/"><span>💼</span>${t("Shubh Muhurat For New Business", "नए व्यापार के लिए शुभ मुहूर्त")}</a>
-<a class="tile" href="/shubh-muhurat/"><span>✂️</span>${t("Shubh Muhurat For Mundan", "मुंडन के लिए शुभ मुहूर्त")}</a>
+<a class="tile" href="/shubh-muhurat/"><span class="ticon">💍</span>${t("Shubh Muhurat For Marriage", "विवाह के लिए शुभ मुहूर्त")}</a>
+<a class="tile" href="/shubh-muhurat/"><span class="ticon">👶</span>${t("Shubh Muhurat For Name Giving", "नामकरण के लिए शुभ मुहूर्त")}</a>
+<a class="tile" href="/shubh-muhurat/"><span class="ticon">🚗</span>${t("Shubh Muhurat For New Vehicle", "नए वाहन के लिए शुभ मुहूर्त")}</a>
+<a class="tile" href="/shubh-muhurat/"><span class="ticon">🏠</span>${t("Shubh Muhurat For New Property", "नई संपत्ति के लिए शुभ मुहूर्त")}</a>
+<a class="tile" href="/shubh-muhurat/"><span class="ticon">💼</span>${t("Shubh Muhurat For New Business", "नए व्यापार के लिए शुभ मुहूर्त")}</a>
+<a class="tile" href="/shubh-muhurat/"><span class="ticon">✂️</span>${t("Shubh Muhurat For Mundan", "मुंडन के लिए शुभ मुहूर्त")}</a>
 </div>
 <h2>${t("Auspicious time today", "आज का शुभ समय")}</h2>
 <p>${t("Shubh, Labh, Char and Amrit are the choghadiyas people check first. Amrit is treated as the most auspicious period for any kind of work, Labh suits anyone starting a new business or a course, Shubh is the classic pick for weddings, puja and religious activities, and Char favours travel, dance and cultural work.", "शुभ, लाभ, चर और अमृत — ये चौघड़िया लोग सबसे पहले देखते हैं। अमृत को हर तरह के काम के लिए सबसे शुभ माना जाता है, लाभ नया व्यापार या कोर्स शुरू करने वालों के लिए अच्छा है, शुभ शादी-पूजा जैसे धार्मिक कार्यों के लिए पारंपरिक पसंद है, और चर यात्रा, नृत्य व सांस्कृतिक कार्यों के लिए अनुकूल है।")}</p>
@@ -457,12 +457,12 @@ write("/shubh-muhurat/", layout({
 <p>${t("Tap an occasion to see the cleanest daytime slots for the selected date and city, based on today's choghadiya.", "चुनी गई तारीख़ और शहर के लिए आज के चौघड़िया के आधार पर सबसे साफ़ दिन के स्लॉट देखने के लिए कोई अवसर चुनें।")}</p>
 ${btnsBlock}
 <div class="tiles">
-<button class="tile" data-tile="marriage"><span>💍</span>${t("Shubh Muhurat For Marriage", "विवाह के लिए शुभ मुहूर्त")}</button>
-<button class="tile" data-tile="naming"><span>👶</span>${t("Shubh Muhurat For Name Giving", "नामकरण के लिए शुभ मुहूर्त")}</button>
-<button class="tile" data-tile="vehicle"><span>🚗</span>${t("Shubh Muhurat For New Vehicle", "नए वाहन के लिए शुभ मुहूर्त")}</button>
-<button class="tile" data-tile="property"><span>🏠</span>${t("Shubh Muhurat For New Property", "नई संपत्ति के लिए शुभ मुहूर्त")}</button>
-<button class="tile" data-tile="business"><span>💼</span>${t("Shubh Muhurat For Business", "व्यापार के लिए शुभ मुहूर्त")}</button>
-<button class="tile" data-tile="mundan"><span>✂️</span>${t("Shubh Muhurat For Mundan", "मुंडन के लिए शुभ मुहूर्त")}</button>
+<button class="tile" data-tile="marriage"><span class="ticon">💍</span>${t("Shubh Muhurat For Marriage", "विवाह के लिए शुभ मुहूर्त")}</button>
+<button class="tile" data-tile="naming"><span class="ticon">👶</span>${t("Shubh Muhurat For Name Giving", "नामकरण के लिए शुभ मुहूर्त")}</button>
+<button class="tile" data-tile="vehicle"><span class="ticon">🚗</span>${t("Shubh Muhurat For New Vehicle", "नए वाहन के लिए शुभ मुहूर्त")}</button>
+<button class="tile" data-tile="property"><span class="ticon">🏠</span>${t("Shubh Muhurat For New Property", "नई संपत्ति के लिए शुभ मुहूर्त")}</button>
+<button class="tile" data-tile="business"><span class="ticon">💼</span>${t("Shubh Muhurat For Business", "व्यापार के लिए शुभ मुहूर्त")}</button>
+<button class="tile" data-tile="mundan"><span class="ticon">✂️</span>${t("Shubh Muhurat For Mundan", "मुंडन के लिए शुभ मुहूर्त")}</button>
 </div>
 <div id="tileOut" role="status"></div>
 <h2>${t("How this works", "यह कैसे काम करता है")}</h2>
