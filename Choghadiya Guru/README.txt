@@ -58,3 +58,13 @@ AFTER LAUNCH — GETTING INDEXED
 ADDING MORE CITIES
 Edit TOP_CITIES in build.js (format "City|State", must match an entry in CITY_DATA inside
 assets/app.js). Re-run node build.js.
+
+
+PANCHANG CALENDAR (new)
+- /panchang/ and /panchang/2026/ ... /panchang/2030/ : 12-month calendar, festivals/vrats highlighted green,
+  click any date for the full daily panchang (tithi, nakshatra, yoga, karana, sunrise/moonrise, rashi,
+  Shaka/Vikram samvat, Rahu Kaal, Dur Muhurtam, Varjyam, Abhijit, Amrit Kalam).
+- To add a year: add it to the YEARS list in build.js (panchang line) and run node build.js. Any year works.
+- assets/panchang-engine.js = astronomy + festival rules (used by build.js and the browser).
+  Festival rules are in the FEST list at the top of the festival section. Edit/add there.
+- Festival dates depend on the city and on tithi rules; verify important ones with a pandit.

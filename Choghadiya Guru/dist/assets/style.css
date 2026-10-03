@@ -95,3 +95,48 @@ h3.sec{font-size:17px;margin:20px 0 8px;color:var(--nav)}tr.tw td{background:#ff
 .disc2{font-size:.85rem;opacity:.8;margin:.6rem 0}
 
 @media(max-width:600px){.tiles{gap:8px}.tile{padding:10px 4px;font-size:12.5px;min-height:88px;gap:6px}.tile span{font-size:28px}}
+
+/* panchang calendar */
+.pc[data-lang="hi"] .en,.pc[data-lang="en"] .hi{display:none}
+.pc .intro{margin:4px 0 10px}
+.ynav{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 12px}
+.ynav a{border:1px solid var(--mar);color:var(--mar);border-radius:16px;padding:3px 14px;text-decoration:none;font-weight:600}
+.ynav a.act,.ynav a:hover{background:var(--mar);color:#fff}
+.lang button{border:1px solid var(--mar);background:#fff;color:var(--mar);padding:6px 14px;cursor:pointer;font:inherit;font-weight:600}
+.lang button:first-child{border-radius:6px 0 0 6px}.lang button:last-child{border-radius:0 6px 6px 0;margin-left:-1px}
+.lang button[aria-pressed="true"]{background:var(--mar);color:#fff}
+.pday{margin:14px 0;scroll-margin-top:60px}
+.pdn{display:flex;align-items:center;gap:6px;margin-bottom:12px}
+.pdn button{background:#e24c14;color:#fff;border:0;padding:8px 12px;cursor:pointer;font:inherit;font-size:13px;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,8px 50%);white-space:nowrap}
+.pdn button:last-child{clip-path:polygon(0 0,100% 0,calc(100% - 8px) 50%,100% 100%,0 100%)}
+.pdt{flex:1;background:#f6e2ae;text-align:center;padding:9px 8px;font-size:15px}.pdt em{font-style:normal;color:#c4121b;font-weight:600;margin-left:6px}
+.pdg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.pdc{display:flex;gap:14px;padding:14px;border-radius:10px;border:1px solid var(--bd);background:#fff}
+.pdc.bad{background:linear-gradient(#fffdf6,#faedd0)}.pdc.good{background:linear-gradient(#fffdf6,#faedd0)}
+.pdc .ic{flex:0 0 64px;height:64px;border-radius:14px;background:linear-gradient(145deg,#ffd873,#f39a1c);display:grid;place-items:center;font-size:32px}
+.pdc>div{flex:1;min-width:0}
+.pdc h4{margin:2px 0 8px;color:#c4121b;font-size:16px}
+.pr{display:grid;grid-template-columns:minmax(96px,38%) 1fr;gap:6px;padding:3px 0;font-size:14.5px;line-height:1.45}
+.pr span{color:#3a2b20}.pr b{color:#1b1209;font-weight:700}
+.pdf{background:var(--cream);border:1px solid var(--bd);border-radius:10px;padding:10px 14px;margin-bottom:10px}
+.pdf h4{margin:0 0 6px;color:var(--nav);font-size:15px}
+.chip{display:inline-block;background:#e4f5dc;color:#256b0c;border:1px solid #b5df9f;border-radius:14px;padding:2px 11px;margin:2px 6px 2px 0;font-size:14px}.chip.big{background:#d3efc3;font-weight:700}
+.muted{color:#777;font-size:14px}.pdl{font-size:14px;margin:6px 0 0}.pdl a{color:var(--mar)}
+.plegend{display:flex;flex-wrap:wrap;gap:16px;font-size:13.5px;margin:6px 0 10px}
+.plegend i{display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:6px;vertical-align:-2px}
+.plegend .lf{background:#3fb618}.plegend .lw{background:#d9434f}.plegend .lt{border:2px solid var(--mar);background:#fff}
+.pmonths{display:grid;grid-template-columns:repeat(2,1fr);gap:26px 30px;margin:8px 0 20px}
+.mc{border:1px solid #f6c3c3;border-radius:14px;padding:12px 10px 8px;box-shadow:0 2px 10px rgba(217,114,12,.08);background:#fff}
+.mc h3{text-align:center;color:#f58a0a;font-size:18px;margin:2px 0 8px}.mc h3 small{font-size:12px;color:#b9833a;font-weight:500}
+.pcal{width:100%;min-width:0;border-collapse:collapse;table-layout:fixed;font-size:14px}
+.pcal th{background:none;text-align:center;border:0;border-bottom:1px solid #e8e8e8;color:#111;padding:8px 2px;font-size:13px}
+.pcal td{border:0;padding:2px;text-align:center}
+.pcal td button,.pcal td span{display:block;width:100%;min-height:34px;line-height:34px;border:2px solid transparent;border-radius:8px;background:none;font:inherit;font-weight:700;color:#111;padding:0}
+.pcal td button{cursor:pointer}.pcal td button:hover{background:#fff1da}
+.pcal td.w button{color:#d9434f}.pcal td.f button,.pcal td.f span{color:#3fb618}
+.pcal td.adj span{color:#999}.pcal td.adj.f span{color:#3fb618}.pcal td.adj.w span{color:#999}
+.pcal td.today button{border-color:var(--mar)}.pcal td.sel button{background:var(--mar);color:#fff}
+.mf{border:0;padding:0;margin:6px 0 0;text-align:center}.mf summary{display:inline-block;background:#c9c9c9;color:#222;padding:0 8px;font-weight:500;font-size:15px;list-style:none;cursor:pointer}
+.mf ul{text-align:left;margin:8px 4px 4px;padding:0;list-style:none;font-size:13.5px}.mf li{padding:2px 0;border-bottom:1px dotted #eadcc2}.mf li b{display:inline-block;min-width:26px;color:#3fb618}
+@media(max-width:860px){.pdg{grid-template-columns:1fr}.pmonths{grid-template-columns:1fr}}
+@media(max-width:520px){.pdn{flex-wrap:wrap}.pdt{order:-1;flex-basis:100%}.pdn button{flex:1}.pdc{padding:10px}.pdc .ic{flex-basis:44px;height:44px;font-size:22px}.pr{grid-template-columns:42% 1fr}}
