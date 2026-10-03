@@ -1,5 +1,5 @@
 # Muhurat data for 2026. Format: "MM-DD HH:MM > MM-DD HH:MM Nakshatra" (24h, IST).
-# Source: mPanchang Hindi articles (Vivah + Namkaran muhurat 2026). To add a new year, copy this file to muhurat-2027.txt.
+# Source: mPanchang Hindi articles (Vivah, Namkaran, Business and Mundan muhurat 2026). To add a new year, copy this file to muhurat-2027.txt.
 # Weekdays are NOT stored: build.js computes them from the date.
 [adhik]
 05-17 > 06-15 Adhik Jyeshtha
@@ -284,3 +284,61 @@
 12-18 16:13 > 12-19 07:08 Revati
 12-24 01:52 > 12-25 07:08 Punarvasu
 12-25 07:16 > 12-25 22:49 Punarvasu
+[business]
+01-23 07:46 > 01-23 11:48 Purva Bhadrapada
+01-28 07:44 > 01-28 08:36 Krittika
+02-02 07:42 > 02-02 11:09 Ashlesha
+02-23 09:49 > 02-23 11:22 Bharani
+03-04 07:14 > 03-04 09:11 Purva Phalguni
+03-13 07:13 > 03-13 10:11 Purva Ashadha
+03-23 06:55 > 03-23 11:29 Krittika
+04-09 10:23 > 04-09 12:35 Moola
+04-15 06:27 > 04-15 12:13 Purva Bhadrapada
+04-18 12:03 > 04-18 14:20 Ashwini
+04-19 07:39 > 04-19 07:45 Bharani
+04-19 09:41 > 04-19 13:01 Bharani
+05-07 08:33 > 05-07 10:45 Purva Ashadha
+06-19 06:25 > 06-19 10:18 Ashlesha
+06-21 05:57 > 06-21 10:10 Purva Phalguni
+07-10 08:57 > 07-10 11:13 Bharani
+07-16 06:13 > 07-16 08:30 Ashlesha
+07-16 10:49 > 07-16 13:04 Ashlesha
+07-23 08:03 > 07-23 12:36 Vishakha
+08-14 06:39 > 08-14 08:53 Purva Phalguni
+08-14 11:12 > 08-14 13:31 Purva Phalguni
+08-19 07:18 > 08-19 13:11 Swati
+08-29 07:08 > 08-29 12:30 Purva Bhadrapada
+09-11 11:42 > 09-11 13:47 Purva Phalguni
+09-16 06:46 > 09-16 11:21 Vishakha
+10-17 11:39 > 10-17 13:16 Moola
+10-18 06:57 > 10-18 09:14 Purva Ashadha
+10-28 08:36 > 10-28 12:58 Krittika
+11-14 07:28 > 11-14 11:58 Purva Ashadha
+11-19 09:29 > 11-19 13:14 Purva Bhadrapada
+12-11 07:37 > 12-11 10:04 Purva Ashadha
+12-11 11:49 > 12-11 13:13 Purva Ashadha
+[mundan]
+01-20 02:16 > 01-20 07:12 Shravana
+01-21 07:15 > 01-22 02:46 Dhanishta
+01-31 03:29 > 01-31 07:10 Punarvasu
+02-06 12:24 > 02-07 01:18 Hasta
+02-11 10:54 > 02-11 23:11 Jyeshtha
+02-12 12:24 > 02-12 13:43 Jyeshtha
+02-18 16:58 > 02-18 21:17 Shatabhisha
+02-26 02:41 > 02-26 12:12 Mrigashirsha
+02-27 10:48 > 02-27 11:31 Punarvasu
+03-05 08:19 > 03-06 05:25 Hasta
+03-16 09:43 > 03-17 06:36 Dhanishta
+04-21 04:17 > 04-21 06:04 Mrigashirsha
+04-22 22:52 > 04-23 20:48 Punarvasu
+04-29 05:59 > 04-29 19:51 Hasta
+05-04 09:59 > 05-04 16:13 Jyeshtha
+05-09 01:19 > 05-09 05:51 Shravana
+05-11 15:27 > 05-12 01:27 Shatabhisha
+05-14 22:35 > 05-15 08:30 Ashwini
+06-17 05:47 > 06-17 21:38 Punarvasu
+06-24 05:49 > 06-24 07:07 Chitra
+07-02 09:29 > 07-02 22:31 Shravana
+07-09 10:38 > 07-09 14:57 Ashwini
+07-15 11:53 > 07-15 21:45 Pushya
+07-20 05:58 > 07-21 04:02 Hasta

@@ -8,7 +8,7 @@ module.exports = function ({ ROOT, BRAND, layout, write, faqSchema, citiesBlock 
   const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const MONTH_FULL = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const nowIST = new Date(Date.now() + 5.5 * 3600e3).toISOString().slice(0, 16); // "YYYY-MM-DDTHH:MM"
-  const D = { adhik: [], abujh: [], vivah: [], namkaran: [], vehicle: [], property: [] };
+  const D = { adhik: [], abujh: [], vivah: [], namkaran: [], vehicle: [], property: [], business: [], mundan: [] };
 
   // ---- load every data/muhurat-YYYY.txt ----
   const dir = path.join(ROOT, "data");
@@ -42,7 +42,7 @@ module.exports = function ({ ROOT, BRAND, layout, write, faqSchema, citiesBlock 
   const HI_DAY = ["रवि", "सोम", "मंगल", "बुध", "गुरु", "शुक्र", "शनि"];
   const HI_MONTH = ["जनवरी", "फ़रवरी", "मार्च", "अप्रैल", "मई", "जून", "जुलाई", "अगस्त", "सितंबर", "अक्टूबर", "नवंबर", "दिसंबर"];
   const HI_OCC = { "Basant Panchami":"बसंत पंचमी", "Phulera Dooj":"फुलेरा दूज", "Akshaya Tritiya":"अक्षय तृतीया", "Janaki Navami":"जानकी नवमी", "Devutthani Ekadashi":"देवउठनी एकादशी" };
-  Object.assign(HI_NAK, { Punarvasu:"पुनर्वसु", Chitra:"चित्रा", Ashlesha:"आश्लेषा", Vishakha:"विशाखा", "Purva Phalguni":"पूर्वा फाल्गुनी", "Purva Bhadrapada":"पूर्वा भाद्रपद", "Purva Ashadha":"पूर्वाषाढ़ा", Mrigashira:"मृगशिरा", Mula:"मूल" });
+  Object.assign(HI_NAK, { Punarvasu:"पुनर्वसु", Chitra:"चित्रा", Ashlesha:"आश्लेषा", Vishakha:"विशाखा", "Purva Phalguni":"पूर्वा फाल्गुनी", "Purva Bhadrapada":"पूर्वा भाद्रपद", "Purva Ashadha":"पूर्वाषाढ़ा", Mrigashira:"मृगशिरा", Mula:"मूल", Krittika:"कृत्तिका", Bharani:"भरणी", Jyeshtha:"ज्येष्ठा", Shatabhisha:"शतभिषा" });
   const nk = n => n.split(", ").map(x => HI_NAK[x] ? `${x} (${HI_NAK[x]})` : x).join(", ");
   const NAMING_DAYS = [1, 3, 4, 5]; // Mon, Wed, Thu, Fri
 
@@ -179,7 +179,7 @@ ${srcNote}${citiesBlock}${hideScript}`,
     ["Which planet is linked to property?", "Mars is the karaka of land and the 4th house of the chart governs home and property. Jupiter and Venus, as benefic planets, are also considered supportive."],
     ["Does the muhurat apply to registration or to booking?", "Families usually pick the muhurat for the registry or the formal agreement, and a separate muhurat for Griha Pravesh (moving in). Booking an advance can be done earlier."],
     ["Why do the windows differ from other panchangs?", "Nakshatra start and end times shift with location, and different texts apply different filters. Treat the table as a guide and confirm with your pandit."],
-    ["Do these dates also apply to a flat or a plot?", "Yes, the same type of muhurat is used for a house, flat, plot or shop registration. For a business premises, also see the Shubh Muhurat page."]
+    ["Do these dates also apply to a flat or a plot?", "Yes, the same type of muhurat is used for a house, flat, plot or shop registration. For a business premises, also see the Business Muhurat page."]
   ];
   write("/property-muhurat/", layout({
     urlPath: "/property-muhurat/", title: `Property Purchase Muhurat ${lastYear} – Home, Flat & Land Registration Dates | ${BRAND}`,
@@ -197,5 +197,94 @@ ${faqBlock(propFaqs, "अक्सर पूछे जाने वाले प
 ${srcNote}${citiesBlock}${hideScript}`,
     extraJsonLd: [faqSchema(propFaqs)],
     related: [["/vehicle-muhurat/", "Vehicle Muhurat"], ["/vivah-muhurat/", "Vivah Muhurat"], ["/shubh-muhurat/", "Shubh Muhurat Today"]]
+  }));
+
+  /* ================= BUSINESS + MUNDAN ================= */
+  const BIZ_DAY = 4; // Thursday (Jupiter)
+  const bizFaqs = [
+    [
+      "Which day of the week is best to open a shop or start a business?",
+      "Thursday is the day most often recommended, because it belongs to Jupiter, the planet of growth and prosperity. The tables tick Thursdays, worked out from the calendar date."
+    ],
+    [
+      "Which nakshatras are considered good for starting a business?",
+      "Pushya, Ashwini, Chitra, Revati and Anuradha are the ones named most often. The tithi of the day also matters, so a pandit usually looks at both before confirming a time."
+    ],
+    [
+      "Which planets are linked with business?",
+      "Mercury is the main business planet because it governs trade, communication and intelligence. Jupiter (growth) and Venus (wealth) are the other supporting planets."
+    ],
+    [
+      "Which houses of the birth chart matter for business?",
+      "The 10th house stands for career and achievement, and the 7th house for partnerships. Benefic planets in the 2nd, 5th, 9th, 10th or 11th houses are read as supportive."
+    ],
+    [
+      "How do I find a business muhurat for today?",
+      "Check the day's panchang for tithi, nakshatra and yoga, or ask a pandit. For the hour, Abhijit Muhurat is the best-known window, and Amrit, Shubh or Labh Choghadiya are good picks. Keep clear of Rahu Kaal."
+    ]
+  ];
+  write("/business-muhurat/", layout({
+    urlPath: "/business-muhurat/", title: `Business & Shop Opening Muhurat ${lastYear} – दुकान उद्घाटन मुहूर्त | ${BRAND}`,
+    description: `Upcoming shubh muhurat dates to open a shop or start a new business in ${lastYear} with nakshatra windows, best weekday and Rahu Kaal guidance. Updated daily.`,
+    h1: `Business & Shop Opening Muhurat ${lastYear} – नया व्यापार मुहूर्त ${lastYear}`, crumbLabel: "Business Muhurat",
+    bodyHtml: `
+${nextBox(D.business, "Next business muhurat", "अगला व्यापार शुरू करने का मुहूर्त")}
+<p lang="hi">नई दुकान खोलने या नया व्यापार शुरू करने के लिए शुभ नक्षत्र और समय नीचे दिए गए हैं। उद्घाटन का समय राहु काल से बाहर रखें और अंतिम समय पंडित से पक्का कर लें।</p>
+<p>Many people open a shop, office or new venture on a favourable day. The tables below list the muhurat windows for ${lastYear}, month by month, starting from today. Some dates have two windows in the same day.</p>
+<h2>Upcoming business muhurat / आगामी व्यापार मुहूर्त</h2>
+${section(D.business, ["Muhurat window / मुहूर्त (IST)", "Nakshatra / नक्षत्र", "Day / वार"], r => `<tr${rowAttr(r)}><td>${range(r)}</td><td>${nk(r.nak)}</td><td>${U(r.s).getUTCDay() === BIZ_DAY ? "✓ " : ""}${dayName(r.s)} / ${HI_DAY[U(r.s).getUTCDay()]}</td></tr>`, `No upcoming business muhurat is listed for the rest of ${lastYear}.`, "Past dates this year")}
+<p class="disc2">✓ marks Thursday, the weekday most often preferred for starting a business.</p>
+<h2>What makes a good business muhurat / शुभ व्यापार मुहूर्त के नियम</h2>
+<p><b>Weekday:</b> Thursday (Jupiter). <b>Nakshatra:</b> Pushya, Ashwini, Chitra, Revati and Anuradha are the classic picks. <b>Planets:</b> Mercury for trade, with Jupiter and Venus supporting. <b>Birth chart:</b> the 10th house (career) and 7th house (partnership), with benefics in the 2nd, 5th, 9th, 10th or 11th. <b>Hour:</b> Abhijit Muhurat or an Amrit, Shubh or Labh Choghadiya, outside Rahu Kaal.</p>
+<h2>Picking the opening hour / उद्घाटन का समय</h2>
+<p>After you choose a date, pick the hour from that day's slots. Our <a href="/abhijit-muhurat/">Abhijit Muhurat</a>, <a href="/choghadiya/">Choghadiya</a> and <a href="/rahu-kaal/">Rahu Kaal</a> pages show the exact times for your city.</p>
+${faqBlock(bizFaqs, "अक्सर पूछे जाने वाले प्रश्न")}
+${srcNote}${citiesBlock}${hideScript}`,
+    extraJsonLd: [faqSchema(bizFaqs)],
+    related: [[ "/property-muhurat/", "Property Muhurat" ], [ "/vehicle-muhurat/", "Vehicle Muhurat" ], [ "/abhijit-muhurat/", "Abhijit Muhurat" ]]
+  }));
+
+  const MUN_DAYS = [1, 3, 4, 5]; // Mon, Wed, Thu, Fri
+  const munFaqs = [
+    [
+      "What is Mundan Sanskar?",
+      "Mundan, also called Chudakarana, is the ceremony in which a child's head is shaved for the first time. It is counted among the sixteen Hindu Sanskars and is traditionally done at an auspicious time."
+    ],
+    [
+      "Why is Mundan performed?",
+      "Traditionally it is seen as cleansing the child of the past and welcoming good fortune. Many families also value it for practical reasons, such as even hair growth afterwards."
+    ],
+    [
+      "At what age is Mundan done?",
+      "Customs differ by family and region. It is commonly done in the first, third or fifth year, though some families choose other ages. Ask your family pandit which tradition you follow."
+    ],
+    [
+      "Why are there no Mundan dates from August to December 2026?",
+      "The source panchang lists no Mundan muhurat for those months. Mundan is generally not done in Chaturmas, and other filters (Jupiter or Venus being set, for example) also remove dates. Consult a pandit for any special exception."
+    ],
+    [
+      "Can I set the time myself within a nakshatra window?",
+      "Usually yes, but pick the hour carefully: prefer Amrit, Shubh or Labh Choghadiya and avoid Rahu Kaal. Some windows run past midnight, so check the end date in the table."
+    ]
+  ];
+  write("/mundan-muhurat/", layout({
+    urlPath: "/mundan-muhurat/", title: `Mundan Muhurat ${lastYear} – मुंडन मुहूर्त, Chudakarana Sanskar Dates | ${BRAND}`,
+    description: `Upcoming Mundan (Chudakarana) muhurat dates for ${lastYear} with nakshatra windows and good weekdays, plus what the ceremony means. Updated daily.`,
+    h1: `Mundan Muhurat ${lastYear} – मुंडन मुहूर्त ${lastYear}`, crumbLabel: "Mundan Muhurat",
+    bodyHtml: `
+${nextBox(D.mundan, "Next Mundan muhurat", "अगला मुंडन मुहूर्त")}
+<p lang="hi"><b>मुंडन संस्कार</b> (चूड़ाकरण) सोलह संस्कारों में से एक है, जिसमें बच्चे के सिर के बाल पहली बार उतारे जाते हैं। इसे शुभ मुहूर्त में करने की परंपरा है। नीचे 2026 के मुंडन मुहूर्त नक्षत्र सहित दिए गए हैं।</p>
+<p>Mundan is the child's first haircut ceremony and one of the sixteen Hindu Sanskars. Families choose a favourable date for it, and the windows below show when a suitable nakshatra is running in ${lastYear}. Some windows end after midnight, and the end date is shown.</p>
+<h2>Upcoming Mundan muhurat / आगामी मुंडन मुहूर्त</h2>
+${section(D.mundan, ["Muhurat window / मुहूर्त (IST)", "Nakshatra / नक्षत्र", "Start day / वार"], r => `<tr${rowAttr(r)}><td>${range(r)}</td><td>${nk(r.nak)}</td><td>${MUN_DAYS.includes(U(r.s).getUTCDay()) ? "✓ " : ""}${dayName(r.s)} / ${HI_DAY[U(r.s).getUTCDay()]}</td></tr>`, `No Mundan muhurat is listed for the rest of ${lastYear} (August to December have none in the source panchang). ${lastYear + 1} dates will be added once the data file is updated.`, "Past dates this year")}
+<p class="disc2">✓ marks Monday, Wednesday, Thursday or Friday, weekdays commonly preferred for Mundan. Weekdays are calculated from the calendar date.</p>
+<h2>Why Mundan matters / मुंडन का महत्व</h2>
+<p>In Hindu tradition the ceremony symbolises a fresh start for the child, and a good muhurat is believed to bring wisdom, strength and good fortune. Because a child's horoscope also matters, many families confirm the final date with an astrologer using the child's birth details.</p>
+<h2>Choosing the hour / समय कैसे चुनें</h2>
+<p>Once you have a date, pick an Amrit, Shubh or Labh Choghadiya and stay out of Rahu Kaal. See <a href="/choghadiya/">today's Choghadiya</a> and <a href="/rahu-kaal/">Rahu Kaal</a> for your city.</p>
+${faqBlock(munFaqs, "अक्सर पूछे जाने वाले प्रश्न")}
+${srcNote}${citiesBlock}${hideScript}`,
+    extraJsonLd: [faqSchema(munFaqs)],
+    related: [[ "/namkaran-muhurat/", "Namkaran Muhurat" ], [ "/vivah-muhurat/", "Vivah Muhurat" ], [ "/choghadiya/", "Choghadiya Today" ]]
   }));
 };

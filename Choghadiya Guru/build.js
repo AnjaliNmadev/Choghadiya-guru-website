@@ -14,8 +14,7 @@ const NAV = [
     ["/abhijit-muhurat/", "Abhijit Muhurat"],
     ["/rahu-kaal/", "Rahu Kalam"],
     ["/gowri-panchangam/", "Gowri Panchangam"]
-  ]],
-  ["/shubh-muhurat/", "Shubh Muhurat"]
+  ]]
 ];
 
 // Top cities that get their own dedicated /choghadiya/<slug>/ landing page.
@@ -98,7 +97,7 @@ ${relatedHtml}
 <footer class="foot"><div class="wrap">
 <div class="cols4">
 <div><h4>Panchang Tools</h4><a href="/choghadiya/">Today's Choghadiya</a><a href="/hora/">Shubh Hora</a><a href="/gowri-panchangam/">Gowri Panchangam</a><a href="/rahu-kaal/">Rahu Kaal</a><a href="/abhijit-muhurat/">Abhijit Muhurat</a></div>
-<div><h4>Shubh Muhurat</h4><a href="/vivah-muhurat/">Marriage (Vivah)</a><a href="/namkaran-muhurat/">Namkaran</a><a href="/shubh-muhurat/">New Vehicle</a><a href="/shubh-muhurat/">New Property</a><a href="/shubh-muhurat/">Business</a><a href="/shubh-muhurat/">Mundan</a></div>
+<div><h4>Shubh Muhurat</h4><a href="/vivah-muhurat/">Marriage (Vivah)</a><a href="/namkaran-muhurat/">Namkaran</a><a href="/vehicle-muhurat/">New Vehicle</a><a href="/property-muhurat/">New Property</a><a href="/business-muhurat/">Business</a><a href="/mundan-muhurat/">Mundan</a></div>
 <div><h4>Learn</h4><a href="/what-is-choghadiya/">What is Choghadiya</a><a href="/what-is-choghadiya/#faq">FAQs</a></div>
 <div><h4>About ${BRAND}</h4><p>Simple, free choghadiya, hora, Gowri Panchangam, Rahu Kaal and Abhijit muhurat timings for Indian cities, calculated in your browser.</p></div>
 </div>
@@ -166,8 +165,8 @@ ${legend}
 <a class="tile" href="/namkaran-muhurat/"><span>👶</span>Shubh Muhurat For Name Giving</a>
 <a class="tile" href="/vehicle-muhurat/"><span>🚗</span>Shubh Muhurat For New Vehicle</a>
 <a class="tile" href="/property-muhurat/"><span>🏠</span>Shubh Muhurat For New Property</a>
-<a class="tile" href="/shubh-muhurat/"><span>💼</span>Shubh Muhurat For New Business</a>
-<a class="tile" href="/shubh-muhurat/"><span>✂️</span>Shubh Muhurat For Mundan</a>
+<a class="tile" href="/business-muhurat/"><span>💼</span>Shubh Muhurat For New Business</a>
+<a class="tile" href="/mundan-muhurat/"><span>✂️</span>Shubh Muhurat For Mundan</a>
 </div>
 <h2>Auspicious time today</h2>
 <p>Shubh, Labh, Char and Amrit are the choghadiyas people check first. Amrit is treated as the most auspicious period for any kind of work, Labh suits anyone starting a new business or a course, Shubh is the classic pick for weddings, puja and religious activities, and Char favours travel, dance and cultural work.</p>
