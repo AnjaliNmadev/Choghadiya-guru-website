@@ -74,3 +74,17 @@ PANCHANG PAGES (added)
 - /month-panchang/    month-wise grid (tithi, paksha, festivals) with Month and Year drop-downs (2000-2100), Amanta/Purnimanta switch.
 - /panchang/<year>/   12-month calendar pages, 2026-2035 (edit YEARS in build.js to add more).
 - Clicking any date anywhere opens its full daily panchang.
+
+
+VRAT PAGES (added): Purnima, Amavasya, Ekadashi, Pradosh
+- /purnima-vrat/  /amavasya-dates/  /ekadashi-vrat/  /pradosh-vrat/   (hub = next date + current-year month-wise list)
+- /<vrat>/<year>/  one page per year in YEARS (2026-2035), every month, with tithi start/end time (IST, New Delhi).
+  Ekadashi rows also show the parana window; Pradosh rows show Pradosh Kaal.
+- NOTHING is typed in by hand. vrat-calc.js computes all dates from assets/panchang-engine.js; vrat-pages.js writes the pages.
+  To add a year, add it to YEARS in build.js (this also adds the panchang calendar for that year) and run node build.js.
+- The daily GitHub Action rebuilds everything, so "Next ..." boxes and the current-year hub roll over by themselves on 1 Jan.
+- Pradosh date rule: PRADOSH_RULE in vrat-calc.js (or env var PRADOSH_RULE).
+    "pradoshkaal" (default) = day on which Trayodashi covers the evening Pradosh Kaal (Drik Panchang / shastra rule)
+    "sunrise"               = day on which Trayodashi is running at sunrise (mPanchang's list; ~half the dates are one day later)
+- Ekadashi dates follow the Smarta rule (first sunrise). Vaishnava dates can be one day later on some Ekadashis.
+- Home page (and the shared choghadiya city pages) got a "Vrat dates & important tithis" tile row linking to the 4 hubs.
