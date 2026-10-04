@@ -68,3 +68,9 @@ PANCHANG CALENDAR (new)
 - assets/panchang-engine.js = astronomy + festival rules (used by build.js and the browser).
   Festival rules are in the FEST list at the top of the festival section. Edit/add there.
 - Festival dates depend on the city and on tithi rules; verify important ones with a pandit.
+
+PANCHANG PAGES (added)
+- /aaj-ka-panchang/   today's panchang with a date box: any day, month or year (1900-2200), plus Previous/Next day.
+- /month-panchang/    month-wise grid (tithi, paksha, festivals) with Month and Year drop-downs (2000-2100), Amanta/Purnimanta switch.
+- /panchang/<year>/   12-month calendar pages, 2026-2035 (edit YEARS in build.js to add more).
+- Clicking any date anywhere opens its full daily panchang.

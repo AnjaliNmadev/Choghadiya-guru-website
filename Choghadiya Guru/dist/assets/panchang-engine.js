@@ -67,7 +67,7 @@
     sb += -2235 * Math.sin(Lp * RAD) + 382 * Math.sin(A3) + 175 * Math.sin(A1 - F) + 175 * Math.sin(A1 + F) + 127 * Math.sin(Lp * RAD - Mp) - 115 * Math.sin(Lp * RAD + Mp);
     return { lon: mod(Lp + sl / 1e6, 360), lat: sb / 1e6, dist: sr / 1000 };
   }
-  function ayanamsa(jd) { return 23.85306 + 1.396971 * ((jd - 2451545) / 36525) + 0.000308 * Math.pow((jd - 2451545) / 36525, 2); }  // Lahiri (mean)
+  function ayanamsa(jd) { return 23.83306 + 1.396971 * ((jd - 2451545) / 36525) + 0.000308 * Math.pow((jd - 2451545) / 36525, 2); }  // Lahiri (mean)
 
   /* ---------- Angles driving the panchang ---------- */
   function elong(jd) { return mod(moon(jd).lon - sunLon(jd), 360); }
@@ -110,9 +110,10 @@
     var sd = Math.asin(1737.4 / m.dist);
     return (topo - 0 ) * DEG + (0.5667 + sd * DEG);  // >0 once upper limb is above horizon (incl. refraction)
   }
-  function moonRiseSet(y, m, d, lat, lon) {
+  function moonRiseSet(y, m, d, lat, lon, endMin) {
     var res = { rise: null, set: null }, step = 10, prev = moonAlt(jdIST(y, m, d, 0), lat, lon), mn;
-    for (mn = step; mn <= 1440; mn += step) {
+    endMin = endMin || 1440;
+    for (mn = step; mn <= endMin + step; mn += step) {
       var cur = moonAlt(jdIST(y, m, d, mn), lat, lon);
       if ((prev < 0) !== (cur < 0)) {
         var lo = mn - step, hi = mn, fl = prev, k;
@@ -178,7 +179,7 @@
     if (mi.idx >= 9 && m <= 6) shaka = y - 79;
     out.shaka = shaka; out.vikram = shaka + 135; out.samvatsara = (shaka + 11) % 60;
     /* moon rise/set (civil date) */
-    var mr = moonRiseSet(y, m, d, lat, lon); out.moonrise = mr.rise; out.moonset = mr.set;
+    var mr = moonRiseSet(y, m, d, lat, lon, 1440 + b.r); out.moonrise = mr.rise; out.moonset = mr.set;
     /* inauspicious / auspicious periods */
     var dl = (a.s - a.r) / 8, seg = function (tb) { var s = a.r + (tb[wd] - 1) * dl; return [s, s + dl]; };
     out.rahu = seg(RAHU); out.yama = seg(YAMA); out.gulika = seg(GULI);
@@ -225,9 +226,9 @@
     { id: "sharadnav", hi: "शारदीय नवरात्रि प्रारंभ", en: "Sharad Navratri begins", m: 6, t: 1, at: "sr", big: 1 },
     { id: "durgashtami", hi: "दुर्गा अष्टमी", en: "Durga Ashtami", m: 6, t: 8, at: "sr", big: 1 },
     { id: "mahanavami", hi: "महा नवमी", en: "Maha Navami", m: 6, t: 9, at: "sr" },
-    { id: "dussehra", hi: "विजयादशमी (दशहरा)", en: "Vijayadashami (Dussehra)", m: 6, t: 10, at: "ap", big: 1 },
-    { id: "sharadpurnima", hi: "शरद पूर्णिमा", en: "Sharad Purnima", m: 6, t: 15, at: "pr", g: "purnima", big: 1 },
-    { id: "karwa", hi: "करवा चौथ", en: "Karwa Chauth", m: 7, t: 19, at: "mr", g: "sankashti", big: 1 },
+    { id: "dussehra", hi: "विजयादशमी (दशहरा)", en: "Vijayadashami (Dussehra)", m: 6, t: 10, at: "sr", big: 1 },
+    { id: "sharadpurnima", hi: "शरद पूर्णिमा", en: "Sharad Purnima", m: 6, t: 15, at: "sr", g: "purnima", big: 1 },
+    { id: "karwa", hi: "करवा चौथ", en: "Karwa Chauth", m: 7, t: 19, at: "mr", big: 1 },
     { id: "ahoi", hi: "अहोई अष्टमी", en: "Ahoi Ashtami", m: 7, t: 23, at: "pr" },
     { id: "dhanteras", hi: "धनतेरस", en: "Dhanteras", m: 7, t: 28, at: "pr", g: "pradosh", big: 1 },
     { id: "narak", hi: "नरक चतुर्दशी (छोटी दिवाली)", en: "Narak Chaturdashi (Chhoti Diwali)", m: 7, t: 29, at: "sr", g: "shivratri", big: 1 },
@@ -253,6 +254,7 @@
     "8K": ["उत्पन्ना एकादशी", "Utpanna Ekadashi"], "8S": ["मोक्षदा एकादशी (गीता जयंती)", "Mokshada Ekadashi (Gita Jayanti)"], "9K": ["सफला एकादशी", "Saphala Ekadashi"], "9S": ["पौष पुत्रदा एकादशी", "Pausha Putrada Ekadashi"],
     "10K": ["षटतिला एकादशी", "Shattila Ekadashi"], "10S": ["जया एकादशी", "Jaya Ekadashi"], "11K": ["विजया एकादशी", "Vijaya Ekadashi"], "11S": ["आमलकी एकादशी", "Amalaki Ekadashi"]
   };
+  var NAVD = [["शैलपुत्री पूजा", "Shailputri Puja"], ["ब्रह्मचारिणी पूजा", "Brahmacharini Puja"], ["चंद्रघंटा पूजा", "Chandraghanta Puja"], ["कुष्मांडा पूजा", "Kushmanda Puja"], ["स्कंदमाता पूजा", "Skandamata Puja"], ["कात्यायनी पूजा", "Katyayani Puja"], ["कालरात्रि पूजा", "Kalaratri Puja"], ["महागौरी पूजा", "Mahagauri Puja"], ["सिद्धिदात्री पूजा", "Siddhidatri Puja"]];
   var CIVIL = [[1, 1, "नव वर्ष", "New Year's Day"], [1, 26, "गणतंत्र दिवस", "Republic Day"], [4, 14, "अम्बेडकर जयंती", "Ambedkar Jayanti"], [8, 15, "स्वतंत्रता दिवस", "Independence Day"], [10, 2, "गांधी जयंती", "Gandhi Jayanti"], [12, 25, "क्रिसमस", "Christmas"]];
   var SANK = [["मेष संक्रांति (बैसाखी)", "Mesha Sankranti (Baisakhi)"], ["वृषभ संक्रांति", "Vrishabha Sankranti"], ["मिथुन संक्रांति", "Mithuna Sankranti"], ["कर्क संक्रांति", "Karka Sankranti"], ["सिंह संक्रांति", "Simha Sankranti"], ["कन्या संक्रांति (विश्वकर्मा पूजा)", "Kanya Sankranti (Vishwakarma Puja)"], ["तुला संक्रांति", "Tula Sankranti"], ["वृश्चिक संक्रांति", "Vrishchika Sankranti"], ["धनु संक्रांति", "Dhanu Sankranti"], ["मकर संक्रांति / पोंगल / उत्तरायण", "Makar Sankranti / Pongal / Uttarayan"], ["कुम्भ संक्रांति", "Kumbha Sankranti"], ["मीन संक्रांति", "Meena Sankranti"]];
 
@@ -316,12 +318,16 @@
         var hi = ad ? (pk === "S" ? "पद्मिनी एकादशी" : "परमा एकादशी") : e[0], en = ad ? (pk === "S" ? "Padmini Ekadashi" : "Parama Ekadashi") : e[1];
         if (!has(x3, "ekadashi")) add(x3, { hi: hi, en: en, g: "ekadashi", big: 0 }); } });
       // Pradosh (tithi at pradosh)
-      if ((pr.n === 13 || pr.n === 28) && !(get(D[x3.i], "pr").n === pr.n)) { if (!has(x3, "pradosh")) { var wdx = x3.wd, pn = { 1: ["सोम प्रदोष व्रत", "Som Pradosh Vrat"], 2: ["भौम प्रदोष व्रत", "Bhauma Pradosh Vrat"], 6: ["शनि प्रदोष व्रत", "Shani Pradosh Vrat"] }[wdx] || ["प्रदोष व्रत", "Pradosh Vrat"]; add(x3, { hi: pn[0], en: pn[1], g: "pradosh", big: 0 }); } }
+      if ((((sr.n === 13 || sr.n === 28) && prevSr.n !== sr.n) || kshaya(13) || kshaya(28))) { if (!has(x3, "pradosh")) { var wdx = x3.wd, pn = { 1: ["सोम प्रदोष व्रत", "Som Pradosh Vrat"], 2: ["भौम प्रदोष व्रत", "Bhauma Pradosh Vrat"], 6: ["शनि प्रदोष व्रत", "Shani Pradosh Vrat"] }[wdx] || ["प्रदोष व्रत", "Pradosh Vrat"]; add(x3, { hi: pn[0], en: pn[1], g: "pradosh", big: 0 }); } }
       // Purnima / Amavasya
       if (first(15) && !has(x3, "purnima")) add(x3, { hi: T.lm.hi[sr.pm] + " पूर्णिमा", en: T.lm.en[sr.pm] + " Purnima", g: "purnima", big: 0 });
       if (first(30) && !has(x3, "amavasya")) add(x3, { hi: T.lm.hi[sr.pm] + " अमावस्या", en: T.lm.en[sr.pm] + " Amavasya", g: "amavasya", big: 0 });
       // Masik Shivratri
       if ((pr.n === 29) && !(get(D[x3.i], "pr").n === 29) && !has(x3, "shivratri")) add(x3, { hi: "मासिक शिवरात्रि", en: "Masik Shivratri", g: "shivratri", big: 0 });
+      // Navratri daily pujas (Chaitra & Ashwin shukla 1-9)
+      if ((sr.pm === 6 || sr.pm === 0) && !sr.adhik && sr.n >= 1 && sr.n <= 9 && !(prevSr.n === sr.n)) { var nv = NAVD[sr.n - 1]; add(x3, { hi: nv[0], en: nv[1], g: "navratri", big: 0 }); }
+      // Bhanu Saptami
+      if (x3.wd === 0 && (sr.n === 7 || sr.n === 22) && !has(x3, "bhanu")) add(x3, { hi: "भानु सप्तमी", en: "Bhanu Saptami", g: "bhanu", big: 0 });
       // Vinayaka Chaturthi (shukla 4, midday)
       var md = get(x3, "md"); if (md.n === 4 && get(D[x3.i], "md").n !== 4 && !has(x3, "vinayaka")) add(x3, { hi: "विनायक चतुर्थी", en: "Vinayaka Chaturthi", g: "vinayaka", big: 0 });
     }
@@ -332,6 +338,21 @@
     return out;
   }
 
+
+
+  /* ---------- Month-wise panchang grid (tithi at sunrise + tithis that begin before midnight) ---------- */
+  function monthGrid(y, m, lat, lon) {
+    var dim = new Date(Date.UTC(y, m, 0)).getUTCDate(), out = [], d;
+    for (d = 1; d <= dim; d++) {
+      var a = sun(y, m, d, lat, lon), nx = new Date(Date.UTC(y, m - 1, d + 1)), b = sun(nx.getUTCFullYear(), nx.getUTCMonth() + 1, nx.getUTCDate(), lat, lon);
+      var sr = jdIST(y, m, d, a.r), nsr = jdIST(y, m, d, 1440 + b.r), n0 = Math.floor(elong(sr) / 12) + 1, n1 = Math.floor(elong(nsr) / 12) + 1, list = [n0], df = (n1 - n0 + 30) % 30, k;
+      for (k = 1; k < df; k++) list.push((n0 - 1 + k) % 30 + 1);          // tithis that fall wholly between two sunrises (kshaya)
+      var mi = monthInfo(sr);
+      out.push({ d: d, wd: new Date(Date.UTC(y, m - 1, d)).getUTCDay(), tn: list, am: mi.idx, adhik: mi.adhik, pm: (mi.idx + (list[0] > 15 ? 1 : 0)) % 12, sam: 0 });
+    }
+    var sh = (out[0].am >= 9 && m <= 6) ? y - 79 : y - 78; if (out[0].am >= 9 && m >= 10) sh = y - 78;
+    return { days: out, shaka: sh, samvatsara: (sh + 11) % 60 };
+  }
 
   /* ---------- Calendar markup (used by the build for SEO and by the browser for re-rendering) ---------- */
   var WDH = ["सो", "मं", "बु", "गु", "शु", "श", "र"], WDE = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
@@ -363,6 +384,6 @@
   /* ---------- tiny helpers shared with UI ---------- */
   function ago24(mins) { mins = Math.round(mins); var h = Math.floor(mins / 60), mm = mins - h * 60; return (h < 10 ? "0" : "") + h + ":" + (mm < 10 ? "0" : "") + mm; }
 
-  var API = { dayData: dayData, festivals: festivals, calendarHTML: calendarHTML, monthHTML: monthHTML, T: T, fmt24: ago24, moonRiseSet: moonRiseSet, sun: sun, _int: { elong: elong, moon: moon, sunLon: sunLon, sunSid: sunSid, moonSid: moonSid, ayanamsa: ayanamsa, jdIST: jdIST, jd0: jd0, cross: cross, monthInfo: monthInfo } };
+  var API = { dayData: dayData, festivals: festivals, calendarHTML: calendarHTML, monthGrid: monthGrid, monthHTML: monthHTML, T: T, fmt24: ago24, moonRiseSet: moonRiseSet, sun: sun, _int: { elong: elong, moon: moon, sunLon: sunLon, sunSid: sunSid, moonSid: moonSid, ayanamsa: ayanamsa, jdIST: jdIST, jd0: jd0, cross: cross, monthInfo: monthInfo } };
   if (typeof module !== "undefined" && module.exports) module.exports = API; else root.Panchang = API;
 })(typeof window !== "undefined" ? window : this);

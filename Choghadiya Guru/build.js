@@ -8,7 +8,11 @@ const TODAY = new Date().toISOString().slice(0, 10);
 // children: array of [href, label] — clicking any of these opens ONLY that tool's own page.
 const NAV = [
   ["/", "Home"],
-  ["/panchang/", "Panchang"],
+  ["/panchang/", "Panchang", [
+    ["/aaj-ka-panchang/", "Aaj ka Panchang"],
+    ["/panchang/", "Panchang Calendar"],
+    ["/month-panchang/", "Month Panchang"]
+  ]],
   ["/choghadiya/", "Choghadiya", [
     ["/choghadiya/", "Aaj ka Choghadiya"],
     ["/hora/", "Shubh Hora"],
@@ -97,7 +101,7 @@ ${relatedHtml}
 </main>
 <footer class="foot"><div class="wrap">
 <div class="cols4">
-<div><h4>Panchang Tools</h4><a href="/panchang/">Panchang Calendar</a><a href="/choghadiya/">Today's Choghadiya</a><a href="/hora/">Shubh Hora</a><a href="/gowri-panchangam/">Gowri Panchangam</a><a href="/rahu-kaal/">Rahu Kaal</a><a href="/abhijit-muhurat/">Abhijit Muhurat</a></div>
+<div><h4>Panchang Tools</h4><a href="/aaj-ka-panchang/">Aaj ka Panchang</a><a href="/panchang/">Panchang Calendar</a><a href="/month-panchang/">Month Panchang</a><a href="/choghadiya/">Today's Choghadiya</a><a href="/hora/">Shubh Hora</a><a href="/gowri-panchangam/">Gowri Panchangam</a><a href="/rahu-kaal/">Rahu Kaal</a><a href="/abhijit-muhurat/">Abhijit Muhurat</a></div>
 <div><h4>Shubh Muhurat</h4><a href="/vivah-muhurat/">Marriage (Vivah)</a><a href="/namkaran-muhurat/">Namkaran</a><a href="/vehicle-muhurat/">New Vehicle</a><a href="/property-muhurat/">New Property</a><a href="/business-muhurat/">Business</a><a href="/mundan-muhurat/">Mundan</a></div>
 <div><h4>Learn</h4><a href="/what-is-choghadiya/">What is Choghadiya</a><a href="/what-is-choghadiya/#faq">FAQs</a></div>
 <div><h4>About ${BRAND}</h4><p>Simple, free choghadiya, hora, Gowri Panchangam, Rahu Kaal and Abhijit muhurat timings for Indian cities, calculated in your browser.</p></div>
@@ -471,7 +475,7 @@ ${citiesBlock}`,
 }));
 
 require("./muhurat-pages.js")({ ROOT, BRAND, layout, write, faqSchema, citiesBlock });
-require("./panchang-pages.js")({ BRAND, layout, write, faqSchema, citiesBlock, SITE, YEARS: [2026, 2027, 2028, 2029, 2030] });
+require("./panchang-pages.js")({ BRAND, layout, write, faqSchema, citiesBlock, SITE, YEARS: [2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035] });
 
 /* ---------------- 404 ---------------- */
 fs.writeFileSync(path.join(ROOT, "dist", "404.html"), layout({
