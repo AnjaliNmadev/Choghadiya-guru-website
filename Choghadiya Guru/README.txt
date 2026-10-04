@@ -76,8 +76,8 @@ PANCHANG PAGES (added)
 - Clicking any date anywhere opens its full daily panchang.
 
 
-VRAT PAGES (added): Purnima, Amavasya, Ekadashi, Pradosh
-- /purnima-vrat/  /amavasya-dates/  /ekadashi-vrat/  /pradosh-vrat/   (hub = next date + current-year month-wise list)
+VRAT PAGES (added): Purnima, Amavasya, Ekadashi, Pradosh, Sankashti Chaturthi, Vinayaka Chaturthi
+- /purnima-vrat/  /amavasya-dates/  /ekadashi-vrat/  /pradosh-vrat/  /sankashti-chaturthi/  /vinayaka-chaturthi/   (hub = next date + current-year month-wise list)
 - /<vrat>/<year>/  one page per year in YEARS (2026-2035), every month, with tithi start/end time (IST, New Delhi).
   Ekadashi rows also show the parana window; Pradosh rows show Pradosh Kaal.
 - NOTHING is typed in by hand. vrat-calc.js computes all dates from assets/panchang-engine.js; vrat-pages.js writes the pages.
@@ -87,4 +87,5 @@ VRAT PAGES (added): Purnima, Amavasya, Ekadashi, Pradosh
     "pradoshkaal" (default) = day on which Trayodashi covers the evening Pradosh Kaal (Drik Panchang / shastra rule)
     "sunrise"               = day on which Trayodashi is running at sunrise (mPanchang's list; ~half the dates are one day later)
 - Ekadashi dates follow the Smarta rule (first sunrise). Vaishnava dates can be one day later on some Ekadashis.
-- Home page (and the shared choghadiya city pages) got a "Vrat dates & important tithis" tile row linking to the 4 hubs.
+- Sankashti date = day Krishna Chaturthi is running at MOONRISE (Delhi); table shows moonrise. Vinayaka date = day Shukla Chaturthi covers MADHYAHNA; table shows the puja muhurat.
+- All vrat pages are linked from the "Vrats" dropdown in the navbar and the "Vrat Dates" column in the footer (NAV and footer in build.js). They are NOT on the home page.

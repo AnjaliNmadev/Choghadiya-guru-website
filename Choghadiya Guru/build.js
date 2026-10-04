@@ -19,6 +19,17 @@ const NAV = [
     ["/abhijit-muhurat/", "Abhijit Muhurat"],
     ["/rahu-kaal/", "Rahu Kalam"],
     ["/gowri-panchangam/", "Gowri Panchangam"]
+  ]],
+  ["/vrats/", "Vrats", [
+    ["/vrats/", "All Vrats"],
+    ["/purnima-vrat/", "Purnima Vrat"],
+    ["/amavasya-dates/", "Amavasya Dates"],
+    ["/ekadashi-vrat/", "Ekadashi Vrat"],
+    ["/pradosh-vrat/", "Pradosh Vrat"],
+    ["/sankashti-chaturthi/", "Sankashti Chaturthi"],
+    ["/vinayaka-chaturthi/", "Vinayaka Chaturthi"],
+    ["/sankranti-dates/", "Sankranti Dates"],
+    ["/satyanarayan-puja/", "Satyanarayan Puja"]
   ]]
 ];
 
@@ -103,6 +114,7 @@ ${relatedHtml}
 <div class="cols4">
 <div><h4>Panchang Tools</h4><a href="/aaj-ka-panchang/">Aaj ka Panchang</a><a href="/panchang/">Panchang Calendar</a><a href="/month-panchang/">Month Panchang</a><a href="/choghadiya/">Today's Choghadiya</a><a href="/hora/">Shubh Hora</a><a href="/gowri-panchangam/">Gowri Panchangam</a><a href="/rahu-kaal/">Rahu Kaal</a><a href="/abhijit-muhurat/">Abhijit Muhurat</a></div>
 <div><h4>Shubh Muhurat</h4><a href="/vivah-muhurat/">Marriage (Vivah)</a><a href="/namkaran-muhurat/">Namkaran</a><a href="/vehicle-muhurat/">New Vehicle</a><a href="/property-muhurat/">New Property</a><a href="/business-muhurat/">Business</a><a href="/mundan-muhurat/">Mundan</a></div>
+<div><h4>Vrat Dates</h4><a href="/purnima-vrat/">Purnima Vrat</a><a href="/amavasya-dates/">Amavasya Dates</a><a href="/ekadashi-vrat/">Ekadashi Vrat</a><a href="/pradosh-vrat/">Pradosh Vrat</a><a href="/sankashti-chaturthi/">Sankashti Chaturthi</a><a href="/vinayaka-chaturthi/">Vinayaka Chaturthi</a><a href="/sankranti-dates/">Sankranti Dates</a><a href="/satyanarayan-puja/">Satyanarayan Puja</a><a href="/vrats/">All Vrats</a></div>
 <div><h4>Learn</h4><a href="/what-is-choghadiya/">What is Choghadiya</a><a href="/what-is-choghadiya/#faq">FAQs</a></div>
 <div><h4>About ${BRAND}</h4><p>Simple, free choghadiya, hora, Gowri Panchangam, Rahu Kaal and Abhijit muhurat timings for Indian cities, calculated in your browser.</p></div>
 </div>
@@ -173,14 +185,6 @@ ${legend}
 <a class="tile" href="/property-muhurat/"><span>🏠</span>Shubh Muhurat For New Property</a>
 <a class="tile" href="/business-muhurat/"><span>💼</span>Shubh Muhurat For New Business</a>
 <a class="tile" href="/mundan-muhurat/"><span>✂️</span>Shubh Muhurat For Mundan</a>
-</div>
-<h2>Vrat dates &amp; important tithis</h2>
-<p>Looking for the next Purnima, Amavasya, Ekadashi or Pradosh? Open a page below for every date of the year with the exact tithi timing.</p>
-<div class="tiles">
-<a class="tile" href="/purnima-vrat/"><span>🌕</span>Purnima Vrat Dates</a>
-<a class="tile" href="/amavasya-dates/"><span>🌑</span>Amavasya Dates</a>
-<a class="tile" href="/ekadashi-vrat/"><span>🪷</span>Ekadashi Vrat Dates</a>
-<a class="tile" href="/pradosh-vrat/"><span>🔱</span>Pradosh Vrat Dates</a>
 </div>
 <h2>Auspicious time today</h2>
 <p>Shubh, Labh, Char and Amrit are the choghadiyas people check first. Amrit is treated as the most auspicious period for any kind of work, Labh suits anyone starting a new business or a course, Shubh is the classic pick for weddings, puja and religious activities, and Char favours travel, dance and cultural work.</p>

@@ -1,4 +1,4 @@
-// Computes Purnima, Amavasya, Ekadashi and Pradosh vrat dates + tithi timings for ANY year,
+// Computes Purnima, Amavasya, Ekadashi, Pradosh, Sankashti Chaturthi, Vinayaka Chaturthi, Sankranti and Satyanarayan Puja dates + tithi timings for ANY year,
 // directly from assets/panchang-engine.js (same astronomy as the panchang calendar).
 // Nothing here is typed in by hand: add a year to YEARS in build.js and it just works.
 // Location: New Delhi (28.6139 N, 77.2090 E), times in IST.
@@ -29,6 +29,20 @@ const EKA = {
   "10K": ["षटतिला एकादशी", "Shattila Ekadashi"], "10S": ["जया एकादशी", "Jaya Ekadashi"],
   "11K": ["विजया एकादशी", "Vijaya Ekadashi"], "11S": ["आमलकी एकादशी", "Amalaki Ekadashi"]
 };
+const RASHI = [ // index = rashi the Sun ENTERS (0 = Mesha)
+  ["मेष", "Mesha", "Aries", "Vishu", "Mesha Sankranti (Baisakhi, Vishu, Puthandu)", "मेष संक्रांति (बैसाखी, विशु)"],
+  ["वृषभ", "Vrishabha", "Taurus", "Vishnupadi", "Vrishabha Sankranti", "वृषभ संक्रांति"],
+  ["मिथुन", "Mithuna", "Gemini", "Shadashitimukhi", "Mithuna Sankranti (Raja Parba in Odisha)", "मिथुन संक्रांति"],
+  ["कर्क", "Karka", "Cancer", "Ayana", "Karka Sankranti (Dakshinayana begins)", "कर्क संक्रांति (दक्षिणायन आरंभ)"],
+  ["सिंह", "Simha", "Leo", "Vishnupadi", "Simha Sankranti", "सिंह संक्रांति"],
+  ["कन्या", "Kanya", "Virgo", "Shadashitimukhi", "Kanya Sankranti (Vishwakarma Puja)", "कन्या संक्रांति (विश्वकर्मा पूजा)"],
+  ["तुला", "Tula", "Libra", "Vishu", "Tula Sankranti", "तुला संक्रांति"],
+  ["वृश्चिक", "Vrishchika", "Scorpio", "Vishnupadi", "Vrishchika Sankranti", "वृश्चिक संक्रांति"],
+  ["धनु", "Dhanu", "Sagittarius", "Shadashitimukhi", "Dhanu Sankranti (Kharmas begins)", "धनु संक्रांति (खरमास आरंभ)"],
+  ["मकर", "Makar", "Capricorn", "Ayana", "Makar Sankranti (Pongal, Uttarayan, Magh Bihu)", "मकर संक्रांति (पोंगल, उत्तरायण)"],
+  ["कुंभ", "Kumbha", "Aquarius", "Vishnupadi", "Kumbha Sankranti", "कुंभ संक्रांति"],
+  ["मीन", "Meena", "Pisces", "Shadashitimukhi", "Meena Sankranti (Kharmas)", "मीन संक्रांति (खरमास)"]
+];
 const WD_HI = ["रविवार", "सोमवार", "मंगलवार", "बुधवार", "गुरुवार", "शुक्रवार", "शनिवार"];
 const WD_EN = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
@@ -72,7 +86,7 @@ function fmtRun(run) { return { s: ist(run.s).iso, e: ist(run.e).iso }; }
 
 function compute(year) {
   const jdFrom = E.jd0(year, 1, 1), jdTo = E.jd0(year, 12, 31);
-  const res = { purnima: [], amavasya: [], ekadashi: [], pradosh: [] };
+  const res = { purnima: [], amavasya: [], ekadashi: [], pradosh: [], sankashti: [], vinayaka: [], sankranti: [], satyanarayan: [] };
 
   // ---- sunrise-based vrats: day on which the tithi is running at sunrise (first such day; kshaya -> day before) ----
   function sunriseDay(run) {
@@ -141,10 +155,83 @@ function compute(year) {
     });
   });
 
+
+  // ---- Sankashti Chaturthi (Krishna Chaturthi, tithi 19): the day on which Chaturthi is running at MOONRISE (Delhi).
+  //      If it runs at moonrise on two days, the first day is taken. If it never touches a moonrise, the day it is running at sunrise.
+  const hhmm = (y, m, d, min) => dateKey(y, m, d) + "T" + pad(Math.floor(min / 60)) + ":" + pad(Math.floor(min % 60));
+  tithiRuns(19, jdFrom - 1, jdTo + 1).forEach(run => {
+    const t0 = ist(run.s); let [y, m, d] = nextDay(t0.y, t0.m, t0.d, -1), best = null;
+    for (let k = 0; k < 4 && !best; k++) {
+      const mr = P.moonRiseSet(y, m, d, DEL.lat, DEL.lon).rise;
+      if (mr !== null && mr < 1440) { const jd = E.jdIST(y, m, d, mr); if (jd >= run.s && jd < run.e) best = { y, m, d, mr }; }
+      [y, m, d] = nextDay(y, m, d, 1);
+    }
+    if (!best) { const x = sunriseDay(run); if (x) best = { y: x.y, m: x.m, d: x.d, mr: null }; }
+    if (!best || best.y !== year) return;
+    if (best.mr === null) { const q = P.moonRiseSet(best.y, best.m, best.d, DEL.lat, DEL.lon).rise; if (q !== null && q < 1440) best.mr = q; }
+    const mi = E.monthInfo(sunJD(best.y, best.m, best.d).rise), nm = monthName(mi, true);
+    const wd = new Date(Date.UTC(best.y, best.m - 1, best.d)).getUTCDay();
+    const ang = wd === 2, extra = [];
+    if (!mi.adhik && nm.i === 10) extra.push(["सकट चौथ", "Sakat Chauth"]);   // Magha Krishna Chaturthi
+    if (!mi.adhik && nm.i === 7) extra.push(["करवा चौथ", "Karwa Chauth"]);   // Kartik (Purnimanta) Krishna Chaturthi
+    const en = (ang ? "Angarki " : nm.en + " ") + "Sankashti Chaturthi" + (extra.length ? " (" + extra.map(x => x[1]).join(", ") + ")" : "");
+    const hi = (ang ? "अंगारकी " : nm.hi + " ") + "संकष्टी चतुर्थी" + (extra.length ? " (" + extra.map(x => x[0]).join(", ") + ")" : "");
+    res.sankashti.push({ date: dateKey(best.y, best.m, best.d), wd, en, hi, month: nm, paksha: "K", angarki: ang, run: fmtRun(run), moonrise: best.mr === null ? null : hhmm(best.y, best.m, best.d, best.mr) });
+  });
+
+  // ---- Vinayaka Chaturthi (Shukla Chaturthi, tithi 4): the day on which Chaturthi covers the most of MADHYAHNA
+  //      (the middle fifth of the daytime, the Ganesh puja time). If it misses madhyahna on both days, the day it is running at sunrise.
+  tithiRuns(4, jdFrom - 1, jdTo + 1).forEach(run => {
+    const t0 = ist(run.s); let [y, m, d] = nextDay(t0.y, t0.m, t0.d, -1), best = null;
+    for (let k = 0; k < 4; k++) {
+      const sj = sunJD(y, m, d), len = sj.set - sj.rise, ms = sj.rise + 2 * len / 5, me = sj.rise + 3 * len / 5;
+      const ov = Math.min(run.e, me) - Math.max(run.s, ms);
+      if (ov > 1e-6 && (!best || ov > best.ov + 1e-9)) best = { y, m, d, ov, ms, me };
+      [y, m, d] = nextDay(y, m, d, 1);
+    }
+    if (!best) { const x = sunriseDay(run); if (x) { const sj = sunJD(x.y, x.m, x.d), len = sj.set - sj.rise; best = { y: x.y, m: x.m, d: x.d, ov: 0, ms: sj.rise + 2 * len / 5, me: sj.rise + 3 * len / 5 }; } }
+    if (!best || best.y !== year) return;
+    const mi = E.monthInfo(sunJD(best.y, best.m, best.d).rise), nm = monthName(mi, false);
+    const wd = new Date(Date.UTC(best.y, best.m - 1, best.d)).getUTCDay();
+    const ganesh = !mi.adhik && nm.i === 5;                                    // Bhadrapada Shukla Chaturthi
+    const en = ganesh ? "Ganesh Chaturthi (Bhadrapada Vinayaka Chaturthi)" : nm.en + " Vinayaka Chaturthi";
+    const hi = ganesh ? "गणेश चतुर्थी (भाद्रपद विनायक चतुर्थी)" : nm.hi + " विनायक चतुर्थी";
+    // puja muhurat = madhyahna clipped to the tithi
+    const ps = Math.max(best.ms, run.s), pe = Math.min(best.me, run.e);
+    res.vinayaka.push({ date: dateKey(best.y, best.m, best.d), wd, en, hi, month: nm, paksha: "S", ganesh, run: fmtRun(run), puja: pe > ps ? { s: ist(ps).iso, e: ist(pe).iso } : null });
+  });
+
+
+  // ---- Sankranti: the moment the Sun (sidereal / Nirayana) enters a new rashi. Date = IST date of that moment.
+  for (let r = 0; r < 12; r++) {
+    let g = null; const yd = E.jd0(year, 1, 1);
+    for (let q = 0; q < 366; q += 10) { const jj = yd + q; if (Math.floor(E.sunSid(jj) / 30) === (r + 11) % 12 && Math.floor(E.sunSid(jj + 10) / 30) === r) { g = jj + 5; break; } }
+    if (g === null) continue;
+    const c = E.cross(E.sunSid, r * 30, g), t = ist(c);
+    if (t.y !== year) continue;
+    const wd = new Date(Date.UTC(t.y, t.m - 1, t.d)).getUTCDay(), R = RASHI[r];
+    res.sankranti.push({ date: dateKey(t.y, t.m, t.d), wd, rashi: r, en: R[4], hi: R[5], rashiHi: R[0], rashiEn: R[1], sign: R[2], kind: R[3], moment: t.iso, afterSunset: c > sunJD(t.y, t.m, t.d).set, run: null });
+  }
+
+  // ---- Satyanarayan Puja (Purnima): the Purnima day (same day as the Purnima vrat, Purnima at sunrise) plus the
+  //      day on which Purnima is running in the EVENING (the preferred time for the katha), which can be the day before.
+  tithiRuns(15, jdFrom - 1, jdTo + 1).forEach(run => {
+    const x = sunriseDay(run); if (!inYear(x)) return;
+    const mi = E.monthInfo(sunJD(x.y, x.m, x.d).rise), nm = monthName(mi, false);
+    const wd = new Date(Date.UTC(x.y, x.m - 1, x.d)).getUTCDay();
+    const t0 = ist(run.s); let [y, m, d] = nextDay(t0.y, t0.m, t0.d, -1), best = null;
+    for (let k = 0; k < 4; k++) {
+      const ss = sunJD(y, m, d).set, ov = Math.min(run.e, ss + PRADOSH_MIN / 1440) - Math.max(run.s, ss);
+      if (ov > 0 && (!best || ov > best.ov + 1e-9)) best = { y, m, d, ov };
+      [y, m, d] = nextDay(y, m, d, 1);
+    }
+    res.satyanarayan.push({ date: dateKey(x.y, x.m, x.d), wd, month: nm, en: nm.en + " Purnima Satyanarayan Vrat", hi: nm.hi + " पूर्णिमा सत्यनारायण व्रत", run: fmtRun(run), eveningDate: best ? dateKey(best.y, best.m, best.d) : null });
+  });
+
   Object.keys(res).forEach(k => res[k].sort((a, b) => a.date < b.date ? -1 : 1));
   // drop accidental duplicates (same date)
   Object.keys(res).forEach(k => res[k] = res[k].filter((r, i, a) => !i || r.date !== a[i - 1].date));
   return res;
 }
 
-module.exports = { EKA, PRADOSH_RULE, PRADOSH_MIN, compute, LM, WD_HI, WD_EN, DEL };
+module.exports = { RASHI, EKA, PRADOSH_RULE, PRADOSH_MIN, compute, LM, WD_HI, WD_EN, DEL };
