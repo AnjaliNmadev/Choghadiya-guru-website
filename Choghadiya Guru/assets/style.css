@@ -167,3 +167,7 @@ h3.sec{font-size:17px;margin:20px 0 8px;color:var(--nav)}tr.tw td{background:#ff
 input[type=date]{width:auto;min-width:170px}
 
 .tbl tr.past td{opacity:.55}.tbl td small{opacity:.75}.tbl td a{color:var(--mar);font-weight:600;text-decoration:none}.tbl td a:hover{text-decoration:underline}h3.sec{scroll-margin-top:12px}
+/* calendar pages */
+.ctbl{min-width:0;table-layout:auto}.ctbl td:first-child{white-space:nowrap}
+.mjump{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 14px}.mjump a{border:1px solid var(--bd);background:#fff;color:var(--mar);border-radius:16px;padding:4px 11px;font-size:13px;font-weight:600;text-decoration:none}.mjump a:hover{background:var(--cream)}
+h2.mh{scroll-margin-top:12px}.disc2{font-size:13px;color:#8a7a5f;margin-top:16px}
