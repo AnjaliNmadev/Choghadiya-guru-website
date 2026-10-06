@@ -87,12 +87,12 @@ ${citiesBlock}`;
   const faq = (title, list) => `<h2>${title}</h2>` + list.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join("\n");
 
   // build-time snapshot of today's panchang (New Delhi) so crawlers see real content; replaced by the live panel in the browser
-  const dd = P.dayData(ty, tm, td, LAT, LON), f = P.fmt24, fl = v => f(Math.floor(v + 1e-6));
+  const dd = P.dayData(ty, tm, td, LAT, LON), f = P.fmt24, fl = v => f(Math.floor(v + 1e-6)), fu = e => { if (e <= dd.nextSunrise) return f(e); const k = Math.floor(e / 1440); return f(e - 1440 * k) + (k <= 1 ? " (next day)" : " (day after next)"); };
   const tnm = n => n === 30 ? P.T.tithi.hi[15] : P.T.tithi.hi[(n - 1) % 15], tne = n => n === 30 ? P.T.tithi.en[15] : P.T.tithi.en[(n - 1) % 15];
   const snap = `<div class="snap"><h2>Today's Panchang, New Delhi – ${td} ${MON_E[tm - 1]} ${ty} / आज का पंचांग</h2><div class="tbl"><table><tbody>
-<tr><th>Tithi / तिथि</th><td>${tne(dd.tithi[0].n)} / ${tnm(dd.tithi[0].n)} (until ${f(dd.tithi[0].e)})</td></tr>
-<tr><th>Nakshatra / नक्षत्र</th><td>${P.T.nak.en[dd.nak[0].i]} / ${P.T.nak.hi[dd.nak[0].i]} (until ${f(dd.nak[0].e)})</td></tr>
-<tr><th>Yoga / योग</th><td>${P.T.yoga.en[dd.yoga[0].i]} / ${P.T.yoga.hi[dd.yoga[0].i]} (until ${f(dd.yoga[0].e)})</td></tr>
+<tr><th>Tithi / तिथि</th><td>${tne(dd.tithi[0].n)} / ${tnm(dd.tithi[0].n)} (until ${fu(dd.tithi[0].e)})</td></tr>
+<tr><th>Nakshatra / नक्षत्र</th><td>${P.T.nak.en[dd.nak[0].i]} / ${P.T.nak.hi[dd.nak[0].i]} (until ${fu(dd.nak[0].e)})</td></tr>
+<tr><th>Yoga / योग</th><td>${P.T.yoga.en[dd.yoga[0].i]} / ${P.T.yoga.hi[dd.yoga[0].i]} (until ${fu(dd.yoga[0].e)})</td></tr>
 <tr><th>Weekday / वार</th><td>${WD_E[dd.wd]} / ${P.T.wd.hi[dd.wd]}</td></tr>
 <tr><th>Sunrise / Sunset</th><td>${fl(dd.sunrise)} / ${fl(dd.sunset)}</td></tr>
 <tr><th>Rahu Kaal / राहु काल</th><td>${fl(dd.rahu[0])} – ${fl(dd.rahu[1])}</td></tr>
