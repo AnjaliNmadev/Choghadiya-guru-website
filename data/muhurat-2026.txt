@@ -1,0 +1,344 @@
+# Muhurat data for 2026. Format: "MM-DD HH:MM > MM-DD HH:MM Nakshatra" (24h, IST).
+# Source: mPanchang Hindi articles (Vivah, Namkaran, Business and Mundan muhurat 2026). To add a new year, copy this file to muhurat-2027.txt.
+# Weekdays are NOT stored: build.js computes them from the date.
+[adhik]
+05-17 > 06-15 Adhik Jyeshtha
+[abujh]
+01-23 Basant Panchami
+02-19 Phulera Dooj
+04-19 Akshaya Tritiya
+04-25 Janaki Navami
+11-20 Devutthani Ekadashi
+[vivah]
+01-14 19:57 > 01-15 03:02 Anuradha
+01-23 15:58 > 01-24 01:45 Uttara Bhadrapada
+01-25 07:21 > 01-25 13:34 Revati
+01-28 09:28 > 01-28 23:52 Rohini
+02-03 01:54 > 02-03 07:14 Magha
+02-06 00:24 > 02-06 23:35 Hasta
+02-09 00:09 > 02-09 05:00 Swati
+02-12 13:44 > 02-13 16:11 Moola
+02-19 20:53 > 02-20 14:37 Uttara Bhadrapada
+02-26 02:43 > 02-26 12:10 Mrigashirsha
+03-08 06:49 > 03-08 07:02 Swati
+04-20 04:37 > 04-20 07:27 Rohini
+04-21 04:17 > 04-21 06:00 Mrigashirsha
+04-26 05:58 > 04-26 20:26 Magha
+04-27 21:18 > 04-27 21:34 Uttara Phalguni
+04-29 05:54 > 04-29 19:51 Hasta
+05-03 07:11 > 05-03 22:26 Anuradha
+05-06 07:53 > 05-06 15:52 Moola
+05-13 05:46 > 05-14 11:20 Uttara Bhadrapada
+05-18 01:59 > 05-19 05:40 Rohini
+05-23 02:08 > 05-23 05:03 Magha
+05-25 04:33 > 05-26 05:37 Uttara Phalguni
+05-28 08:08 > 05-29 03:53 Swati
+06-01 19:08 > 06-02 05:37 Moola
+06-04 23:32 > 06-05 03:40 Uttara Ashadha
+06-10 05:38 > 06-10 13:51 Uttara Bhadrapada
+06-11 00:58 > 06-11 08:15 Revati
+06-19 10:08 > 06-19 17:01 Magha
+06-21 09:33 > 06-21 11:20 Uttara Phalguni
+06-24 13:59 > 06-25 07:06 Swati
+06-26 19:17 > 06-27 05:38 Anuradha
+07-07 01:43 > 07-07 05:41 Uttara Bhadrapada
+07-16 19:54 > 07-16 23:34 Magha
+11-20 06:58 > 11-20 19:01 Uttara Bhadrapada
+11-21 06:34 > 11-21 06:53 Uttara Bhadrapada
+11-25 16:52 > 11-26 17:46 Rohini
+12-02 22:54 > 12-03 10:53 Uttara Phalguni
+12-03 23:06 > 12-04 10:21 Hasta
+12-12 03:06 > 12-12 07:09 Uttara Ashadha
+[namkaran]
+01-01 06:38 > 01-02 20:02 Rohini
+01-04 15:13 > 01-05 13:18 Pushya
+01-09 13:42 > 01-10 06:35 Hasta
+01-14 06:38 > 01-15 03:01 Anuradha
+01-18 10:16 > 01-20 06:37 Uttara Ashadha
+01-21 06:39 > 01-21 13:56 Dhanishta
+01-23 14:34 > 01-24 06:34 Uttara Bhadrapada
+01-25 06:39 > 01-26 12:31 Revati
+01-28 09:29 > 01-30 05:24 Rohini
+02-01 06:38 > 02-01 23:53 Pushya
+02-05 22:59 > 02-07 00:18 Hasta
+02-11 06:38 > 02-11 10:51 Anuradha
+02-15 06:37 > 02-17 06:28 Uttara Ashadha
+02-19 20:51 > 02-21 06:31 Uttara Bhadrapada
+02-22 06:34 > 02-22 17:52 Ashwini
+02-25 06:32 > 02-26 12:08 Rohini
+03-01 06:28 > 03-01 08:32 Pushya
+03-05 08:19 > 03-06 09:29 Hasta
+03-09 16:11 > 03-10 06:21 Anuradha
+03-14 03:05 > 03-14 06:18 Uttara Ashadha
+03-15 06:19 > 03-17 06:13 Shravana
+03-19 05:23 > 03-21 06:14 Uttara Bhadrapada
+03-23 20:49 > 03-24 06:12 Rohini
+03-25 06:15 > 03-25 17:31 Mrigashirsha
+03-27 15:26 > 03-28 06:11 Pushya
+04-01 16:19 > 04-02 17:33 Hasta
+04-06 00:09 > 04-07 02:53 Anuradha
+04-10 11:29 > 04-11 06:00 Uttara Ashadha
+04-12 06:01 > 04-13 16:00 Shravana
+04-15 15:24 > 04-18 05:54 Uttara Bhadrapada
+04-20 04:35 > 04-21 05:53 Rohini
+04-24 00:02 > 04-24 20:10 Pushya
+04-29 05:54 > 04-30 00:12 Hasta
+05-03 07:11 > 05-04 09:55 Anuradha
+05-07 18:47 > 05-09 05:42 Uttara Ashadha
+05-10 05:48 > 05-11 00:48 Dhanishta
+05-13 05:49 > 05-15 20:14 Uttara Bhadrapada
+05-17 14:34 > 05-19 05:42 Rohini
+05-22 00:02 > 05-22 02:44 Pushya
+05-26 04:06 > 05-26 05:44 Hasta
+05-27 05:47 > 05-27 05:55 Hasta
+05-31 05:47 > 05-31 16:11 Anuradha
+06-04 00:59 > 06-06 05:42 Uttara Ashadha
+06-07 05:47 > 06-07 07:53 Dhanishta
+06-10 05:47 > 06-12 06:26 Uttara Bhadrapada
+06-14 05:48 > 06-15 19:05 Rohini
+06-17 13:36 > 06-18 13:31 Pushya
+06-22 10:24 > 06-23 05:47 Hasta
+06-26 19:18 > 06-27 05:44 Anuradha
+07-01 06:53 > 07-04 05:48 Uttara Ashadha
+07-06 16:09 > 07-07 05:48 Uttara Bhadrapada
+07-08 05:51 > 07-09 14:56 Revati
+07-12 05:54 > 07-13 05:38 Rohini
+07-15 05:55 > 07-15 21:44 Pushya
+07-19 18:14 > 07-20 19:05 Hasta
+07-24 01:44 > 07-25 04:34 Anuradha
+07-29 05:59 > 07-31 19:21 Uttara Ashadha
+08-02 21:37 > 08-04 05:51 Uttara Bhadrapada
+08-05 05:58 > 08-05 21:16 Ashwini
+08-07 18:45 > 08-08 05:53 Rohini
+08-09 05:59 > 08-09 14:41 Mrigashirsha
+08-12 05:59 > 08-12 07:57 Pushya
+08-16 06:02 > 08-17 03:48 Hasta
+08-20 09:08 > 08-21 11:48 Anuradha
+08-24 20:28 > 08-25 05:58 Uttara Ashadha
+08-26 06:01 > 08-28 02:11 Shravana
+08-30 06:01 > 09-01 06:01 Uttara Bhadrapada
+09-04 00:29 > 09-05 06:01 Rohini
+09-07 18:16 > 09-08 05:58 Pushya
+09-13 06:03 > 09-13 13:04 Hasta
+09-16 17:24 > 09-17 19:51 Anuradha
+09-21 04:36 > 09-22 06:01 Uttara Ashadha
+09-23 06:03 > 09-24 10:33 Shravana
+09-27 06:03 > 09-29 06:01 Uttara Bhadrapada
+10-01 06:04 > 10-03 02:52 Rohini
+10-05 00:15 > 10-05 23:07 Pushya
+10-09 21:19 > 10-10 06:01 Hasta
+10-14 06:04 > 10-15 04:03 Anuradha
+10-18 12:48 > 10-20 06:01 Uttara Ashadha
+10-21 06:05 > 10-21 19:45 Dhanishta
+10-23 21:05 > 10-24 06:02 Uttara Bhadrapada
+10-25 06:06 > 10-26 17:41 Revati
+10-28 13:27 > 10-30 09:03 Rohini
+11-01 06:08 > 11-02 04:28 Pushya
+11-06 03:57 > 11-07 04:40 Hasta
+11-11 06:09 > 11-11 11:34 Anuradha
+11-15 06:11 > 11-17 06:12 Uttara Ashadha
+11-20 06:58 > 11-21 06:13 Uttara Bhadrapada
+11-22 06:15 > 11-23 04:13 Ashwini
+11-25 06:17 > 11-26 17:45 Rohini
+11-29 06:19 > 11-29 10:57 Pushya
+12-03 09:24 > 12-04 10:18 Hasta
+12-07 15:48 > 12-08 06:20 Anuradha
+12-12 03:06 > 12-12 06:23 Uttara Ashadha
+12-13 06:27 > 12-15 06:20 Shravana
+12-17 15:34 > 12-19 06:26 Uttara Bhadrapada
+12-20 06:29 > 12-20 14:53 Ashwini
+12-23 06:32 > 12-24 04:51 Rohini
+12-25 22:54 > 12-26 06:30 Pushya
+12-30 15:38 > 12-31 16:12 Hasta
+[vehicle]
+01-01 06:36 > 01-01 22:21 Rohini
+01-04 06:36 > 01-04 12:31 Punarvasu
+01-20 02:16 > 01-20 06:40 Shravana
+01-23 14:34 > 01-24 01:47 Uttara Bhadrapada
+01-25 06:41 > 01-25 23:11 Revati
+01-28 09:28 > 01-29 07:32 Rohini
+01-31 03:29 > 01-31 06:39 Punarvasu
+02-02 22:49 > 02-03 01:53 Magha
+02-19 20:53 > 02-20 14:39 Uttara Bhadrapada
+02-22 06:34 > 02-22 11:11 Ashwini
+02-27 10:48 > 02-28 06:29 Punarvasu
+03-04 07:38 > 03-04 16:50 Uttara Phalguni
+03-20 04:54 > 03-21 06:17 Revati
+03-27 10:09 > 03-27 15:25 Punarvasu
+03-29 14:39 > 03-30 14:49 Magha
+04-02 07:43 > 04-03 08:43 Hasta
+04-20 04:37 > 04-20 07:29 Rohini
+04-22 22:52 > 04-23 20:50 Punarvasu
+04-26 05:53 > 04-26 20:26 Magha
+04-27 21:18 > 04-28 05:52 Uttara Phalguni
+04-29 05:52 > 04-29 19:51 Hasta
+05-01 22:55 > 05-02 04:34 Swati
+05-17 21:43 > 05-18 11:30 Rohini
+05-20 11:09 > 05-21 04:11 Punarvasu
+05-23 02:08 > 05-23 05:03 Magha
+05-25 04:33 > 05-26 05:44 Uttara Phalguni
+05-27 05:47 > 05-29 09:50 Hasta
+05-31 14:16 > 05-31 16:10 Anuradha
+06-17 05:46 > 06-17 13:35 Punarvasu
+06-19 10:08 > 06-19 17:01 Magha
+06-21 09:33 > 06-21 15:20 Uttara Phalguni
+06-24 05:48 > 06-25 16:28 Chitra
+06-26 19:15 > 06-27 05:47 Anuradha
+07-01 06:51 > 07-01 07:37 Uttara Ashadha
+07-16 19:52 > 07-17 06:27 Magha
+07-20 03:32 > 07-21 04:02 Hasta
+07-24 01:42 > 07-25 04:35 Anuradha
+07-29 20:05 > 07-30 17:44 Shravana
+08-13 20:44 > 08-14 04:37 Magha
+08-15 03:40 > 08-15 06:01 Uttara Phalguni
+08-16 16:55 > 08-17 17:01 Hasta
+08-19 06:02 > 08-19 06:45 Swati
+08-24 20:20 > 08-25 06:03 Uttara Ashadha
+08-26 06:03 > 08-26 07:59 Shravana
+09-13 06:04 > 09-14 07:06 Hasta
+09-17 10:48 > 09-17 19:52 Anuradha
+09-21 04:36 > 09-22 06:00 Uttara Ashadha
+09-23 06:03 > 09-23 09:08 Shravana
+09-27 06:01 > 09-27 20:58 Uttara Bhadrapada
+10-11 21:33 > 10-12 23:51 Chitra
+10-15 01:13 > 10-15 04:02 Anuradha
+10-23 21:05 > 10-24 06:03 Uttara Bhadrapada
+10-26 09:43 > 10-26 17:40 Ashwini
+11-11 06:11 > 11-11 11:37 Anuradha
+11-16 02:03 > 11-17 02:15 Shravana
+11-20 06:58 > 11-21 06:12 Uttara Bhadrapada
+11-22 06:16 > 11-23 02:36 Ashwini
+11-25 06:17 > 11-25 16:51 Rohini
+12-12 03:06 > 12-12 06:24 Uttara Ashadha
+12-13 16:48 > 12-14 09:11 Shravana
+12-18 23:14 > 12-19 06:27 Revati
+12-20 06:31 > 12-20 14:54 Ashwini
+12-25 01:49 > 12-25 03:06 Punarvasu
+[property]
+01-01 22:53 > 01-02 07:13 Mrigashira
+01-02 07:17 > 01-02 20:01 Mrigashira
+01-08 07:17 > 01-08 12:21 Purva Phalguni
+01-15 05:52 > 01-16 07:12 Mula
+01-16 07:18 > 01-17 07:12 Mula
+01-22 14:32 > 01-23 07:11 Purva Bhadrapada
+01-23 07:18 > 01-23 14:32 Purva Bhadrapada
+01-29 07:36 > 01-30 05:28 Mrigashira
+01-30 03:32 > 01-31 07:09 Punarvasu
+02-12 13:47 > 02-13 06:58 Mula
+02-13 07:06 > 02-14 06:57 Mula, Purva Ashadha
+02-19 06:59 > 02-19 20:52 Purva Bhadrapada
+02-20 20:12 > 02-21 06:53 Revati
+02-26 06:53 > 02-26 12:08 Mrigashira
+02-27 10:53 > 02-28 06:44 Punarvasu
+03-12 06:39 > 03-13 06:32 Mula, Purva Ashadha
+03-13 06:38 > 03-14 03:02 Purva Ashadha
+03-19 04:07 > 03-20 04:51 Revati, Uttara Bhadrapada
+03-20 06:27 > 03-21 02:24 Revati
+03-26 16:24 > 03-27 06:14 Punarvasu
+03-27 06:22 > 03-27 15:23 Punarvasu
+04-09 06:07 > 04-10 05:53 Mula, Purva Ashadha
+04-10 06:06 > 04-10 11:25 Purva Ashadha
+04-16 14:04 > 04-17 05:51 Revati
+04-17 05:59 > 04-17 12:01 Revati
+04-23 05:53 > 04-23 20:54 Punarvasu
+04-24 20:19 > 04-25 05:43 Ashlesha
+05-01 04:37 > 05-02 05:37 Vishakha
+05-07 05:39 > 05-07 18:43 Purva Ashadha
+05-14 05:36 > 05-14 22:31 Revati
+06-18 11:37 > 06-19 05:22 Ashlesha
+06-19 05:28 > 06-20 05:23 Ashlesha, Magha
+06-25 16:34 > 06-26 05:22 Vishakha
+06-26 05:28 > 06-27 05:24 Vishakha, Anuradha
+07-16 05:39 > 07-17 05:31 Ashlesha, Magha
+07-17 05:39 > 07-18 04:41 Magha, Purva Phalguni
+07-23 05:42 > 07-24 05:35 Vishakha, Anuradha
+07-24 05:43 > 07-25 04:33 Anuradha
+08-13 05:52 > 08-14 04:35 Magha
+08-14 05:55 > 08-15 03:41 Purva Phalguni
+08-20 05:58 > 08-21 05:52 Vishakha, Anuradha
+08-21 05:58 > 08-21 11:51 Anuradha
+08-28 03:18 > 08-29 05:56 Purva Bhadrapada
+09-04 23:09 > 09-05 05:58 Mrigashira
+09-10 06:08 > 09-11 06:03 Magha, Purva Phalguni
+09-11 06:09 > 09-11 13:13 Purva Phalguni
+09-17 06:12 > 09-17 19:52 Anuradha
+09-18 22:49 > 09-19 06:07 Mula
+09-25 11:27 > 09-26 06:08 Purva Bhadrapada
+10-01 04:32 > 10-02 06:13 Mrigashira
+10-02 06:19 > 10-03 02:52 Mrigashira
+10-08 06:23 > 10-08 21:19 Purva Phalguni
+10-16 06:53 > 10-17 06:22 Mula
+10-22 20:54 > 10-23 06:26 Purva Bhadrapada
+10-23 06:32 > 10-23 21:01 Purva Bhadrapada
+10-29 11:16 > 10-30 06:28 Mrigashira
+10-30 06:36 > 10-30 09:03 Mrigashira
+11-12 14:24 > 11-13 06:41 Mula
+11-13 06:47 > 11-14 06:42 Mula, Purva Ashadha
+11-19 06:52 > 11-20 06:47 Purva Bhadrapada
+11-20 06:53 > 11-20 06:55 Uttara Bhadrapada, Purva Bhadrapada
+11-26 06:57 > 11-26 17:46 Mrigashira
+11-27 15:13 > 11-28 06:38 Punarvasu
+12-10 07:08 > 12-11 07:01 Mula, Purva Ashadha
+12-11 07:09 > 12-12 03:01 Purva Ashadha
+12-17 07:12 > 12-17 15:29 Purva Bhadrapada
+12-18 16:13 > 12-19 07:08 Revati
+12-24 01:52 > 12-25 07:08 Punarvasu
+12-25 07:16 > 12-25 22:49 Punarvasu
+[business]
+01-23 07:46 > 01-23 11:48 Purva Bhadrapada
+01-28 07:44 > 01-28 08:36 Krittika
+02-02 07:42 > 02-02 11:09 Ashlesha
+02-23 09:49 > 02-23 11:22 Bharani
+03-04 07:14 > 03-04 09:11 Purva Phalguni
+03-13 07:13 > 03-13 10:11 Purva Ashadha
+03-23 06:55 > 03-23 11:29 Krittika
+04-09 10:23 > 04-09 12:35 Moola
+04-15 06:27 > 04-15 12:13 Purva Bhadrapada
+04-18 12:03 > 04-18 14:20 Ashwini
+04-19 07:39 > 04-19 07:45 Bharani
+04-19 09:41 > 04-19 13:01 Bharani
+05-07 08:33 > 05-07 10:45 Purva Ashadha
+06-19 06:25 > 06-19 10:18 Ashlesha
+06-21 05:57 > 06-21 10:10 Purva Phalguni
+07-10 08:57 > 07-10 11:13 Bharani
+07-16 06:13 > 07-16 08:30 Ashlesha
+07-16 10:49 > 07-16 13:04 Ashlesha
+07-23 08:03 > 07-23 12:36 Vishakha
+08-14 06:39 > 08-14 08:53 Purva Phalguni
+08-14 11:12 > 08-14 13:31 Purva Phalguni
+08-19 07:18 > 08-19 13:11 Swati
+08-29 07:08 > 08-29 12:30 Purva Bhadrapada
+09-11 11:42 > 09-11 13:47 Purva Phalguni
+09-16 06:46 > 09-16 11:21 Vishakha
+10-17 11:39 > 10-17 13:16 Moola
+10-18 06:57 > 10-18 09:14 Purva Ashadha
+10-28 08:36 > 10-28 12:58 Krittika
+11-14 07:28 > 11-14 11:58 Purva Ashadha
+11-19 09:29 > 11-19 13:14 Purva Bhadrapada
+12-11 07:37 > 12-11 10:04 Purva Ashadha
+12-11 11:49 > 12-11 13:13 Purva Ashadha
+[mundan]
+01-20 02:16 > 01-20 07:12 Shravana
+01-21 07:15 > 01-22 02:46 Dhanishta
+01-31 03:29 > 01-31 07:10 Punarvasu
+02-06 12:24 > 02-07 01:18 Hasta
+02-11 10:54 > 02-11 23:11 Jyeshtha
+02-12 12:24 > 02-12 13:43 Jyeshtha
+02-18 16:58 > 02-18 21:17 Shatabhisha
+02-26 02:41 > 02-26 12:12 Mrigashirsha
+02-27 10:48 > 02-27 11:31 Punarvasu
+03-05 08:19 > 03-06 05:25 Hasta
+03-16 09:43 > 03-17 06:36 Dhanishta
+04-21 04:17 > 04-21 06:04 Mrigashirsha
+04-22 22:52 > 04-23 20:48 Punarvasu
+04-29 05:59 > 04-29 19:51 Hasta
+05-04 09:59 > 05-04 16:13 Jyeshtha
+05-09 01:19 > 05-09 05:51 Shravana
+05-11 15:27 > 05-12 01:27 Shatabhisha
+05-14 22:35 > 05-15 08:30 Ashwini
+06-17 05:47 > 06-17 21:38 Punarvasu
+06-24 05:49 > 06-24 07:07 Chitra
+07-02 09:29 > 07-02 22:31 Shravana
+07-09 10:38 > 07-09 14:57 Ashwini
+07-15 11:53 > 07-15 21:45 Pushya
+07-20 05:58 > 07-21 04:02 Hasta
