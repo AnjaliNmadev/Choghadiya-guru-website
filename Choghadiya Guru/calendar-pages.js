@@ -5,12 +5,14 @@
 //   /telugu-festivals/     Telugu festivals (Amanta lunisolar calendar)
 // Data lives in calendar-data.js. Add a year there (same shape) and it appears on the next build.
 const D = require("./calendar-data.js");   // hand-checked 2026 data
-const G = require("./calendar-gen.js");    // every other year is computed from the panchang engine (nothing typed by hand)
+const G = require("./calendar-gen.js");
+const RD = require("./calendar-data-regional.js");   // hand-checked 2026 data for Malayalam / Tamil / Gujarati
+const RG = require("./calendar-regional.js");    // every other year is computed from the panchang engine (nothing typed by hand)
 
 module.exports = function ({ BRAND, layout, write, faqSchema, citiesBlock, YEARS }) {
   YEARS = (YEARS && YEARS.length ? YEARS : Object.keys(D.HINDU).map(Number)).slice().sort((a, b) => a - b);
-  const FN = { HINDU: "hindu", HOLIDAYS: "holidays", TELUGU: "telugu" }, DC = {};
-  const dataFor = (key, y) => (D[key] && D[key][y]) || (DC[key + y] = DC[key + y] || G[FN[key]](y));
+  const FN = { HINDU: "hindu", HOLIDAYS: "holidays", TELUGU: "telugu", MALAYALAM: "malayalam", TAMIL: "tamil", GUJARATI: "gujarati", BENGALI: "bengali", HINDUFEST: "hindiFest" }, DC = {};
+  const dataFor = (key, y) => (D[key] && D[key][y]) || (RD[key] && RD[key][y]) || (DC[key + y] = DC[key + y] || (G[FN[key]] || RG[FN[key]])(y));
   const MONF = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const MONH = ["जनवरी", "फ़रवरी", "मार्च", "अप्रैल", "मई", "जून", "जुलाई", "अगस्त", "सितंबर", "अक्टूबर", "नवंबर", "दिसंबर"];
   const WDE = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -108,6 +110,148 @@ ${adhikEn(y)}
         [`Why do Telugu festival dates differ from the North Indian calendar?`, `The Telugu calendar names vrats differently (for example Sankashtahara for Sankashti), and a tithi that spans two days can put a festival one day apart in different traditions.`]
       ]
     }
+    ,{
+      slug: "/malayalam-festivals/", key: "MALAYALAM", crumb: "Malayalam Festivals", emoji: "🌺",
+      title: y => `Malayalam Calendar ${y} – Festivals, Onam, Vishu & Sankramam Dates | ${BRAND}`,
+      desc: y => `Malayalam calendar ${y} (മലയാളം കലണ്ടര്‍ ${y}): Onam, Vishu, Thiruvathira, Thrissur Pooram, Sankramam, Mandalakala and Guruvayur Ekadasi dates month by month.`,
+      h1: y => `Malayalam Festivals ${y} / മലയാളം കലണ്ടര്‍ ${y}`,
+      short: "Kollavarsham festivals: Onam, Vishu, Sankramam", shortHi: "मलयालम त्योहार",
+      colFest: "Festival · ആഘോഷം",
+      intro: y => `<p lang="hi">मलयालम कैलेंडर, जिसे कोल्लवर्षम कहते हैं, केरल का पारंपरिक सौर कैलेंडर है। इसके महीने सूर्य के राशि बदलने (संक्रमण) से शुरू होते हैं, और पहला महीना चिंगम है। नीचे ${y} के ओणम, विशु और अन्य त्योहारों की तारीखें हैं।</p>
+<p>The Malayalam calendar (Kollavarsham, കൊല്ലവർഷം) is the traditional solar calendar of Kerala. Each month begins when the Sun enters a new zodiac sign (the Sankramam), and the year begins with Chingam, the month of Onam. The dates below are the festivals of ${y}, worked out for Delhi (IST).</p>`,
+      sections: y => `<h2>Malayalam months / മലയാളം മാസങ്ങൾ</h2>
+<div class="tbl"><table class="ctbl"><thead><tr><th>Malayalam month</th><th>Approx. period</th><th>Malayalam month</th><th>Approx. period</th></tr></thead><tbody>
+<tr><td><b>Chingam / ചിങ്ങം</b></td><td>Aug – Sep</td><td><b>Makaram / മകരം</b></td><td>Jan – Feb</td></tr>
+<tr><td><b>Kanni / കന്നി</b></td><td>Sep – Oct</td><td><b>Kumbham / കുംഭം</b></td><td>Feb – Mar</td></tr>
+<tr><td><b>Thulam / തുലാം</b></td><td>Oct – Nov</td><td><b>Meenam / മീനം</b></td><td>Mar – Apr</td></tr>
+<tr><td><b>Vrischikam / വൃശ്ചികം</b></td><td>Nov – Dec</td><td><b>Metam / മേടം</b></td><td>Apr – May</td></tr>
+<tr><td><b>Dhanu / ധനു</b></td><td>Dec – Jan</td><td><b>Edavam / ഇടവം</b></td><td>May – Jun</td></tr>
+<tr><td><b>Mithunam / മിഥുനം</b></td><td>Jun – Jul</td><td><b>Karkidakam / കർക്കടകം</b></td><td>Jul – Aug</td></tr>
+</tbody></table></div>
+<h2>Malayalam New Year and the Kollam year</h2>
+<p>${(f => f ? `The Malayalam New Year falls on ${dstr(f)} ${y}, the first day of Chingam, and starts Kollavarsham ${y - 824}.` : "")(findFest("MALAYALAM", y, "Malayalam New Year"))} Kollavarsham counts from 825 CE, so the Kollam year is the Gregorian year minus 824 once Chingam begins. Karkidakam, the last month, is traditionally the month of the Ramayana reading.</p>
+<h2>Popular Malayalam festivals</h2>
+<ul><li><b>Onam</b>: Thiruvonam, when the Shravana nakshatra falls in Chingam.</li><li><b>Vishu</b>: the first day of Metam, with the Vishukkani ritual and Vishukkaineettam.</li><li><b>Thiruvathira</b>: the Ardra nakshatra in Dhanu, celebrated mainly by women.</li><li><b>Thrissur Pooram</b>: the Pooram nakshatra of Metam.</li><li><b>Makaravilakku</b>: Makara Sankramam at Sabarimala. <b>Mandalakala</b> is the 41-day season that begins on Vrischikam 1.</li><li><b>Sankramam</b>: the first day of each solar month.</li></ul>
+<p>Eclipses are shown for 2026 only. For other regional dates, see the <a href="/tamil-festivals/">Tamil Festivals</a>, <a href="/telugu-festivals/">Telugu Festivals</a> and <a href="/hindu-calendar/">Hindu Calendar</a>.</p>`,
+      faqs: y => [
+        [`When is Onam in ${y}?`, `Onam (Thiruvonam) falls on ${dstr(findFest("MALAYALAM", y, "Onam"))} ${y}, the day the Shravana nakshatra rules in the month of Chingam.`],
+        [`When is Vishu in ${y}?`, `Vishu is on ${dstr(findFest("MALAYALAM", y, "Vishu"))} ${y}, the first day of Metam. It moves between 14 and 15 April depending on when the Sun enters Mesha.`],
+        [`When is the Malayalam New Year in ${y}?`, `The Malayalam New Year (Chingam 1) is on ${dstr(findFest("MALAYALAM", y, "Malayalam New Year"))} ${y}.`],
+        [`Is the Malayalam calendar solar or lunar?`, `It is a solar calendar. Months start at the Sun's transit into a new sign (Sankramam), while festivals such as Onam and Vishu also use the nakshatra.`]
+      ]
+    }
+    ,{
+      slug: "/tamil-festivals/", key: "TAMIL", crumb: "Tamil Festivals", emoji: "🌾",
+      title: y => `Tamil Calendar ${y} – Festivals, Pongal, Puthandu & Karthigai Deepam | ${BRAND}`,
+      desc: y => `Tamil calendar ${y} (தமிழ் பஞ்சாங்கம் ${y}): Pongal, Puthandu, Thai Pusam, Chitra Pournami, Avani Avittam, Deepavali and Karthigai Deepam dates month by month.`,
+      h1: y => `Tamil Festivals ${y} / தமிழ் காலண்டர் ${y}`,
+      short: "Tamil panchangam: Pongal, Puthandu, Deepam", shortHi: "तमिल त्योहार",
+      colFest: "Festival · பண்டிகை",
+      intro: y => `<p lang="hi">तमिल पंचांग मुख्यतः सौर कैलेंडर है, जिसका उपयोग तमिलनाडु, पुदुचेरी, मलेशिया, सिंगापुर और श्रीलंका के तमिल समुदाय करते हैं। नए साल पुथांडु की शुरुआत चित्तिरई महीने से होती है। नीचे ${y} के तमिल त्योहार दिए गए हैं।</p>
+<p>The Tamil calendar (தமிழ் பஞ்சாங்கம்) is a solar calendar used in Tamil Nadu, Puducherry, Malaysia, Singapore and Sri Lanka. Months begin when the Sun enters a new sign, and the new year, Puthandu, begins with Chithirai. The dates below are the festivals of ${y}, worked out for Delhi (IST).</p>`,
+      sections: y => `<h2>Tamil months / தமிழ் மாதங்கள்</h2>
+<div class="tbl"><table class="ctbl"><thead><tr><th>Tamil month</th><th>Approx. period</th><th>Tamil month</th><th>Approx. period</th></tr></thead><tbody>
+<tr><td><b>Chithirai / சித்திரை</b></td><td>Apr – May</td><td><b>Aippasi / ஐப்பசி</b></td><td>Oct – Nov</td></tr>
+<tr><td><b>Vaikasi / வைகாசி</b></td><td>May – Jun</td><td><b>Karthigai / கார்த்திகை</b></td><td>Nov – Dec</td></tr>
+<tr><td><b>Aani / ஆனி</b></td><td>Jun – Jul</td><td><b>Margazhi / மார்கழி</b></td><td>Dec – Jan</td></tr>
+<tr><td><b>Aadi / ஆடி</b></td><td>Jul – Aug</td><td><b>Thai / தை</b></td><td>Jan – Feb</td></tr>
+<tr><td><b>Avani / ஆவணி</b></td><td>Aug – Sep</td><td><b>Maasi / மாசி</b></td><td>Feb – Mar</td></tr>
+<tr><td><b>Purattasi / புரட்டாசி</b></td><td>Sep – Oct</td><td><b>Panguni / பங்குனி</b></td><td>Mar – Apr</td></tr>
+</tbody></table></div>
+<h2>Tamil New Year (Puthandu) / புத்தாண்டு</h2>
+<p>${(f => f ? `Puthandu, the Tamil New Year, falls on ${dstr(f)} ${y}, the first day of Chithirai.` : "")(findFest("TAMIL", y, "Puthandu"))} It is marked with the mango pachadi, a visit to the temple and kolam at the doorstep. Pongal, the harvest festival, is on the first day of Thai.</p>
+<h2>Popular Tamil festivals</h2>
+<ul><li><b>Pongal</b>: Thai 1, with Bhogi the day before and Mattu Pongal the day after.</li><li><b>Thai Pusam</b> and <b>Panguni Uthiram</b>: star-based festivals of Murugan.</li><li><b>Chitra Pournami</b>, <b>Vaikasi Visakam</b> and <b>Aadi Perukku</b>: festivals of the Tamil months.</li><li><b>Avani Avittam</b>: the sacred thread change, on different days for Rigveda, Yajurveda and Samaveda.</li><li><b>Karthigai Deepam</b>: the festival of lamps, when the Krittika star rules in Karthigai.</li><li><b>Soora Samharam</b> and <b>Subrahmanya Sashti</b>: Skanda festivals on the Sashti tithi.</li></ul>
+<p>Eclipses and the Smarta/ISKCON split of Rama Navami are shown for 2026 only. For other regional dates, see the <a href="/malayalam-festivals/">Malayalam Festivals</a>, <a href="/telugu-festivals/">Telugu Festivals</a> and <a href="/hindu-calendar/">Hindu Calendar</a>.</p>`,
+      faqs: y => [
+        [`When is Pongal in ${y}?`, `Pongal is on ${dstr(findFest("TAMIL", y, "Pongal"))} ${y}, the first day of Thai. Bhogi is the day before and Mattu Pongal the day after.`],
+        [`When is Tamil New Year (Puthandu) in ${y}?`, `Puthandu falls on ${dstr(findFest("TAMIL", y, "Puthandu"))} ${y}, the first day of Chithirai.`],
+        [`When is Karthigai Deepam in ${y}?`, `Karthigai Deepam is on ${dstr(findFest("TAMIL", y, "Karthigai Deepam"))} ${y}.`],
+        [`Is the Tamil calendar solar or lunar?`, `The month cycle is solar, with each month starting when the Sun enters a new sign. Many festivals combine this with a tithi or a nakshatra.`]
+      ]
+    }
+    ,{
+      slug: "/gujarati-festivals/", key: "GUJARATI", crumb: "Gujarati Festivals", emoji: "🪁",
+      title: y => `Gujarati Calendar ${y} – Festivals, Tithi, Ekadashi & Vrat Dates | ${BRAND}`,
+      desc: y => `Gujarati calendar ${y} (ગુજરાતી કૅલેન્ડર ${y}): Uttarayana, Navratri, Diwali, Bestu Varas, Ekadashi, Sankashta Chaturthi and Chandra Darshana dates month by month.`,
+      h1: y => `Gujarati Festivals ${y} / ગુજરાતી કૅલેન્ડર ${y}`,
+      short: "Vikram Samvat festivals, Ekadashi and vrats", shortHi: "गुजराती त्योहार",
+      colFest: "Festival / Vrat · તહેવાર",
+      intro: y => `<p lang="hi">गुजराती कैलेंडर विक्रम संवत पर आधारित चन्द्र-सौर कैलेंडर है। इसका नया साल दिवाली के अगले दिन, कार्तिक शुक्ल प्रतिपदा (बेस्तु वरस) से शुरू होता है। नीचे ${y} के गुजराती त्योहार और व्रत हैं।</p>
+<p>The Gujarati calendar (ગુજરાતી કૅલેન્ડર) is a lunisolar calendar based on Vikram Samvat. Months run from new moon to new moon (Amanta), and the year begins on Kartik Shukla Pratipada, the day after Diwali. The dates below are the festivals and vrats of ${y}, worked out for Delhi (IST).</p>`,
+      sections: y => `<h2>Gujarati months / ગુજરાતી મહિના</h2>
+<div class="tbl"><table class="ctbl"><thead><tr><th>Gujarati month</th><th>Approx. period</th><th>Gujarati month</th><th>Approx. period</th></tr></thead><tbody>
+<tr><td><b>Kartak / કારતક</b></td><td>Oct – Nov</td><td><b>Vaishakh / વૈશાખ</b></td><td>Apr – May</td></tr>
+<tr><td><b>Magshar / માગશર</b></td><td>Nov – Dec</td><td><b>Jeth / જેઠ</b></td><td>May – Jun</td></tr>
+<tr><td><b>Posh / પોષ</b></td><td>Dec – Jan</td><td><b>Ashadh / અષાડ</b></td><td>Jun – Jul</td></tr>
+<tr><td><b>Maha / મહા</b></td><td>Jan – Feb</td><td><b>Shravan / શ્રાવણ</b></td><td>Jul – Aug</td></tr>
+<tr><td><b>Fagan / ફાગણ</b></td><td>Feb – Mar</td><td><b>Bhadarvo / ભાદરવો</b></td><td>Aug – Sep</td></tr>
+<tr><td><b>Chaitra / ચૈત્ર</b></td><td>Mar – Apr</td><td><b>Aaso / આસો</b></td><td>Sep – Oct</td></tr>
+</tbody></table></div>
+<h2>Gujarati New Year (Bestu Varas) / બેસતું વર્ષ</h2>
+<p>${(f => f ? `The Gujarati New Year falls on ${dstr(f)} ${y} and begins Vikram Samvat ${y + 57}.` : "")(findFest("GUJARATI", y, "Bestu Varsh"))} Vikram Samvat runs 57 years ahead of the Gregorian year, and the Gujarati year starts in Kartak instead of Chaitra. ${adhikShort(y)} An Adhik Mahino (extra month) is added about every 30 months to keep the lunar months in step with the seasons.</p>
+<h2>Popular Gujarati festivals and vrats</h2>
+<ul><li><b>Uttarayana</b>: Makara Sankranti, the kite festival.</li><li><b>Navratri</b> and <b>Sharad Purnima</b>: nine nights of garba, then the Kojagari full moon.</li><li><b>Diwali</b> and <b>Bestu Varas</b>: Dhanteras, Kali Chaudas, Lakshmi Puja and the new year on the next day.</li><li><b>Jaya Parvati and Gauri Vrat</b>: fasts of young girls in Ashadh.</li><li><b>Randhan Chhath, Shitala Satam and Nag Pancham</b>: the three days before Janmashtami.</li><li><b>Sankashta, Ekadashi and Chandra Darshana</b>: the monthly fasts and moon sightings.</li></ul>
+<p>Where two traditions differ, an Ekadashi is shown on both days as Gauna and Vaishnava. Eclipses are shown for 2026 only. For other dates, see the <a href="/hindu-calendar/">Hindu Calendar</a>, <a href="/indian-holidays/">Indian Holidays</a> and the <a href="/aaj-ka-panchang/">Aaj ka Panchang</a>.</p>`,
+      faqs: y => [
+        [`When is the Gujarati New Year in ${y}?`, `The Gujarati New Year (Bestu Varas) is on ${dstr(findFest("GUJARATI", y, "Bestu Varsh"))} ${y}, the day after Diwali.`],
+        [`When is Uttarayana in ${y}?`, `Uttarayana (Makara Sankranti) is on ${dstr(findFest("GUJARATI", y, "Makara Sankranti"))} ${y}.`],
+        [`When is Diwali in ${y}?`, `Diwali (Lakshmi Puja) is on ${dstr(findFest("GUJARATI", y, "Diwali"))} ${y}.`],
+        [`What is Chandra Darshana?`, `It is the first sighting of the new Moon after Amavasya, in the evening of Shukla Dwitiya. Many families offer prayers and some begin fasts on this day.`]
+      ]
+    }
+    ,{
+      slug: "/bengali-festivals/", key: "BENGALI", crumb: "Bengali Festivals", emoji: "🪷",
+      title: y => `Bengali Calendar ${y} – Festivals, Durga Puja, Poila Boishakh & Kali Puja Dates | ${BRAND}`,
+      desc: y => `Bengali calendar ${y} (বাঙালি ক্যালেন্ডার ${y}): Pohela Boishakha, Durga Puja, Lakshmi Puja, Kali Puja, Bhai Phonta, Jagaddhatri Puja and Sankranti dates month by month.`,
+      h1: y => `Bengali Festivals ${y} / বাঙালি ক্যালেন্ডার ${y}`,
+      short: "Bengali panjika: Poila Boishakh, Durga Puja, Kali Puja", shortHi: "बंगाली त्योहार",
+      colFest: "Festival · উৎসব",
+      intro: y => `<p lang="hi">बंगाली पंजिका मुख्यतः सौर कैलेंडर है, जिसका उपयोग पश्चिम बंगाल, त्रिपुरा, असम और बांग्लादेश के बंगाली समुदाय करते हैं। बंगाली नववर्ष पोइला बैशाख से शुरू होता है। नीचे ${y} के बंगाली त्योहारों की तारीखें हैं।</p>
+<p>The Bengali calendar (Panjika, বাঙালি পঞ্জিকা) is a solar calendar used in West Bengal, Tripura, Assam and Bangladesh. The year begins with Boishakh, and the festival season peaks with Durga Puja in autumn. The dates below are the festivals of ${y}, worked out for Delhi (IST).</p>`,
+      sections: y => `<h2>Bengali months / বাংলা মাস</h2>
+<div class="tbl"><table class="ctbl"><thead><tr><th>Bengali month</th><th>Approx. period</th><th>Bengali month</th><th>Approx. period</th></tr></thead><tbody>
+<tr><td><b>Boishakh / বৈশাখ</b></td><td>Apr – May</td><td><b>Kartik / কার্তিক</b></td><td>Oct – Nov</td></tr>
+<tr><td><b>Joishtho / জ্যৈষ্ঠ</b></td><td>May – Jun</td><td><b>Ogrohayon / অগ্রহায়ণ</b></td><td>Nov – Dec</td></tr>
+<tr><td><b>Asharh / আষাঢ়</b></td><td>Jun – Jul</td><td><b>Poush / পৌষ</b></td><td>Dec – Jan</td></tr>
+<tr><td><b>Shrabon / শ্রাবণ</b></td><td>Jul – Aug</td><td><b>Magh / মাঘ</b></td><td>Jan – Feb</td></tr>
+<tr><td><b>Bhadro / ভাদ্র</b></td><td>Aug – Sep</td><td><b>Falgun / ফাল্গুন</b></td><td>Feb – Mar</td></tr>
+<tr><td><b>Ashwin / আশ্বিন</b></td><td>Sep – Oct</td><td><b>Choitro / চৈত্র</b></td><td>Mar – Apr</td></tr>
+</tbody></table></div>
+<h2>Bengali New Year (Pohela Boishakh) / পহেলা বৈশাখ</h2>
+<p>${(f => f ? `Pohela Boishakha falls on ${dstr(f)} ${y} and begins the Bengali year ${y - 593} (Bangabda).` : "")(findFest("BENGALI", y, "Pohela Boishakha"))} The Bengali year is the Gregorian year minus 593 once Boishakh begins. The day is marked with new clothes, sweets and Halkhata, the opening of new account books.</p>
+<h2>Durga Puja and the festival season</h2>
+<p>${(f => f ? `Durga Puja ${y} runs from Kalparambha and Akal Bodhon on ${dstr(f)} to Vijayadashami on ${dstr(findFest("BENGALI", y, "Vijayadashami"))}.` : "")(findFest("BENGALI", y, "Kalparambha"))} It begins with Mahalaya, followed by Shashthi, Saptami, Ashtami (with Sandhi Puja), Navami and Dashami. Lakshmi Puja is on the next full moon, and Kali Puja falls on the Diwali amavasya, followed by Bhai Phonta.</p>
+<h2>Popular Bengali festivals</h2>
+<ul><li><b>Poila Boishakh</b>: the Bengali New Year, in mid-April.</li><li><b>Dol Purnima</b> and <b>Saraswati Puja</b>: the spring festivals of colour and learning.</li><li><b>Jamai Shashti</b>: honouring sons-in-law in Joishtho.</li><li><b>Ratha Jatra</b> and <b>Rakhi Bandhan</b>: the summer festivals.</li><li><b>Durga Puja</b>, <b>Lakshmi Puja</b>, <b>Kali Puja</b> and <b>Bhai Phonta</b>: the autumn festival season.</li><li><b>Sankranti</b>: the first day of each solar month, such as Poush Sankranti.</li></ul>
+<p>Eclipses and the Smarta/ISKCON split of Rama Navami are shown for 2026 only. For other dates, see the <a href="/hindu-calendar/">Hindu Calendar</a> and <a href="/diwali/">Diwali</a>.</p>`,
+      faqs: y => [
+        [`When is Durga Puja in ${y}?`, `Durga Ashtami is on ${dstr(findFest("BENGALI", y, "Durga Ashtami"))} ${y} and Vijayadashami on ${dstr(findFest("BENGALI", y, "Vijayadashami"))} ${y}.`],
+        [`When is Pohela Boishakh in ${y}?`, `The Bengali New Year (Pohela Boishakha) is on ${dstr(findFest("BENGALI", y, "Pohela Boishakha"))} ${y}.`],
+        [`When is Kali Puja in ${y}?`, `Kali Puja (Dipabali) is on ${dstr(findFest("BENGALI", y, "Kali Puja"))} ${y}, with Bhai Phonta on ${dstr(findFest("BENGALI", y, "Bhai Phonta"))} ${y}.`],
+        [`Is the Bengali calendar solar or lunar?`, `The months are solar, starting at each Sankranti, while Durga Puja, Lakshmi Puja and Dol Purnima follow the lunar tithi.`]
+      ]
+    }
+    ,{
+      slug: "/hindu-festivals/", key: "HINDUFEST", crumb: "Hindu Festivals", emoji: "🛕",
+      title: y => `हिन्दू त्यौहार ${y} – Hindu Festivals ${y} List, Dates & Vrat Calendar | ${BRAND}`,
+      desc: y => `हिन्दू त्यौहार ${y}: होली, राम नवमी, नवरात्रि, दशहरा, दीवाली, एकादशी, प्रदोष, संकष्टी और सभी हिन्दू व्रत-त्योहारों की तारीखें महीने के क्रम में। Hindu festivals ${y} in Hindi.`,
+      h1: y => `हिन्दू त्यौहार ${y} / Hindu Festivals ${y}`,
+      short: "हिन्दू त्यौहारों की महीनेवार सूची (हिन्दी)", shortHi: "हिन्दू त्यौहार",
+      colFest: "त्यौहार / व्रत · Festival",
+      intro: y => `<p lang="hi">${y} के सभी प्रमुख हिन्दू त्यौहार और व्रत महीने के क्रम में नीचे दिए गए हैं। इनमें होली, राम नवमी, नवरात्रि, दशहरा, दीवाली जैसे बड़े त्यौहारों के साथ एकादशी, प्रदोष, संकष्टी चतुर्थी, पूर्णिमा और अमावस्या भी शामिल हैं। तारीखें दिल्ली (IST) के लिए हैं।</p>
+<p>This is the Hindi festival list for ${y}, month by month, worked out for Delhi (IST). For the English list with more regional names, see the <a href="/hindu-calendar/${y}/">Hindu Calendar ${y}</a>; for Diwali timings, see <a href="/diwali/${y}/">Diwali ${y}</a>.</p>`,
+      sections: y => `<h2>प्रमुख त्यौहार ${y} / Major festivals of ${y}</h2>
+<ul>${[["holi", "होली", "Holi"], ["ramnavami", "राम नवमी", "Ram Navami"], ["akshaya", "अक्षय तृतीया", "Akshaya Tritiya"], ["raksha", "रक्षा बंधन", "Raksha Bandhan"], ["janmashtami", "कृष्ण जन्माष्टमी", "Krishna Janmashtami"], ["ganesh", "गणेश चतुर्थी", "Ganesh Chaturthi"], ["sharadnav", "शारदीय नवरात्रि", "Sharad Navratri"], ["dussehra", "दशहरा", "Dussehra"], ["karwa", "करवा चौथ", "Karwa Chauth"], ["diwali", "दीवाली", "Diwali"]].map(([id, hi, en]) => { const iso = G._h.base(y).byId[id]; if (!iso) return ""; const [yy, m, d] = iso.split("-").map(Number); return `<li><b>${hi} / ${en}</b>: ${d} ${MONF[m - 1]} ${y}</li>`; }).join("")}</ul>
+<p lang="hi">हिन्दू त्यौहार चन्द्र तिथि और सौर संक्रांति दोनों पर आधारित हैं, इसलिए अंग्रेज़ी तारीखें हर साल बदलती हैं। जब कोई तिथि दो दिन पड़ती है, तो अलग-अलग परंपराओं में त्यौहार एक दिन आगे-पीछे हो सकता है।</p>
+<p>See also the <a href="/vrats/">vrat dates</a> (Ekadashi, Pradosh, Sankashti), the <a href="/diwali/${y}/">Diwali ${y}</a> calendar and the <a href="/indian-holidays/${y}/">Indian Holidays ${y}</a> list.</p>`,
+      faqs: y => [
+        [`${y} में दीवाली कब है? / When is Diwali in ${y}?`, `Diwali ${y} is on ${dstr(findFest("HINDUFEST", y, "दिवाली") || findFest("HINDUFEST", y, "दीपावली") || findFest("HINDUFEST", y, "दीवाली"))} ${y}. See the Diwali page for the Lakshmi Puja muhurat.`],
+        [`${y} में होली कब है? / When is Holi in ${y}?`, `Holi (Dhulandi) is on ${dstr(findFest("HINDUFEST", y, "होली"))} ${y}, the day after Holika Dahan.`],
+        [`Why do Hindu festival dates change every year?`, `Hindu festivals follow lunar tithis and the Sun's transit, which do not match the Gregorian calendar, so the date moves each year.`],
+        [`क्या सभी त्यौहार छुट्टी होते हैं?`, `नहीं। इस सूची में त्यौहार, व्रत और तिथियाँ शामिल हैं। छुट्टी आपके राज्य और संस्थान की सूची पर निर्भर करती है।`]
+      ]
+    }
   ];
 
   const monthBlock = (key, y, mi) => {
@@ -161,8 +305,8 @@ ${citiesBlock}`,
   // hub page
   const Y0 = HUB_Y;
   write("/calendar/", layout({
-    urlPath: "/calendar/", title: `Calendar ${Y0} – Hindu Calendar, Indian Holidays, Telugu Festivals | ${BRAND}`,
-    description: `Festival calendars for ${Y0}: Hindu calendar, Indian holidays and Telugu festivals, month by month.`,
+    urlPath: "/calendar/", title: `Calendar ${Y0} – Hindu, Telugu, Malayalam, Tamil, Gujarati Festivals | ${BRAND}`,
+    description: `Festival calendars for ${Y0}: Hindu calendar, Indian holidays, and Telugu, Malayalam, Tamil and Gujarati festivals, month by month.`,
     h1: `Festival Calendars ${Y0} / कैलेंडर ${Y0}`, crumbLabel: "Calendar",
     bodyHtml: `<p>Pick a calendar to see the festivals, vrats and holidays of ${Y0} month by month. Other years (${YEARS[0]}–${YEARS[YEARS.length - 1]}) are linked at the top of each calendar.</p>
 <div class="tiles">${PAGES.map(P => `<a class="tile" href="${P.slug}" style="text-decoration:none"><span>${P.emoji}</span>${P.crumb} ${Y0}<br><small>${P.short}</small></a>`).join("")}</div>

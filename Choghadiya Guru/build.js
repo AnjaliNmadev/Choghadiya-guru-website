@@ -33,8 +33,21 @@ const NAV = [
   ]],
   ["/calendar/", "Calendar", [
     ["/hindu-calendar/", "Hindu Calendar"],
+    ["/hindu-festivals/", "Hindu Festivals"],
+    ["/diwali/", "Diwali"],
+    ["/navratri/", "Sharad Navratri"],
+    ["/navratri-colors/", "Navratri Colors"],
+    ["/aarti/", "Aarti"],
+    ["/chalisa/", "Chalisa"],
+    ["/stotram/", "Stotram"],
+    ["/mantra/", "Vedic Mantra"],
+    ["/ashtakam/", "Ashtakam"],
     ["/indian-holidays/", "Indian Holidays"],
-    ["/telugu-festivals/", "Telugu Festivals"]
+    ["/telugu-festivals/", "Telugu Festivals"],
+    ["/malayalam-festivals/", "Malayalam Festivals"],
+    ["/tamil-festivals/", "Tamil Festivals"],
+    ["/gujarati-festivals/", "Gujarati Festivals"],
+    ["/bengali-festivals/", "Bengali Festivals"]
   ]]
 ];
 
@@ -120,7 +133,7 @@ ${relatedHtml}
 <div><h4>Panchang Tools</h4><a href="/aaj-ka-panchang/">Aaj ka Panchang</a><a href="/panchang/">Panchang Calendar</a><a href="/month-panchang/">Month Panchang</a><a href="/choghadiya/">Today's Choghadiya</a><a href="/hora/">Shubh Hora</a><a href="/gowri-panchangam/">Gowri Panchangam</a><a href="/rahu-kaal/">Rahu Kaal</a><a href="/abhijit-muhurat/">Abhijit Muhurat</a></div>
 <div><h4>Shubh Muhurat</h4><a href="/vivah-muhurat/">Marriage (Vivah)</a><a href="/namkaran-muhurat/">Namkaran</a><a href="/vehicle-muhurat/">New Vehicle</a><a href="/property-muhurat/">New Property</a><a href="/business-muhurat/">Business</a><a href="/mundan-muhurat/">Mundan</a></div>
 <div><h4>Vrat Dates</h4><a href="/purnima-vrat/">Purnima Vrat</a><a href="/amavasya-dates/">Amavasya Dates</a><a href="/ekadashi-vrat/">Ekadashi Vrat</a><a href="/pradosh-vrat/">Pradosh Vrat</a><a href="/sankashti-chaturthi/">Sankashti Chaturthi</a><a href="/vinayaka-chaturthi/">Vinayaka Chaturthi</a><a href="/sankranti-dates/">Sankranti Dates</a><a href="/satyanarayan-puja/">Satyanarayan Puja</a><a href="/vrats/">All Vrats</a></div>
-<div><h4>Calendar</h4><a href="/hindu-calendar/">Hindu Calendar</a><a href="/indian-holidays/">Indian Holidays</a><a href="/telugu-festivals/">Telugu Festivals</a></div>
+<div><h4>Calendar</h4><a href="/hindu-calendar/">Hindu Calendar</a><a href="/indian-holidays/">Indian Holidays</a><a href="/telugu-festivals/">Telugu Festivals</a><a href="/malayalam-festivals/">Malayalam Festivals</a><a href="/tamil-festivals/">Tamil Festivals</a><a href="/gujarati-festivals/">Gujarati Festivals</a><a href="/bengali-festivals/">Bengali Festivals</a><a href="/hindu-festivals/">Hindu Festivals</a><a href="/diwali/">Diwali</a><a href="/navratri/">Sharad Navratri</a><a href="/navratri-colors/">Navratri Colors</a><a href="/aarti/">Aarti</a><a href="/chalisa/">Chalisa</a><a href="/stotram/">Stotram</a><a href="/mantra/">Vedic Mantra</a><a href="/ashtakam/">Ashtakam</a></div>
 <div><h4>Learn</h4><a href="/what-is-choghadiya/">What is Choghadiya</a><a href="/what-is-choghadiya/#faq">FAQs</a></div>
 <div><h4>About ${BRAND}</h4><p>Simple, free choghadiya, hora, Gowri Panchangam, Rahu Kaal and Abhijit muhurat timings for Indian cities, calculated in your browser.</p></div>
 </div>
@@ -496,7 +509,10 @@ require("./muhurat-pages.js")({ ROOT, BRAND, layout, write, faqSchema, citiesBlo
 const YEARS = [2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035]; // add a year here: panchang calendar AND vrat pages pick it up
 require("./panchang-pages.js")({ BRAND, layout, write, faqSchema, citiesBlock, SITE, YEARS });
 require("./vrat-pages.js")({ BRAND, layout, write, faqSchema, citiesBlock, YEARS });
-require("./calendar-pages.js")({ BRAND, layout, write, faqSchema, citiesBlock });
+require("./calendar-pages.js")({ BRAND, layout, write, faqSchema, citiesBlock, YEARS });
+require("./diwali-pages.js")({ BRAND, layout, write, faqSchema, citiesBlock, YEARS });
+require("./navratri-pages.js")({ BRAND, layout, write, faqSchema, citiesBlock, YEARS });
+require("./lyrics-pages.js")({ BRAND, layout, write, faqSchema });
 
 /* ---------------- 404 ---------------- */
 fs.writeFileSync(path.join(ROOT, "dist", "404.html"), layout({

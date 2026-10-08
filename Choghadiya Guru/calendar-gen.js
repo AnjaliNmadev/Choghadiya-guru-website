@@ -233,4 +233,5 @@ function telugu(y) {
   return finish(M);
 }
 
-module.exports = { hindu, holidays, telugu, adhik, adhikRuns, nextAdhikYear, easter, islamic, season };
+module.exports = { hindu, holidays, telugu, adhik, adhikRuns, nextAdhikYear, easter, islamic, season,
+  _h: { blank, add, finish, addDays, isoOf, parts, wdOf, dim, base, tithiAt, findDay, festEntries, SANKASHTAHARA, PRADOSH_TE } };

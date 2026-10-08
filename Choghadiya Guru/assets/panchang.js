@@ -25,20 +25,30 @@
     if (view === "month") mvRender();
   }
   function row(k, v) { return '<div class="pr"><span>' + k + '</span><b>' + v + "</b></div>"; }
-  function upto(x) { return f24(x) + " " + t().upto; }
+  function upto(x, ns) { // times past the next sunrise show the real clock time + which day (never 45:31)
+    if (!ns || x <= ns) return f24(x) + " " + t().upto;
+    var k = Math.floor(x / 1440), lbl = k <= 1 ? t().nextday : (lang === "hi" ? "अगले से अगले दिन" : "day after next");
+    return f24(x - 1440 * k) + " (" + lbl + ") " + t().upto;
+  }
   function flr(v) { return f24(Math.floor(v + 1e-6)); }
-  function range(a) { return flr(a[0]) + " – " + flr(a[1]); }
+  var curNs = null; // next sunrise (minutes) of the day on screen
+  function clk(v) { // 24+ style up to the next sunrise, then real clock time + day label (never 32:09 / 45:31)
+    v = Math.floor(v + 1e-6); if (!curNs || v <= curNs) return f24(v);
+    var k = Math.floor(v / 1440), lbl = k <= 1 ? t().nextday : (lang === "hi" ? "अगले से अगले दिन" : "day after next");
+    return f24(v - 1440 * k) + " (" + lbl + ")";
+  }
+  function range(a) { return clk(a[0]) + " – " + clk(a[1]); }
   function tn(n) { return n === 30 ? T.tithi[lang][15] : T.tithi[lang][(n - 1) % 15]; }
   function lines(arr) { return arr.join("<br>"); }
 
   function show(y, m, d, scroll) {
-    var c = CITIES[cityKey], x = P.dayData(y, m, d, c.lat, c.lon), s = t(), h = [], i;
+    var c = CITIES[cityKey], x = P.dayData(y, m, d, c.lat, c.lon), s = t(), h = [], i; curNs = x.nextSunrise;
     cur = { y: y, m: m, d: d };
     var dateTxt = lang === "hi" ? two(d) + " " + T.mon.hi[m - 1] + ", " + y : two(d) + " " + T.mon.en[m - 1] + " " + y;
-    var tith = x.tithi.map(function (z) { return tn(z.n) + ", " + upto(z.e); });
-    var nak = x.nak.map(function (z) { return T.nak[lang][z.i] + ", " + upto(z.e); });
-    var yog = x.yoga.map(function (z) { return T.yoga[lang][z.i] + ", " + upto(z.e); });
-    var kar = x.kar.map(function (z, j) { return row(s.kar[j] || "", T.kar[lang][z.i] + ", " + upto(z.e)); }).join("");
+    var tith = x.tithi.map(function (z) { return tn(z.n) + ", " + upto(z.e, x.nextSunrise); });
+    var nak = x.nak.map(function (z) { return T.nak[lang][z.i] + ", " + upto(z.e, x.nextSunrise); });
+    var yog = x.yoga.map(function (z) { return T.yoga[lang][z.i] + ", " + upto(z.e, x.nextSunrise); });
+    var kar = x.kar.map(function (z, j) { return row(s.kar[j] || "", T.kar[lang][z.i] + ", " + upto(z.e, x.nextSunrise)); }).join("");
     var rashi = x.moonRashi.map(function (z, j) { return T.rashi[lang][z.i] + (j < x.moonRashi.length - 1 || z.e < x.nextSunrise ? ", " + upto(z.e) : ""); });
     var mon = function (i) { return T.lm[lang][i]; };
     var amanta = (x.adhik ? s.adhik : "") + mon(x.amanta), purni = (x.adhik ? s.adhik : "") + mon(x.purnimanta);
